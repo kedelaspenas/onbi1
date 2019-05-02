@@ -1,0 +1,1780 @@
+{
+  "node": [
+    {
+      "op": "DataInput",
+      "name": "dk_Input",
+      "attr": {
+        "shape": {
+          "shape": {
+            "dim": [
+              {
+                "size": "-1"
+              },
+              {
+                "size": "416"
+              },
+              {
+                "size": "416"
+              },
+              {
+                "size": "3"
+              }
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "3"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer1-conv",
+      "input": [
+        "dk_Input"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "3",
+              "16"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "16"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer1-bn",
+      "input": [
+        "layer1-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "16"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer1-act",
+      "input": [
+        "layer1-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "416"
+                  },
+                  {
+                    "size": "16"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Pool",
+      "name": "layer2-maxpool",
+      "input": [
+        "layer1-act"
+      ],
+      "attr": {
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "16"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer3-conv",
+      "input": [
+        "layer2-maxpool"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "16",
+              "32"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer3-bn",
+      "input": [
+        "layer3-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer3-act",
+      "input": [
+        "layer3-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "208"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Pool",
+      "name": "layer4-maxpool",
+      "input": [
+        "layer3-act"
+      ],
+      "attr": {
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer5-conv",
+      "input": [
+        "layer4-maxpool"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "32",
+              "64"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "64"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer5-bn",
+      "input": [
+        "layer5-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "64"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer5-act",
+      "input": [
+        "layer5-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "104"
+                  },
+                  {
+                    "size": "64"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Pool",
+      "name": "layer6-maxpool",
+      "input": [
+        "layer5-act"
+      ],
+      "attr": {
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "64"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer7-conv",
+      "input": [
+        "layer6-maxpool"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "64",
+              "128"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "128"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer7-bn",
+      "input": [
+        "layer7-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "128"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer7-act",
+      "input": [
+        "layer7-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "52"
+                  },
+                  {
+                    "size": "128"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Pool",
+      "name": "layer8-maxpool",
+      "input": [
+        "layer7-act"
+      ],
+      "attr": {
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "128"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer9-conv",
+      "input": [
+        "layer8-maxpool"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "128",
+              "256"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "256"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer9-bn",
+      "input": [
+        "layer9-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "256"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer9-act",
+      "input": [
+        "layer9-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "26"
+                  },
+                  {
+                    "size": "256"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Pool",
+      "name": "layer10-maxpool",
+      "input": [
+        "layer9-act"
+      ],
+      "attr": {
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "256"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer11-conv",
+      "input": [
+        "layer10-maxpool"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "256",
+              "512"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "512"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer11-bn",
+      "input": [
+        "layer11-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "512"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "bias": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "scale": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer11-act",
+      "input": [
+        "layer11-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "512"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Pool",
+      "name": "layer12-maxpool",
+      "input": [
+        "layer11-act"
+      ],
+      "attr": {
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "pooling_type": {
+          "s": "TUFY"
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "2",
+              "2",
+              "1"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "512"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer13-conv",
+      "input": [
+        "layer12-maxpool"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "512",
+              "1024"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "1024"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer13-bn",
+      "input": [
+        "layer13-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "1024"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer13-act",
+      "input": [
+        "layer13-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "1024"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer14-conv",
+      "input": [
+        "layer13-act"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": false
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "1",
+              "1",
+              "0",
+              "0",
+              "1",
+              "1",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "3",
+              "3",
+              "1024",
+              "1024"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "1024"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "BatchNorm",
+      "name": "layer14-bn",
+      "input": [
+        "layer14-conv"
+      ],
+      "attr": {
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "1024"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "scale": {
+          "b": true
+        },
+        "epsilon": {
+          "f": 9.999999747378752e-06
+        },
+        "use_global_stats": {
+          "b": true
+        },
+        "bias": {
+          "b": true
+        }
+      }
+    },
+    {
+      "op": "LeakyRelu",
+      "name": "layer14-act",
+      "input": [
+        "layer14-bn"
+      ],
+      "attr": {
+        "alpha": {
+          "f": 0.10000000149011612
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "1024"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "Conv",
+      "name": "layer15-conv",
+      "input": [
+        "layer14-act"
+      ],
+      "attr": {
+        "use_bias": {
+          "b": true
+        },
+        "auto_pad": {
+          "s": "U0FNRQ=="
+        },
+        "strides": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          }
+        },
+        "pads": {
+          "list": {
+            "i": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          }
+        },
+        "kernel_shape": {
+          "list": {
+            "i": [
+              "1",
+              "1",
+              "1024",
+              "30"
+            ]
+          }
+        },
+        "_output_shape": {
+          "list": {
+            "shape": [
+              {
+                "dim": [
+                  {
+                    "size": "-1"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "13"
+                  },
+                  {
+                    "size": "30"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "op": "region",
+      "name": "layer16-region",
+      "input": [
+        "layer15-conv"
+      ],
+      "attr": {
+        "anchors": {
+          "list": {
+            "f": [
+              0.7387679815292358,
+              0.8749459981918335,
+              2.4220399856567383,
+              2.6570401191711426,
+              4.3097100257873535,
+              7.0449299812316895,
+              10.246000289916992,
+              4.594279766082764,
+              12.686800003051758,
+              11.874099731445312
+            ]
+          }
+        },
+        "num": {
+          "i": "5"
+        },
+        "bias_match": {
+          "i": "1"
+        },
+        "noobject_scale": {
+          "i": "1"
+        },
+        "rescore": {
+          "i": "1"
+        },
+        "random": {
+          "f": 1.0
+        },
+        "absolute": {
+          "i": "1"
+        },
+        "coord_scale": {
+          "i": "1"
+        },
+        "object_scale": {
+          "i": "5"
+        },
+        "jitter": {
+          "f": 0.20000000298023224
+        },
+        "class_scale": {
+          "i": "1"
+        },
+        "thresh": {
+          "f": 0.6000000238418579
+        },
+        "classes": {
+          "i": "1"
+        },
+        "coords": {
+          "i": "4"
+        },
+        "softmax": {
+          "i": "1"
+        }
+      }
+    }
+  ]
+}
