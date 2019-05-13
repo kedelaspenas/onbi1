@@ -132,10 +132,11 @@ def convolution(weights_dict, name, input, group, conv_type, filters=None, **kwa
 def get_prediction(img_or, boxes):
     return draw_boxes(img_or, boxes, ['neuroblastoma'])
 
-def get_mask(img_or, boxes, percent=1.0):
-    mask = np.zeros(img_or.shape)
-    h,w,_ = img_or.shape
-    for box in boxes:
+def get_mask(img_or, boxes, percent=1.0, instance=False, resize_dims=None, show_score=False):
+    classes = 1 if not instance else len(boxes)
+    h,w = img_or.shape[:2] if not resize_dims else resize_dims
+    mask = np.zeros((classes, h, w))
+    for idx, box in enumerate(boxes):
         dx = (1-percent)/2*(box.xmax - box.xmin)
         dy = (1-percent)/2*(box.ymax - box.ymin)
         xmin = int((box.xmin + dx)*w)
@@ -143,7 +144,7 @@ def get_mask(img_or, boxes, percent=1.0):
         xmax = int((box.xmax - dx)*w)
         ymax = int((box.ymax - dy)*h)
 
-        cv2.rectangle(mask, (xmin,ymin), (xmax,ymax), (255,255,255), -1)
+        mask[idx,ymin:ymax,xmin:xmax] = 1 if not show_score else box.score
     return mask
 
 if __name__ == "__main__":

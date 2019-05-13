@@ -2,6 +2,8 @@ from torch.utils.data import Dataset, DataLoader
 import os, cv2, numpy as np
 import torch
 from convcrf.convcrf import exp_and_normalize
+from yolocrf import read_dataset, MAX_INSTANCES, train_files, test_files
+from keras.utils.np_utils import to_categorical
 
 crf_conf = {
     'filter_size': 3,
@@ -35,9 +37,7 @@ crf_conf = {
     "pyinn": False
 }
 
-MAX_INSTANCES = 50
-
-class YoloCRFDataset(Dataset):
+class UNetCRFDataset(Dataset):
 	def __init__(self, imagefiles, train=False, instance=False, max_instances=MAX_INSTANCES):
 		self.imagefiles = imagefiles
 		self.img_dims = 416
@@ -69,33 +69,29 @@ class YoloCRFDataset(Dataset):
 
 	def _load_input(self, filename):
 		name = filename.split('/')[-1][:-4]
-		data = np.load(os.path.join('intermediate', 'train' if self.train else 'test', name + '.npz'))
-		maps = np.squeeze(data['heatmaps'][:,:,:16]).transpose(2, 0, 1)
+		data = np.load(os.path.join('intermediate2', 'train' if self.train else 'test', name + '.npz'))
+		maps = cv2.imread(filename)
+		maps = cv2.resize(maps, (self.img_dims, self.img_dims)).transpose(2,0,1)
 		if not self.instance:
-			mask = cv2.imread(os.path.join('intermediate', 'train' if self.train else 'test', name + '-mask.png'), 0)
-			mask = cv2.resize(mask, (416, 416))
-			mask[mask > 0] = 1
-			mask = np.array(mask, np.float)
+			# print (os.path.join('intermediate2', 'train' if self.train else 'test', name + '-semantic.jpg'))
+			mask = cv2.resize(data['semantic'], (self.img_dims, self.img_dims), cv2.INTER_CUBIC)
 			mask = np.expand_dims(mask, 0)
 		else:
-			mask = data['mask']
+			mask = to_categorical(data['instance']).transpose(2,0,1)[1:]
+			# in case greater than max_instances, get top in terms of area
+			if mask.shape[0] > MAX_INSTANCES:
+				zeros = np.count_nonzero(mask, axis=0)
+				idx = np.argsort(zeros)[::-1]
+				mask = mask[:50]
 			mask = np.pad(mask, ((0,self.max_instances-mask.shape[0]),(0,0),(0,0)), 'constant', constant_values=(0,))
 		return [mask, maps]
 
-def read_dataset(filename):
-    f = open(filename)
-    files = [i.strip() for i in f.readlines()]
-    f.close()
-    return files
-    
-train_files = read_dataset('train_neuroblastoma.txt')
-trainset = YoloCRFDataset(train_files, True)
+trainset = UNetCRFDataset(train_files, True)
 trainloader = DataLoader(trainset, batch_size=16, shuffle=False, num_workers=2)
-trainset_instance = YoloCRFDataset(train_files, train=True, instance=True)
+trainset_instance = UNetCRFDataset(train_files, train=True, instance=True)
 trainloader_instance = DataLoader(trainset_instance, batch_size=4, shuffle=True, num_workers=1)
 
-test_files = read_dataset('test_neuroblastoma.txt')
-testset = YoloCRFDataset(test_files, False)
+testset = UNetCRFDataset(test_files, False)
 testloader = DataLoader(testset, batch_size=1, shuffle=False, num_workers=1)
-testset_instance = YoloCRFDataset(test_files, train=False, instance=True)
+testset_instance = UNetCRFDataset(test_files, train=False, instance=True)
 testloader_instance = DataLoader(testset_instance, batch_size=1, shuffle=False, num_workers=1)
