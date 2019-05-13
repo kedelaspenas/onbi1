@@ -55,7 +55,7 @@ def match_output_to_target(output, target):
 		# loop over rois
 		out_rois = output_one.shape[0]
 		target_rois = target_one.shape[0]
-		match_idx = np.zeros(target_rois)
+		match_idx = np.zeros(target_rois, dtype='int')
 		taken = np.zeros(out_rois)
 		# loop over the targets
 		for r in range(target_rois):
@@ -67,12 +67,16 @@ def match_output_to_target(output, target):
 					match_idx[r] = idx[ctr]
 					taken[idx[ctr]] = 1
 					break
+				print("here")
 				ctr += 1
 		# reorder target label channels
 		# target[b] = target_one[match_idx]
 		# reorder output to match targets
-		not_match_idx = [i for i in range(out_rois) if i not in match_idx]
-		output[b] = torch.cat((output_one[match_idx], output_one[not_match_idx]), 0)
+# 		not_match_idx = [i for i in range(out_rois) if i not in match_idx]
+# 		output[b] = torch.cat((output_one[match_idx], output_one[not_match_idx]), 0)
+		target[b] = torch.from_numpy(np.zeros(target[b].shape, dtype='float32'))
+		for r in range(target_rois):
+			target[b] += torch.from_numpy(target_one[r]*match_idx[r]).cuda().float()
 	# target = nn.functional.pad(target, (0,0,0,MAX_INSTANCES-target.shape[1],0,0,0,0), 'constant', 0)
 	return output, target
 
