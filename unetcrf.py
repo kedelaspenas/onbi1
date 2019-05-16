@@ -56,10 +56,10 @@ class UNetCRFDataset(Dataset):
 
 		return [torch.from_numpy(masks).double(), torch.from_numpy(maps).double()], torch.from_numpy(targets).double()
 
-	def _load_target(self, filename):
+	def _load_target(self, filename, instance=False):
 		name = filename.split('/')[-1][:-4]
 		target = cv2.imread(os.path.join('label', name + '.jpg'),0)
-		if not self.instance:
+		if not instance:
 			target[target > 0] = 1
 			return cv2.resize(target, (self.img_dims, self.img_dims))
 		else:
@@ -83,7 +83,7 @@ class UNetCRFDataset(Dataset):
 				zeros = np.count_nonzero(mask, axis=0)
 				idx = np.argsort(zeros)[::-1]
 				mask = mask[:50]
-			mask = np.pad(mask, ((0,self.max_instances-mask.shape[0]),(0,0),(0,0)), 'constant', constant_values=(0,))
+			# mask = np.pad(mask, ((0,self.max_instances-mask.shape[0]),(0,0),(0,0)), 'constant', constant_values=(0,))
 		return [mask, maps]
 
 trainset = UNetCRFDataset(train_files, True)

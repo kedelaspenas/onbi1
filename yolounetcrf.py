@@ -7,16 +7,16 @@ from unetcrf import UNetCRFDataset
 from keras.utils.np_utils import to_categorical
 
 crf_conf = {
-    'filter_size': 3,
-    'blur': 8,
+    'filter_size': 11,
+    'blur': 4,
     'merge': True,
     'norm': 'none',
-    'weight': 'vector',
+    'weight': None,
     "unary_weight": 1,
     "weight_init": 0.2,
 
     'trainable': True,
-    'convcomp': True,
+    'convcomp': False,
     'logsoftmax': True,  # use logsoftmax for numerical stability
     'softmax': True,
     'final_softmax': False,
@@ -56,12 +56,19 @@ class YOLOUNetCRFDataset(Dataset):
 		file = self.imagefiles[idx]
 		unetmasks, unetmaps = self.UNetCRFDataset._load_input(file)
 		yolomasks, yolomaps = self.YoloCRFDataset._load_input(file)
-		targets = self.UNetCRFDataset._load_target(file)
+		targets = self.UNetCRFDataset._load_target(file, True)
 
-		return [torch.from_numpy(yolomasks*unetmasks).double(), torch.from_numpy(unetmasks).double(), torch.from_numpy(unetmaps).double()], torch.from_numpy(targets).double()
+		box_unary = unetmasks*yolomasks
+		box_unary[0] = (1-unetmasks)*yolomasks[0]
+		box_unary = torch.from_numpy(box_unary).double()
+		global_unary = torch.from_numpy(unetmasks).double()
+		pairwise_input = torch.from_numpy(unetmaps).double()
+		targets = torch.from_numpy(targets).double()
+
+		return [box_unary, global_unary, pairwise_input], targets
 
 trainset = YOLOUNetCRFDataset(train_files, train=True, instance=True)
-trainloader = DataLoader(trainset, batch_size=4, shuffle=True, num_workers=1)
+trainloader = DataLoader(trainset, batch_size=1, shuffle=True, num_workers=1)
 
 testset = YOLOUNetCRFDataset(test_files, train=False, instance=True)
 testloader = DataLoader(testset, batch_size=1, shuffle=False, num_workers=1)

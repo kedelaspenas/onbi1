@@ -81,7 +81,7 @@ class InstanceCRF(nn.Module):
             convcomp=conf['convcomp'], weight=None,
             final_softmax=conf['final_softmax'],
             unary_weight=conf['unary_weight'],
-            pyinn=conf['pyinn'])
+            pyinn=conf['pyinn'],verbose=False)
 
         return
 

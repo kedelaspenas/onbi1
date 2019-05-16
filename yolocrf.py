@@ -79,7 +79,10 @@ class YoloCRFDataset(Dataset):
 			mask = np.expand_dims(mask, 0)
 		else:
 			mask = data['mask']
-			mask = np.pad(mask, ((0,self.max_instances-mask.shape[0]),(0,0),(0,0)), 'constant', constant_values=(0,))
+			mask_all = mask.sum(0) == 0
+			# mask = np.pad(mask, ((1,self.max_instances-mask.shape[0]-1),(0,0),(0,0)), 'constant', constant_values=(0,))
+			mask = np.pad(mask, ((1,0),(0,0),(0,0)), 'constant', constant_values=(0,))
+			mask[0] = mask_all
 		return [mask, maps]
 
 def read_dataset(filename):

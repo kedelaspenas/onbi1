@@ -31,8 +31,11 @@ def custom_loss(output, target):
 # criterion = nn.CrossEntropyLoss()
 pos_weight = torch.from_numpy(np.array([2.0], dtype=np.float32)).to('cuda:0')
 criterion = nn.CrossEntropyLoss(reduction='mean')
-optimizer = optim.SGD(crf.parameters(), lr=1e-7, momentum=0.9)
-#optimizer = optim.Adam(params = crf.parameters(), weight_decay=2.0)
+# optimizer = optim.SGD(crf.parameters(), lr=1e-12, momentum=0.9)
+for name, param in crf.named_parameters():
+    if param.requires_grad:
+        print (name)
+optimizer = optim.Adam(params = crf.parameters(), lr=1e-3)
 threshold = torch.tensor([0.5]).cuda()
 def iou(o, target):
 	target = torch.from_numpy(target).cuda().int()
@@ -50,7 +53,7 @@ def match_output_to_target(output, target):
 	batch = output.shape[0]
 	for b in range(batch):
 		output_one = output[b]
-		target_one = to_categorical(target[b].cpu()).transpose(2,0,1)[1:]
+		target_one = to_categorical(target[b].cpu()).transpose(2,0,1)
 		# compute ious
 		# loop over rois
 		out_rois = output_one.shape[0]
@@ -67,17 +70,12 @@ def match_output_to_target(output, target):
 					match_idx[r] = idx[ctr]
 					taken[idx[ctr]] = 1
 					break
-				print("here")
 				ctr += 1
-		# reorder target label channels
-		# target[b] = target_one[match_idx]
-		# reorder output to match targets
-# 		not_match_idx = [i for i in range(out_rois) if i not in match_idx]
-# 		output[b] = torch.cat((output_one[match_idx], output_one[not_match_idx]), 0)
-		target[b] = torch.from_numpy(np.zeros(target[b].shape, dtype='float32'))
-		for r in range(target_rois):
-			target[b] += torch.from_numpy(target_one[r]*match_idx[r]).cuda().float()
-	# target = nn.functional.pad(target, (0,0,0,MAX_INSTANCES-target.shape[1],0,0,0,0), 'constant', 0)
+		target_one = target_one[np.argsort(match_idx)]
+		target[b] = torch.from_numpy(np.argmax(target_one, axis=0))
+# 		target[b] = torch.from_numpy(np.zeros(target[b].shape, dtype='float32'))
+# 		for r in range(target_rois):
+# 			target[b][target_one[r]] = float(match_idx[r])
 	return output, target
 
 for epoch in range(NEPOCHS):
@@ -85,7 +83,7 @@ for epoch in range(NEPOCHS):
 	for i, data in enumerate(trainloader, 0):
 		# get the inputs
 		inputs, target = data
-		# zero the parameteoutput_one =r gradients
+		# zero the parameter gradients
 		optimizer.zero_grad()
 		# forward + backward + optimize
 		if BACKEND == 'yolounet':
@@ -94,8 +92,14 @@ for epoch in range(NEPOCHS):
 			output = crf(inputs[0].to('cuda:0').float(), inputs[1].to('cuda:0').float())
 		# target = target.unsqueeze(1)
 		target = target.to('cuda:0')
-		output, target = match_output_to_target(output, target.float())
-		# loss = criterion(output[:,:target.max().int()+1,:,:], target.long())
+		# print(target.max(), output.shape)
+		# if output is less than target, pad
+		_, target = match_output_to_target(output, target.float())
+		# loss = criterion(output[:,:target.max().int(),:,:], target.long())
+		# print(target.max().int(),output.shape)
+		if target.max().int()-output.shape[1] >= 0:
+			output = nn.functional.pad(output, (0,0,0,0,0,target.max().int()-output.shape[1]+1,0,0), 'constant', 0)
+		# print(target.max().int(),output.shape[1])
 		loss = criterion(output, target.long())
 		loss.backward()
 		optimizer.step()

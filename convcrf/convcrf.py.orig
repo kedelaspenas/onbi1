@@ -14,7 +14,6 @@ import sys
 import numpy as np
 import scipy as scp
 import math
-import gc
 
 import logging
 import warnings
@@ -387,7 +386,6 @@ class MessagePassingCol():
             npixels[0], npixels[1])
 
     def compute(self, input):
-        gc.collect()
         if self.merge:
             pred = self._compute_gaussian(input, self.gaussian)
         else:
@@ -577,16 +575,16 @@ class ConvCRF(nn.Module):
 
     def inference(self, unary, num_iter=5):
 
-        # if not self.conf['logsoftmax']:
-        #     lg_unary = torch.log(unary)
-        #     prediction = exp_and_normalize(lg_unary, dim=1)
-        # else:
-        #     lg_unary = nnfun.log_softmax(unary, dim=1, _stacklevel=5)
-        #     if self.conf['softmax'] and False:
-        #         prediction = exp_and_normalize(lg_unary, dim=1)
-        #     else:
-        #         prediction = lg_unary
-        prediction = lg_unary = nnfun.log_softmax(unary, dim=1, _stacklevel=5)
+        if not self.conf['logsoftmax']:
+            lg_unary = torch.log(unary)
+            prediction = exp_and_normalize(lg_unary, dim=1)
+        else:
+            lg_unary = nnfun.log_softmax(unary, dim=1, _stacklevel=5)
+            if self.conf['softmax'] and False:
+                prediction = exp_and_normalize(lg_unary, dim=1)
+            else:
+                prediction = lg_unary
+
         for i in range(num_iter):
             message = self.kernel.compute(prediction)
 
@@ -604,6 +602,7 @@ class ConvCRF(nn.Module):
             if not i == num_iter - 1 or self.final_softmax:
                 if self.conf['softmax']:
                     prediction = exp_and_normalize(prediction, dim=1)
+
         return prediction
 
     def start_inference(self):

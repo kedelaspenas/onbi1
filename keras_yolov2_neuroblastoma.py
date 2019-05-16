@@ -139,10 +139,17 @@ def get_mask(img_or, boxes, percent=1.0, instance=False, resize_dims=None, show_
     for idx, box in enumerate(boxes):
         dx = (1-percent)/2*(box.xmax - box.xmin)
         dy = (1-percent)/2*(box.ymax - box.ymin)
+
         xmin = int((box.xmin + dx)*w)
         ymin = int((box.ymin + dy)*h)
         xmax = int((box.xmax - dx)*w)
         ymax = int((box.ymax - dy)*h)
+
+        # box could extend outside the image, so clip it!
+        xmin = max(0, xmin)
+        ymin = max(0, ymin)
+        xmax = min(xmax, w)
+        ymax = min(ymax, h)
 
         mask[idx,ymin:ymax,xmin:xmax] = 1 if not show_score else box.score
     return mask
