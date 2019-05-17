@@ -586,7 +586,7 @@ class ConvCRF(nn.Module):
         #         prediction = exp_and_normalize(lg_unary, dim=1)
         #     else:
         #         prediction = lg_unary
-        prediction = lg_unary = nnfun.log_softmax(unary, dim=1, _stacklevel=5)
+        prediction = lg_unary = exp_and_normalize(unary, dim=1)
         for i in range(num_iter):
             message = self.kernel.compute(prediction)
 
@@ -596,7 +596,7 @@ class ConvCRF(nn.Module):
                 message = message + comp
 
             if self.weight is None:
-                prediction = lg_unary + message
+                prediction = unary - message
             else:
                 prediction = (self.unary_weight - self.weight) * lg_unary + \
                     self.weight * message

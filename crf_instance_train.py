@@ -35,7 +35,7 @@ criterion = nn.CrossEntropyLoss(reduction='mean')
 for name, param in crf.named_parameters():
     if param.requires_grad:
         print (name)
-optimizer = optim.Adam(params = crf.parameters(), lr=1e-3)
+optimizer = optim.Adam(params = crf.parameters(), lr=1e-5)
 threshold = torch.tensor([0.5]).cuda()
 def iou(o, target):
 	target = torch.from_numpy(target).cuda().int()
@@ -108,7 +108,8 @@ for epoch in range(NEPOCHS):
 		print('[%d, %5d] loss: %.8f' % (epoch + 1, i + 1, loss))
 		running_loss += loss
 	print("Epoch: %d , Average Loss: %.8f" % (epoch + 1, running_loss/(i+1)))
-	torch.save(crf, BACKEND + 'crf-'+str(epoch)+'.pt')	
+	if epoch%20 == 0:
+		torch.save(crf, BACKEND + 'crf-'+str(epoch)+'.pt')	
 
 PATH = BACKEND + 'crf.pt'
 torch.save(crf, PATH)

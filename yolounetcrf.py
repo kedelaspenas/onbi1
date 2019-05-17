@@ -9,8 +9,8 @@ from keras.utils.np_utils import to_categorical
 crf_conf = {
     'filter_size': 11,
     'blur': 4,
-    'merge': True,
-    'norm': 'none',
+    'merge': False,
+    'norm': 'sym',
     'weight': None,
     "unary_weight": 1,
     "weight_init": 0.2,
@@ -62,6 +62,8 @@ class YOLOUNetCRFDataset(Dataset):
 		box_unary[0] = (1-unetmasks)*yolomasks[0]
 		box_unary = torch.from_numpy(box_unary).double()
 		global_unary = torch.from_numpy(unetmasks).double()
+		global_unary = global_unary.repeat(box_unary.shape[0],1,1)
+		global_unary[0] = 1.0-global_unary[0]
 		pairwise_input = torch.from_numpy(unetmaps).double()
 		targets = torch.from_numpy(targets).double()
 

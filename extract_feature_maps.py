@@ -38,6 +38,9 @@ def read_dataset(filename):
 train_files = read_dataset('train_neuroblastoma.txt')
 test_files = read_dataset('test_neuroblastoma.txt')
 
+os.makedirs('intermediate/train', exist_ok=True)
+os.makedirs('intermediate/test', exist_ok=True)
+
 for idx, fileset in enumerate([train_files,test_files]):
     for file in fileset:
         name = file.split('/')[-1][:-4]

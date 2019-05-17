@@ -6,6 +6,9 @@ import numpy as np, os, cv2
 net = UNet(n_channels=1, n_classes=1).cuda()
 net.load_state_dict(torch.load('CP64.pth', map_location={'cuda:1':'cuda:0'}))
 
+os.makedirs('intermediate2/train', exist_ok=True)
+os.makedirs('intermediate2/test', exist_ok=True)
+
 for idx, dataset in enumerate([train_files, test_files]):
 	for file in dataset:
 		filename = file.split('/')[-1][:-4]
