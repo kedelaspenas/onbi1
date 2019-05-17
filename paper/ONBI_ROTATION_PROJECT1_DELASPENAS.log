@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.16)  17 MAY 2019 13:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.8.16)  17 MAY 2019 17:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -248,7 +248,47 @@ Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \extratabsurround=\skip50
 \backup@length=\skip51
 )
-(./ONBI_ROTATION_PROJECT1_DELASPENAS.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2016/02/20 v1.1-142 Sub-captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2016/02/04 v1.7-139 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 67.
+\captionmargin=\dimen139
+\captionmargin@=\dimen140
+\captionwidth=\dimen141
+\caption@tempdima=\dimen142
+\caption@indent=\dimen143
+\caption@parindent=\dimen144
+\caption@hangindent=\dimen145
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+)
+
+Package caption Warning: Unsupported document class (or package) detected,
+(caption)                usage of the caption package is not recommended.
+See the caption package documentation for explanation.
+
+Package caption Info: \@makecaption = \long macro:#1#2->\ifx \@captype \@IEEEta
+blestring \footnotesize \bgroup \par \centering \@IEEEtabletopskipstrut {\norma
+lfont \footnotesize #1}\\{\normalfont \footnotesize \scshape #2}\par \addvspace
+ {0.5\baselineskip }\egroup \@IEEEtablecaptionsepspace \else \@IEEEfigurecaptio
+nsepspace \setbox \@tempboxa \hbox {\normalfont \footnotesize {#1.}\nobreakspac
+e \nobreakspace #2}\ifdim \wd \@tempboxa >\hsize \setbox \@tempboxa \hbox {\nor
+malfont \footnotesize {#1.}\nobreakspace \nobreakspace }\parbox [t]{\hsize }{\n
+ormalfont \footnotesize \noindent \unhbox \@tempboxa #2}\else \ifCLASSOPTIONcon
+ference \hbox to\hsize {\normalfont \footnotesize \hfil \box \@tempboxa \hfil }
+\else \hbox to\hsize {\normalfont \footnotesize \box \@tempboxa \hfil }\fi \fi 
+\fi .
+\c@ContinuedFloat=\count116
+Package caption Info: float package is loaded.
+)
+\c@subfigure=\count117
+\c@subtable=\count118
+) (./ONBI_ROTATION_PROJECT1_DELASPENAS.aux)
 \openout1 = `ONBI_ROTATION_PROJECT1_DELASPENAS.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
@@ -267,16 +307,16 @@ LaTeX Font Info:    ... okay on input line 14.
 -- Lines per column: 58 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count116
-\scratchdimen=\dimen139
+\scratchcounter=\count119
+\scratchdimen=\dimen146
 \scratchbox=\box32
-\nofMPsegments=\count117
-\nofMParguments=\count118
+\nofMPsegments=\count120
+\nofMParguments=\count121
 \everyMPshowfont=\toks25
-\MPscratchCnt=\count119
-\MPscratchDim=\dimen140
-\MPnumerator=\count120
-\makeMPintoPDFobject=\count121
+\MPscratchCnt=\count122
+\MPscratchDim=\dimen147
+\MPnumerator=\count123
+\makeMPintoPDFobject=\count124
 \everyMPtoPDFconversion=\toks26
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -326,38 +366,93 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 66.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 58.
 
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+Underfull \hbox (badness 6559) in paragraph at lines 58--58
+[][][]\OT1/ptm/m/n/8 K. de-las Pe[]nas is with the Doc-toral Train-ing Cen-tre,
+ Uni-ver-
+ []
+
+
+Underfull \hbox (badness 2529) in paragraph at lines 58--58
+\OT1/ptm/m/n/8 sity of Ox-ford, United King-dom, and the De-part-ment of Com-pu
+ter
+ []
+
+
+Underfull \hbox (badness 5908) in paragraph at lines 58--58
+\OT1/ptm/m/n/8 Sci-ence, Uni-ver-sity of the Philip-pines Dil-i-man, Philip-pin
+es e-mail:
+ []
+
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 68.
 <unet.png, id=1, 1560.83125pt x 1039.885pt>
 File: unet.png Graphic file (type png)
  <use unet.png>
-Package pdftex.def Info: unet.png used on input line 115.
+Package pdftex.def Info: unet.png used on input line 117.
 (pdftex.def)             Requested size: 216.81pt x 144.44046pt.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 127.
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+
+ <./unet.png>]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 129.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 127.
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 129.
+
+<../neuroblastoma/110082.jpg, id=14, 513.92pt x 513.92pt>
+File: ../neuroblastoma/110082.jpg Graphic file (type jpg)
+
+<use ../neuroblastoma/110082.jpg>
+Package pdftex.def Info: ../neuroblastoma/110082.jpg used on input line 188.
+(pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
+
+<../label/110082.jpg, id=15, 513.92pt x 513.92pt>
+File: ../label/110082.jpg Graphic file (type jpg)
+ <use ../label/110082.jpg>
+Package pdftex.def Info: ../label/110082.jpg used on input line 192.
+(pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
+
+<../neuroblastoma/110093.jpg, id=16, 513.92pt x 513.92pt>
+File: ../neuroblastoma/110093.jpg Graphic file (type jpg)
+
+<use ../neuroblastoma/110093.jpg>
+Package pdftex.def Info: ../neuroblastoma/110093.jpg used on input line 196.
+(pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
+
+<../label/110093.jpg, id=17, 513.92pt x 513.92pt>
+File: ../label/110093.jpg Graphic file (type jpg)
+ <use ../label/110093.jpg>
+Package pdftex.def Info: ../label/110093.jpg used on input line 200.
+(pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
+
+[2]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
- <./unet.png>]
-(./ONBI_ROTATION_PROJECT1_DELASPENAS.bbl [2]) [3
+(./ONBI_ROTATION_PROJECT1_DELASPENAS.bbl [3 <../neuroblastoma/110082.jpg> <../l
+abel/110082.jpg> <../neuroblastoma/110093.jpg> <../label/110093.jpg>]) [4
 
 ]
 (./ONBI_ROTATION_PROJECT1_DELASPENAS.aux) ) 
 Here is how much of TeX's memory you used:
- 3628 strings out of 493029
- 55067 string characters out of 6136234
- 130401 words of memory out of 5000000
- 7112 multiletter control sequences out of 15000+600000
- 43935 words of font info for 81 fonts, out of 8000000 for 9000
+ 4792 strings out of 493029
+ 76086 string characters out of 6136234
+ 152111 words of memory out of 5000000
+ 8256 multiletter control sequences out of 15000+600000
+ 45528 words of font info for 84 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 38i,8n,28p,838b,296s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,8n,40p,838b,419s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts
 /enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
 ts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
@@ -366,14 +461,15 @@ pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
-utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ONBI_ROTATION_PROJECT1_DELASPENAS.pdf (3 pages, 207488 bytes)
+f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
+/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on ONBI_ROTATION_PROJECT1_DELASPENAS.pdf (4 pages, 531017 bytes)
 .
 PDF statistics:
- 60 PDF objects out of 1000 (max. 8388607)
- 42 compressed objects within 1 object stream
+ 71 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

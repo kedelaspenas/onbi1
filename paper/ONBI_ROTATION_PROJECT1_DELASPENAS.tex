@@ -6,7 +6,7 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{array}
-
+\usepackage{subcaption}
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
@@ -22,7 +22,9 @@
 \title{Detection and Instance Segmentation of Neuroblastoma Cells using YOLO, UNet and Conditional Random Fields}
 
 \author{Kristofer delas Pe\~nas and
-        Dominic Waithe}% <-this % stops a space
+        Dominic Waithe% <-this % stops a space
+\thanks{K. delas Pe\~nas is with the Doctoral Training Centre, University of Oxford, United Kingdom, and the Department of Computer Science, University of the Philippines Diliman, Philippines e-mail: \texttt{kristofer.delaspenas@wolfson.ox.ac.uk}.}% <-this % stops a space
+\thanks{D. Waithe is with the MRC Weatherall Institute of Molecular Medicine, University of Oxford, United Kingdom.}}% <-this % stops a space
 
 % The paper headers
 \markboth{Oxford-Nottingham Centre for Doctoral Training for Biomedical Imaging}%
@@ -105,7 +107,7 @@ A more recent YOLO iteration, version 3 \cite{yolov3}, uses a deeper network and
 \subsection{UNet}
 UNet\cite{RFB15a} is a fully convolutional neural network architecture that aims to semantically label individual pixels in the image. The network consists of two paths - a contracting path and an expansive path. The contracting path is the typical convolutional network with a series of convolutional layers with rectified linear unit (ReLU) activations and pooling layers to downsample.
 
-The expansive path is an upsampling route, taking the output of the previous path. This path performs a series of \textit{up-convolutions}, a combination of upsampling and a 2 $\times$ 2 convolution.
+The expansive path is an upsampling route, taking the output of the contracting path. This path performs a series of \textit{up-convolutions}, a combination of upsampling and a 2 $\times$ 2 convolution.
 
 The key feature in UNet is the shortcut connections between the two paths for each resolution scale as shown in Figure \ref{fig:unet}. At each scale, concatenating the output from the contracting path with the upsampled output from the previous scale in the expansive path, ensures that the finer details lost through downsampling can be recovered and be used to fine tune the segmentation.
 
@@ -169,113 +171,53 @@ The $\Psi_{box}$ term encourages the pixel to be assigned to the instance corres
 \State Initialize $Q$
 \While{not converged}
 \State $\widetilde{Q}_i^{(m)}(l)\gets \sum_{j\neq i}k^{(m)}(f_i,f_j)Q_j(l)$ for all m\Comment{Message Passing}
-\State $\hat{Q}_i(x_i)\gets \sum_{l \in L} \mu^{(m)}(x_i,l)\sum_w^{(m)}\widetilde{Q}_i^{(m)}(l)$
+\State $\hat{Q}_i(x_i)\gets \sum_{l \in L} \mu^{(m)}(x_i,l)\sum_w^{(m)}\widetilde{Q}_i^{(m)}(l)$\Comment{Compatibility Transform}
 \State $Q_i(x_i)\gets exp{-\psi_u(x_i) - \hat{Q}_i(x_i)}$
-\State normalize $Q_i(x_i)$
+\State normalize $Q_i(x_i)$\Comment{Softmax}
 \EndWhile
 \State \textbf{end while}
 \end{algorithmic}
 \end{algorithm*}
 
-% needed in second column of first page if using \IEEEpubid
-%\IEEEpubidadjcol
+\section{Experiment Setup}
+\subsection{Dataset}
+The dataset is composed of wide field fluorescent images of cultured neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. 
+\begin{figure*}
+\centering
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{../neuroblastoma/110082.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{../label/110082.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{../neuroblastoma/110093.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{../label/110093.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and their corresponding segmentation masks (b,d). }
+\end{figure*}
+\subsection{Model Architecture}
+\subsection{Training Parameters}
+\subsubsection{Detection}
+For training the tiny implementation of YOLO version 2 network for neuroblastoma detection, we employ 64 batch size, 8 subdivisions, 416 $\times$ 416 $\times$ 3 input image dimensions, 0.9 momentum, 0.0005 decay, 0.001 learning rate, and 120000 epochs. Additional image augmentation by vertical flips was done, as described in \cite{Waithe544833}, to introduce robustness in detection.
+\subsubsection{Semantic Segmentation}
+For training the UNet, we set the learning rate to 0.001, batch size to 16, momentum to 0.9, decay to 0.0005, and epochs to 8000. The binary cross entropy with logits loss was used as the objective function.
 
+For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 batch size, 1000 epochs, and binary cross entropy with logits loss as objective function. The Gaussian CRF is configured with a filter size of 3, blur of 8, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term.
+\subsubsection{Instance Segmentation}
+For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a filter size of 11, blur of 4, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term. The training, set for 10000 epochs, was done with a low learning rate of 1e-12 to account for the small batch size of 1. 
+\subsection{Evaluation Metrics}
 
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
-
-% Note that the IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
-
-
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
-% labels, the optional argument to \subfloat must be present. If a
-% subcaption is not desired, just leave its contents blank,
-% e.g., \subfloat[].
-
-
-% An example of a floating table. Note that, for IEEE style tables, the
-% \caption command should come BEFORE the table and, given that table
-% captions serve much like titles, are usually capitalized except for words
-% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
-% and up, which are usually not capitalized unless they are the first or
-% last word of the caption. Table text will default to \footnotesize as
-% the IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
-
-
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
-
-
+\section{Results}
+\subsection{Neuroblastoma Detection}
+\subsection{Neuroblastoma Semantic Segmentation}
+\subsection{Neuroblastoma Instance Segmentation}
 
 
 \section{Conclusion}
