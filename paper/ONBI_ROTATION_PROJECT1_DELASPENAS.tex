@@ -3,7 +3,8 @@
 
 \usepackage[pdftex]{graphicx}
 \usepackage{amsmath}
-\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \usepackage{array}
 
 % correct bad hyphenation here
@@ -95,13 +96,65 @@ I wish you the best of success.
 \subsection{YOLO}
 \subsection{UNet}
 \subsection{Conditional Random Fields}
-Subsection text here.
+Many learning problems can be described as a graphical model. In artificial intelligence, one common way to model these problems is a probabilistic approach wherein probability distributions \textit{$\Psi$} are assigned over the random variables \textit{Y}. Formally, the problem can be modelled as the product of all \textit{$\Psi_i$} distributions
+\begin{equation}
+p(Y) = \frac{1}{Z}\prod_1^A \Psi_a(y_a)
+\end{equation}
+for factors \textit{F} = \{$\Psi_a$\} that have $\Psi_a \geq 0$. 
+ 
+Markov networks and conditional random fields (CRF) are formulated similarly in this manner. The main difference is that the CRF learns the conditional probability $p(y|x)$ while Markov networks ultimately obtain the joint probability $p(y,x)$. With the joint probability $p(y,x)$, models like the Markov networks can describe the hypothesis space through the generation of all possible features \textit{x} for all labels \textit{y}. However, joint probability $p(y,x)$ involves prior knowledge on or estimate for $p(x)$, and the dependence (or independence) of the random variables. For general classification tasks, however, modelling of $p(x)$ is not needed as the concern is only on assigning labels to features, which is exactly what the conditional probability $p(y|x)$ gives.
+
+%put figure here
+Exact inference on conditional random fields is computationally expensive and usually impossible. If exact inference is possible, performing naively the sum of products of potentials (\textbf{message passing}) for all variables, can take a long time, especially for dense graphs. Current implementations of CRFs perform inference by approximation, with the speedup by employing dynamic programming. One inference algorithm is the mean field inference described in Algorithm \ref{alg:meanfieldinference}.
+
+Each iteration of the mean field inference described in Algorithm \ref{alg:meanfieldinference} performs a message passing step, compatibility transform, and local update and normalization. Each step, except the message passing, runs in linear time. Message passing is the computational bottleneck. For a naive solution, it requires summing up over all variables and runs in quadratic time. For this very reason, the conditional random fields gained the reputation of being nooriously slow and impractical for a lot of machine learning tasks, especially those involving dense graph representations like image segmentation.
+
+%message passing as convolution
+Addressing the slow inference in CRFs, \cite{NIPS2011_4296} showed that message passing can be approximated and expressed as a convolution with a Gaussian kernel as follows:
+\begin{equation}
+\widetilde{Q}_i^{(m)}(l)\gets \sum_{j\neq i}k^{(m)}(f_i,f_j)Q_j(l) = [G_(m) \otimes Q(l)](f_i) - Q_i(l)
+\end{equation}
+This approximation can be extended to higher dimensions, and with the permutohedral lattice data structure, efficient message passing can be done in $O(Nd)$ time where \textit{N} is the number of variables and \textit{d} the number of dimensions. 
+%cnnasrnn
+Furthermore, \cite{crfasrnn_ICCV2015} and \cite{higherordercrf_ECCV2016} demonstrated how the mean field inference in CRFs can be written as recurrent neural network with learnable weights. This formulation allows the CRFs to be seamlessly integrated as part of a convolutional neural network model for tasks such as image segmentation.
+
+With CRFs implemented as RNNs, several research has been done applying CNN-CRFs for general image segmentation task. \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF} proposed systems using CRFs integrated in CNNs for semantic image segmentation. Both systems train the CRF by minimizing the Gibbs energy and in doing so, finding the Maximum A Posteriori labelling of the image pixels. The CRF for semantic image segmentation is formulated with the following energy function for assignment of the pixels to semantic classes,
+\begin{equation}
+E(X = x) = \sum_i U(x_i) + \sum_{i<j}P(x_i,x_j)
+\end{equation}
+where \textit{U} is the unary potential and \textit{P} the pairwise potential. In \cite{NIPS2011_4296}, responses from the TextonBoost filter bank, color, histogram of oriented gradients (HOG) and pixel location features were used for the unary potential. On the other hand, \cite{Teichmann2018ConvolutionalCF} used the segmentation prediction from ResNet101 for the unary. Both systems used gaussian kernels for the pairwise potentials, given as:
+\begin{equation}
+k(f_i^I,f_j^I) = w^{(1)}G_{appearance} + w^{(2)}G_{smoothness}
+\end{equation}
+\begin{equation}
+G_{appearance} = exp\left(-\frac{|p_i - p_j|^2}{2\theta_\alpha^2} - \frac{|I_i - I_j|^2}{2\theta_\beta^2}\right)
+\end{equation}
+\begin{equation}
+G_{smoothness} = exp\left(-\frac{|p_i - p_j|^2}{2\theta_\gamma^2}\right)
+\end{equation}
+The two terms in the pairwise potential encourages neighboring pairs of pixels that look similar to be assigned the same semantic label.
+
+Extending from this, \cite{Arnab2017PixelwiseIS} and \cite{Li_2018_ECCV} introduced some modification to this energy function to be able to perform  pixelwise instance segmentation. The systems described for this task works on an initial instance segmentation from a detection algorithm, where each detection has a corresponding prediction score. This instance segmentation is further refined by adding information from semantic segmentation and the gaussian pairwise potentials. To do this, They have broken down the unary potential to accommodate two distinct terms $\Psi_{box}$ and $\Psi_{global}$ as follows:
+\begin{equation}
+U(x_i) = -ln[w_1\Psi_{box}(x_i) + w_2\Psi_{global}(x_i)]
+\end{equation}
+The $\Psi_{box}$ term encourages the pixel to be assigned to the instance corresponding to the detection. This is proportional to the probability of the semantic class assigned to the pixel and the detection score. The $\Psi_{global}$ term accounts for pixels that might have been misclassified to another instance label but belongs to the same semantic label. This addresses the problem in the initial instance segmentation that does not fully cover the entire extent of the individual instances.
+\begin{algorithm*}
+\caption{Mean Field Inference}\label{alg:meanfieldinference}
+\begin{algorithmic}[1]
+\State Initialize $Q$
+\While{not converged}
+\State $\widetilde{Q}_i^{(m)}(l)\gets \sum_{j\neq i}k^{(m)}(f_i,f_j)Q_j(l)$ for all m\Comment{Message Passing}
+\State $\hat{Q}_i(x_i)\gets \sum_{l \in L} \mu^{(m)}(x_i,l)\sum_w^{(m)}\widetilde{Q}_i^{(m)}(l)$
+\State $Q_i(x_i)\gets exp{-\psi_u(x_i) - \hat{Q}_i(x_i)}$
+\State normalize $Q_i(x_i)$
+\EndWhile
+\State \textbf{end while}
+\end{algorithmic}
+\end{algorithm*}
 
 % needed in second column of first page if using \IEEEpubid
 %\IEEEpubidadjcol
-
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
 
 
 % An example of a floating figure using the graphicx package.
@@ -265,18 +318,12 @@ The authors would like to thank...
 % http://www.michaelshell.org/tex/ieeetran/bibtex/
 %\bibliographystyle{IEEEtran}
 % argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
+\bibliographystyle{IEEEtran}
+\bibliography{ONBI_ROTATION_PROJECT1_DELASPENAS}
 %
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
 
 % biography section
 % 
