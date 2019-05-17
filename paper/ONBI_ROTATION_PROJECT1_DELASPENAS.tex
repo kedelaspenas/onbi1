@@ -92,9 +92,33 @@ IEEEtran.cls version 1.8b and later.
 I wish you the best of success.
 
 \section{Literature Review}
-\subsection{Neuroblastoma}
+\subsection{Semantic Segmentation}
+\subsection{Instance Segmentation}
 \subsection{YOLO}
+The YOLO (You Only Look Once) network \cite{redmon2016yolo9000} is a state-of-the-art object detection system that gained popularity within the past few years. It employs a series of convolutions to detect and localize objects in real-time.
+
+The implementation of YOLO starts with an initial 416 $\times$ 416 image input. The system performs 19 convolutions with an overall downsampling factor of 32, resulting to an output feature map of 13 $\times$ 13 dimension which is used to predict the bounding boxes of detected objects with the help of anchor boxes.
+
+With version 2 of YOLO, \cite{redmon2016yolo9000} demonstrated a high mean average precision (mAP) on the VOC dataset, higher than existing architectures like Faster-RCNN.
+
+A more recent YOLO iteration, version 3 \cite{yolov3}, uses a deeper network and performs object detection on 3 stages of different resolutions. With these changes, an even higher mAP was achieved, however, at the expense of heavier computational resource requirement and longer detection time.
 \subsection{UNet}
+UNet\cite{RFB15a} is a fully convolutional neural network architecture that aims to semantically label individual pixels in the image. The network consists of two paths - a contracting path and an expansive path. The contracting path is the typical convolutional network with a series of convolutional layers with rectified linear unit (ReLU) activations and pooling layers to downsample.
+
+The expansive path is an upsampling route, taking the output of the previous path. This path performs a series of \textit{up-convolutions}, a combination of upsampling and a 2 $\times$ 2 convolution.
+
+The key feature in UNet is the shortcut connections between the two paths for each resolution scale as shown in Figure \ref{fig:unet}. At each scale, concatenating the output from the contracting path with the upsampled output from the previous scale in the expansive path, ensures that the finer details lost through downsampling can be recovered and be used to fine tune the segmentation.
+
+UNet was first applied on microscopy images but since then have been applied to different imaging modalities like MRIs and CT scans.
+\begin{figure}
+\centering
+\includegraphics[width=3in]{unet.png}
+\caption{\textbf{U-net architecture} \cite{RFB15a} (example for 32x32 pixels in the lowest resolution). Each blue
+box corresponds to a multi-channel feature map. The number of channels is denoted
+on top of the box. The x-y-size is provided at the lower left edge of the box. White
+boxes represent copied feature maps. The arrows denote the different operations.}
+\label{fig:unet}
+\end{figure}
 \subsection{Conditional Random Fields}
 Many learning problems can be described as a graphical model. In artificial intelligence, one common way to model these problems is a probabilistic approach wherein probability distributions \textit{$\Psi$} are assigned over the random variables \textit{Y}. Formally, the problem can be modelled as the product of all \textit{$\Psi_i$} distributions
 \begin{equation}

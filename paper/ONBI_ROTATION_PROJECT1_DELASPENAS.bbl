@@ -21,6 +21,23 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{redmon2016yolo9000}
+J.~Redmon and A.~Farhadi, ``Yolo9000: Better, faster, stronger,'' \emph{arXiv
+  preprint arXiv:1612.08242}, 2016.
+
+\bibitem{yolov3}
+------, ``Yolov3: An incremental improvement,'' \emph{arXiv}, 2018.
+
+\bibitem{RFB15a}
+\BIBentryALTinterwordspacing
+O.~Ronneberger, P.Fischer, and T.~Brox, ``U-net: Convolutional networks for
+  biomedical image segmentation,'' in \emph{Medical Image Computing and
+  Computer-Assisted Intervention (MICCAI)}, ser. LNCS, vol. 9351.\hskip 1em
+  plus 0.5em minus 0.4em\relax Springer, 2015, pp. 234--241, (available on
+  arXiv:1505.04597 [cs.CV]). [Online]. Available:
+  \url{http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a}
+\BIBentrySTDinterwordspacing
+
 \bibitem{NIPS2011_4296}
 \BIBentryALTinterwordspacing
 P.~Kr\"{a}henb\"{u}hl and V.~Koltun, ``Efficient inference in fully connected
