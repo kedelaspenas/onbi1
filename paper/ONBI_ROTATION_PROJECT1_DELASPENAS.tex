@@ -213,10 +213,16 @@ For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 
 \subsubsection{Instance Segmentation}
 For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a filter size of 11, blur of 4, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term. The training, set for 10000 epochs, was done with a low learning rate of 1e-12 to account for the small batch size of 1. 
 \subsection{Evaluation Metrics}
-
-\section{Results}
+We assessed the trained models for detection and segmentation with mean average precision. For the instance segmentation, we used the panoptic quality metric proposed in %cite panoptic
+\begin{equation}
+PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{2}|FP| + \frac{1}{2}|FN|}
+\end{equation}
+\section{Results and Discussion}
 \subsection{Neuroblastoma Detection}
 \subsection{Neuroblastoma Semantic Segmentation}
+While the Tiny YOLO network trained to detect neuroblastoma proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
+
+
 \subsection{Neuroblastoma Instance Segmentation}
 
 
