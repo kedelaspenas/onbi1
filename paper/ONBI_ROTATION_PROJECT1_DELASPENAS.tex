@@ -95,7 +95,11 @@ I wish you the best of success.
 
 \section{Literature Review}
 \subsection{Semantic Segmentation}
+Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. It is one of the key problems in computer vision. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
+
+In recent years, as a natural progression of the popularity of applications of convolutional neural networks (CNN), several CNN-based architectures were developed for semantic segmentation. A step further from the classification problems addressed by CNN architectures like AlexNet, VGG, Inception and ResNet, architectures coupling classification with localization, detection, and segmentation were built. Most of these segmentation architectures were designed as \textit{encoder-decoder} models. The \textit{encoder} is a classification network, oftentimes utilising the aforementioned popular CNN architectures. This network \textit{learns} discriminative features for segmentation in a lower-dimensional space. To achieve a full-resolution segmentation, the output of the \textit{encoder} is passed to the \textit{decoder} that would project it back to the original resolution space.
 \subsection{Instance Segmentation}
+Instance segmentation builds on top of semantic segmentation. Not only are class labels assigned to each pixel, instances of the same class were also discriminated. This addresses problems beyond simple scene understanding, where quantification and individuality of objects is needed. One key issue that algorithms for instance segmentation are still trying to improve on is the resolution of overlapping instances.
 \subsection{YOLO}
 The YOLO (You Only Look Once) network \cite{redmon2016yolo9000} is a state-of-the-art object detection system that gained popularity within the past few years. It employs a series of convolutions to detect and localize objects in real-time.
 
