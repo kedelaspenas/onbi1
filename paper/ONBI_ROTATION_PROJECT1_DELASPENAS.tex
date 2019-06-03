@@ -87,7 +87,11 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 
 \section{Introduction}
 \IEEEPARstart{A}{nalysis} of cells in microscopy images play a vital role in understanding the structure, interactions, and mechanisms involved in several 
-biological processes and drug interventions. 
+biological processes and drug discovery. Depending on the cell interactions involved and the preparation process used, cells in the sample could be isolated from each other and overlapping. For many applications and purposes, it is crucial to detect and to accurately characterize the morphology of the cells. In such cases, the overlapping cells in the samples pose a challenge in the effective segmentation of individual cells. 
+
+A classic approach to the task of detecting and segmenting cells is through image processing. Simple and well-established algorithms for thresholding and obtaining contours are shown to be effective in segmenting cells and approximating their morphologies. 
+
+Another approach to the detection and segmentation of cells in microscopy images involves the use of convolutional neural networks. While most convolutional neural network architectures were built for general image recognition tasks, like cars, trees, and people in images from huge benchmark datasets of real world scenes such as ImageNet, COCO, and VOC Pascal, such architectures have been demonstrated to work well even for specialized tasks like cell detection and segmentation. 
 \section{Literature Review}
 \subsection{Semantic Segmentation}
 Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. It is one of the key problems in computer vision. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
@@ -180,7 +184,7 @@ The $\Psi_{box}$ term encourages the pixel to be assigned to the instance corres
 
 \section{Experiment Setup}
 \subsection{Dataset}
-The dataset is composed of wide field fluorescent images of cultured neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. 
+The dataset is composed of wide field fluorescent images of cultured \textit{Mus musculus} neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. The neuroblastoma cells were grown on 18 $\times$ 18 mm lamin coated glass coverslips maintained at 37 deg C in 5\% CO2. Images were acquired with a Zeiss epifluorescence microscope and a 20$\times$ objective.
 \begin{figure*}
 \centering
 \begin{subfigure}[b]{0.24\linewidth}
@@ -227,9 +231,11 @@ PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{
 \centering
 \begin{subfigure}[b]{0.9\linewidth}
 \includegraphics[width=\linewidth]{110084.png}
+\caption{}
 \end{subfigure}\vspace{2pt}
 \begin{subfigure}[b]{0.9\linewidth}
 \includegraphics[width=\linewidth]{110085.png}
+\caption{}
 \end{subfigure}
 \caption{\textbf{Neuroblastoma Detection}. Shown are some of the detected neuroblastoma cells using the Tiny YOLO network with the corresponding detection scores}
 \label{fig:yolo_results}
@@ -239,7 +245,42 @@ Even with the highly irregular and dissimilar shape of the neuroblastoma cells, 
 \subsection{Neuroblastoma Semantic Segmentation}
 While the Tiny YOLO network trained to detect neuroblastoma proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
 
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{unet/110115-instance.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{unet/110115.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
+\label{fig:unet_results}
+\end{figure}
+We also trained a UNet model to perform semantic segmentation of neuroblastoma. As is to be expected, the trained UNet yielded a high intersection over union (IoU) score even after only a few epoch in training as seen in Figure \ref{fig:unet_epoch}. However, as the loss function used in training the UNet is the standard binary cross entropy function that minimizes pixel-wise the error in segmentation of the foreground (cells) from the background, without any special considerations for misclassified pixels that would result to joining neighboring cells, the UNet segmentation results have poor panoptic quality. Figure \ref{fig:unet_results} shows the UNet segmentation result of one of the test images with high IoU score but low panoptic quality.
 
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{deeplab/110115.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{unet/110115.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
+\label{fig:deeplab_results}
+\end{figure}
+Another architecture explored for semantic segmentation is the version 3 of DeepLab(cite). Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image.
+
+As described in (cite), we modify the training setup of the UNet segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
+Fo each individual pixel location \textit{x}, we determine the distances, \textit{$d_1$} and \textit{$d_2$}, to the two nearest instances, and compute the weight maps as follows:
+\begin{equation}
+w_{sep}(x) = exp\left({-\frac{(d_1(x) + d_2(x))^2}{2\sigma^2_{sep}}}\right)
+\end{equation}
+$w_{sep}$ evaluates to a high value for locations in between  cells. Using this weight map would force the network to learn the cells gaps and yield semantic segmentation with better panoptic quality. 
 \subsection{Neuroblastoma Instance Segmentation}
 
 
