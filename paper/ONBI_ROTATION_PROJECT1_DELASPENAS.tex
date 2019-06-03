@@ -90,7 +90,11 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 biological processes and drug interventions. 
 \section{Literature Review}
 \subsection{Semantic Segmentation}
+Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. It is one of the key problems in computer vision. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
+
+In recent years, as a natural progression of the popularity of applications of convolutional neural networks (CNN), several CNN-based architectures were developed for semantic segmentation. A step further from the classification problems addressed by CNN architectures like AlexNet, VGG, Inception and ResNet, architectures coupling classification with localization, detection, and segmentation were built. Most of these segmentation architectures were designed as \textit{encoder-decoder} models. The \textit{encoder} is a classification network, oftentimes utilising the aforementioned popular CNN architectures. This network \textit{learns} discriminative features for segmentation in a lower-dimensional space. To achieve a full-resolution segmentation, the output of the \textit{encoder} is passed to the \textit{decoder} that would project it back to the original resolution space.
 \subsection{Instance Segmentation}
+Instance segmentation builds on top of semantic segmentation. Not only are class labels assigned to each pixel, instances of the same class were also discriminated. This addresses problems beyond simple scene understanding, where quantification and individuality of objects is needed. One key issue that algorithms for instance segmentation are still trying to improve on is the resolution of overlapping instances.
 \subsection{YOLO}
 The YOLO (You Only Look Once) network \cite{redmon2016yolo9000} is a state-of-the-art object detection system that gained popularity within the past few years. It employs a series of convolutions to detect and localize objects in real-time.
 
@@ -198,6 +202,11 @@ The dataset is composed of wide field fluorescent images of cultured neuroblasto
 \caption{\textbf{The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and their corresponding segmentation masks (b,d). }
 \end{figure*}
 \subsection{Model Architecture}
+\subsubsection{Detection}
+For detection, we employ the YOLO version 2 network because as reviewed previously, it is effective in detecting objects in real-time. Specifically, we use its `tiny' implementation. The tiny implementation of YOLO version 2 differs from its full counterpart in the number of filters in each convolutional layer. In each layer, the tiny implementation contains only half of the number of filters in the full implementation. With this reduction in the number of filters comes an improvement in the detection time of Tiny YOLO version 2. In a microscopy setting, especially dealing with fluorescence-labelled samples with the detection of cells done in an integrated manner like in \cite{Waithe544833}, real-time processing is desirable. Moreover, the small memory footprint of Tiny YOLO version 2 makes it an even more suitable detection algorithm to consider. We start the training with the convolutional weights pre-trained on Imagenet and fine-tune the network for neuroblastoma detection.
+\subsubsection{Semantic Segmentation}
+We compare two models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}.
+\subsubsection{Instance Segmentation}
 \subsection{Training Parameters}
 \subsubsection{Detection}
 For training the tiny implementation of YOLO version 2 network for neuroblastoma detection, we employ 64 batch size, 8 subdivisions, 416 $\times$ 416 $\times$ 3 input image dimensions, 0.9 momentum, 0.0005 decay, 0.001 learning rate, and 120000 epochs. Additional image augmentation by vertical flips was done, as described in \cite{Waithe544833}, to introduce robustness in detection.
@@ -214,6 +223,19 @@ PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{
 \end{equation}
 \section{Results and Discussion}
 \subsection{Neuroblastoma Detection}
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.9\linewidth}
+\includegraphics[width=\linewidth]{110084.png}
+\end{subfigure}\vspace{2pt}
+\begin{subfigure}[b]{0.9\linewidth}
+\includegraphics[width=\linewidth]{110085.png}
+\end{subfigure}
+\caption{\textbf{Neuroblastoma Detection}. Shown are some of the detected neuroblastoma cells using the Tiny YOLO network with the corresponding detection scores}
+\label{fig:yolo_results}
+\end{figure}
+Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Figure \ref{fig:yolo_results} shows some of the boxed neuroblastoma cells in the test images.
+Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained an mAP of (value here).
 \subsection{Neuroblastoma Semantic Segmentation}
 While the Tiny YOLO network trained to detect neuroblastoma proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
 
@@ -223,34 +245,6 @@ While the Tiny YOLO network trained to detect neuroblastoma proved to be effecti
 
 \section{Conclusion}
 The conclusion goes here.
-
-
-
-
-
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
-
-
-\appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
-
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
 
 
 % use section* for acknowledgment
@@ -292,45 +286,6 @@ The authors would like to thank...
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 
-% biography section
-% 
-% If you have an EPS/PDF photo (graphicx package needed) extra braces are
-% needed around the contents of the optional argument to biography to prevent
-% the LaTeX parser from getting confused when it sees the complicated
-% \includegraphics command within an optional argument. (You could create
-% your own custom macro containing the \includegraphics command to make things
-% simpler here.)
-%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
-% or if you just want to reserve a space for a photo:
-
-\begin{IEEEbiography}{Michael Shell}
-Biography text here.
-\end{IEEEbiography}
-
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% insert where needed to balance the two columns on the last page with
-% biographies
-%\newpage
-
-\begin{IEEEbiographynophoto}{Jane Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% You can push biographies down or up by placing
-% a \vfill before or after them. The appropriate
-% use of \vfill depends on what kind of text is
-% on the last page and whether or not the columns
-% are being equalized.
-
-%\vfill
-
-% Can be used to pull up biographies so that the bottom of the last one
-% is flush with the other column.
-%\enlargethispage{-5in}
 
 
 
