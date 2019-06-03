@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.27)  21 MAY 2019 11:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.27)  3 JUN 2019 09:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -395,39 +395,39 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 <unet.png, id=1, 1560.83125pt x 1039.885pt>
 File: unet.png Graphic file (type png)
 <use unet.png>
-Package pdftex.def Info: unet.png  used on input line 117.
+Package pdftex.def Info: unet.png  used on input line 112.
 (pdftex.def)             Requested size: 216.81pt x 144.44046pt.
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./unet.png>]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 129.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 124.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 129.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 124.
 <../neuroblastoma/110082.jpg, id=14, 513.92pt x 513.92pt>
 File: ../neuroblastoma/110082.jpg Graphic file (type jpg)
 <use ../neuroblastoma/110082.jpg>
-Package pdftex.def Info: ../neuroblastoma/110082.jpg  used on input line 188.
+Package pdftex.def Info: ../neuroblastoma/110082.jpg  used on input line 183.
 (pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
 <../label/110082.jpg, id=15, 513.92pt x 513.92pt>
 File: ../label/110082.jpg Graphic file (type jpg)
 <use ../label/110082.jpg>
-Package pdftex.def Info: ../label/110082.jpg  used on input line 192.
+Package pdftex.def Info: ../label/110082.jpg  used on input line 187.
 (pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
 <../neuroblastoma/110093.jpg, id=16, 513.92pt x 513.92pt>
 File: ../neuroblastoma/110093.jpg Graphic file (type jpg)
 <use ../neuroblastoma/110093.jpg>
-Package pdftex.def Info: ../neuroblastoma/110093.jpg  used on input line 196.
+Package pdftex.def Info: ../neuroblastoma/110093.jpg  used on input line 191.
 (pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
 <../label/110093.jpg, id=17, 513.92pt x 513.92pt>
 File: ../label/110093.jpg Graphic file (type jpg)
 <use ../label/110093.jpg>
-Package pdftex.def Info: ../label/110093.jpg  used on input line 200.
+Package pdftex.def Info: ../label/110093.jpg  used on input line 195.
 (pdftex.def)             Requested size: 123.84283pt x 123.83734pt.
  [2]
 (./ONBI_ROTATION_PROJECT1_DELASPENAS.bbl [3 <../neuroblastoma/110082.jpg> <../l
@@ -455,7 +455,7 @@ f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
 /utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ONBI_ROTATION_PROJECT1_DELASPENAS.pdf (4 pages, 533302 bytes)
+Output written on ONBI_ROTATION_PROJECT1_DELASPENAS.pdf (4 pages, 533257 bytes)
 .
 PDF statistics:
  71 PDF objects out of 1000 (max. 8388607)
