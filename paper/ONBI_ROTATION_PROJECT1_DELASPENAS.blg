@@ -1,5 +1,5 @@
-This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
-Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: ONBI_ROTATION_PROJECT1_DELASPENAS.aux
 The style file: IEEEtran.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -13,44 +13,44 @@ Database file #1: ONBI_ROTATION_PROJECT1_DELASPENAS.bib
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 10 entries,
+You've used 11 entries,
             4087 wiz_defined-function locations,
-            888 strings with 9687 characters,
-and the built_in function-call counts, 6611 in all, are:
-= -- 495
-> -- 190
-< -- 28
-+ -- 95
-- -- 39
-* -- 333
-:= -- 1040
-add.period$ -- 22
-call.type$ -- 10
-change.case$ -- 13
+            894 strings with 9926 characters,
+and the built_in function-call counts, 7158 in all, are:
+= -- 541
+> -- 207
+< -- 29
++ -- 103
+- -- 43
+* -- 363
+:= -- 1141
+add.period$ -- 24
+call.type$ -- 11
+change.case$ -- 14
 chr.to.int$ -- 69
-cite$ -- 10
-duplicate$ -- 496
-empty$ -- 582
-format.name$ -- 50
-if$ -- 1511
+cite$ -- 11
+duplicate$ -- 539
+empty$ -- 624
+format.name$ -- 55
+if$ -- 1631
 int.to.chr$ -- 0
-int.to.str$ -- 10
-missing$ -- 97
-newline$ -- 59
-num.names$ -- 12
-pop$ -- 256
+int.to.str$ -- 11
+missing$ -- 106
+newline$ -- 64
+num.names$ -- 13
+pop$ -- 277
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 501
+skip$ -- 543
 stack$ -- 0
-substring$ -- 173
-swap$ -- 344
-text.length$ -- 5
+substring$ -- 174
+swap$ -- 373
+text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 10
+type$ -- 11
 warning$ -- 0
-while$ -- 22
-width$ -- 12
-write$ -- 119
+while$ -- 23
+width$ -- 13
+write$ -- 131

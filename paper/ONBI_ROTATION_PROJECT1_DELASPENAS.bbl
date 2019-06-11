@@ -38,6 +38,14 @@ O.~Ronneberger, P.Fischer, and T.~Brox, ``U-net: Convolutional networks for
   \url{http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a}
 \BIBentrySTDinterwordspacing
 
+\bibitem{DBLP:journals/corr/ChenPSA17}
+\BIBentryALTinterwordspacing
+L.~Chen, G.~Papandreou, F.~Schroff, and H.~Adam, ``Rethinking atrous
+  convolution for semantic image segmentation,'' \emph{CoRR}, vol.
+  abs/1706.05587, 2017. [Online]. Available:
+  \url{http://arxiv.org/abs/1706.05587}
+\BIBentrySTDinterwordspacing
+
 \bibitem{NIPS2011_4296}
 \BIBentryALTinterwordspacing
 P.~Kr\"{a}henb\"{u}hl and V.~Koltun, ``Efficient inference in fully connected

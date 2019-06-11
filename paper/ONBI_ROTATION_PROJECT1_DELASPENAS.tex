@@ -92,6 +92,8 @@ biological processes and drug discovery. Depending on the cell interactions invo
 A classic approach to the task of detecting and segmenting cells is through image processing. Simple and well-established algorithms for thresholding and obtaining contours are shown to be effective in segmenting cells and approximating their morphologies. 
 
 Another approach to the detection and segmentation of cells in microscopy images involves the use of convolutional neural networks. While most convolutional neural network architectures were built for general image recognition tasks, like cars, trees, and people in images from huge benchmark datasets of real world scenes such as ImageNet, COCO, and VOC Pascal, such architectures have been demonstrated to work well even for specialized tasks like cell detection and segmentation. 
+
+%something about constrained environments, realtime processing, why the need for it
 \section{Literature Review}
 \subsection{Semantic Segmentation}
 Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. It is one of the key problems in computer vision. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
@@ -124,6 +126,11 @@ on top of the box. The x-y-size is provided at the lower left edge of the box. W
 boxes represent copied feature maps. The arrows denote the different operations.}
 \label{fig:unet}
 \end{figure}
+\subsection{DeepLabv3}
+DeepLab\cite{DBLP:journals/corr/ChenPSA17} is a recent architecture for semantic segmentation. DeepLab employs a special kind of convolution - the \textit{atrous} or dilated convolution. 
+
+%spatial pooling
+
 \subsection{Conditional Random Fields}
 Many learning problems can be described as a graphical model. In artificial intelligence, one common way to model these problems is a probabilistic approach wherein probability distributions \textit{$\Psi$} are assigned over the random variables \textit{Y}. Formally, the problem can be modelled as the product of all \textit{$\Psi_i$} distributions
 \begin{equation}
@@ -209,7 +216,7 @@ The dataset is composed of wide field fluorescent images of cultured \textit{Mus
 \subsubsection{Detection}
 For detection, we employ the YOLO version 2 network because as reviewed previously, it is effective in detecting objects in real-time. Specifically, we use its `tiny' implementation. The tiny implementation of YOLO version 2 differs from its full counterpart in the number of filters in each convolutional layer. In each layer, the tiny implementation contains only half of the number of filters in the full implementation. With this reduction in the number of filters comes an improvement in the detection time of Tiny YOLO version 2. In a microscopy setting, especially dealing with fluorescence-labelled samples with the detection of cells done in an integrated manner like in \cite{Waithe544833}, real-time processing is desirable. Moreover, the small memory footprint of Tiny YOLO version 2 makes it an even more suitable detection algorithm to consider. We start the training with the convolutional weights pre-trained on Imagenet and fine-tune the network for neuroblastoma detection.
 \subsubsection{Semantic Segmentation}
-We compare two models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}.
+We compare three models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}. Lastly, we experiment on using the DeepLabV3 architecture with Mobilenet and Resnet as backened feature extractors.
 \subsubsection{Instance Segmentation}
 \subsection{Training Parameters}
 \subsubsection{Detection}
@@ -276,11 +283,38 @@ We also trained a UNet model to perform semantic segmentation of neuroblastoma. 
 Another architecture explored for semantic segmentation is the version 3 of DeepLab(cite). Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image.
 
 As described in (cite), we modify the training setup of the UNet segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
-Fo each individual pixel location \textit{x}, we determine the distances, \textit{$d_1$} and \textit{$d_2$}, to the two nearest instances, and compute the weight maps as follows:
+Fo each individual pixel location \textit{x}, we determine \textit{$d_1$} and \textit{$d_2$} - the distances to the two nearest instances, and compute the weight maps as follows:
 \begin{equation}
 w_{sep}(x) = exp\left({-\frac{(d_1(x) + d_2(x))^2}{2\sigma^2_{sep}}}\right)
 \end{equation}
-$w_{sep}$ evaluates to a high value for locations in between  cells. Using this weight map would force the network to learn the cells gaps and yield semantic segmentation with better panoptic quality. 
+$w_{sep}$ evaluates to a high value for locations in between  cells. Using this weight map would force the network to learn the cells gaps and yield semantic segmentation with better panoptic quality. We found that $\sigma_{sep} = 10$ gave the best segmentation visually, hence, for the remaining experiments, weight penalty maps with $\sigma_{sep} = 10$ were used. 
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{weights/110082-wmap.eps}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{weights/110115-wmap.eps}
+\end{subfigure}
+\caption{\textbf{Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.}
+\label{fig:weight_map}
+\end{figure}
+
+Figure \ref{fig:weight_map} shows the computed weight map for some of the training images.
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{weighted/110115-unet.jpg}
+\caption{UNet}
+\end{subfigure}
+\begin{subfigure}[b]{0.45\linewidth}
+\includegraphics[width=\linewidth]{weighted/110115-deeplab.jpg}
+\caption{DeepLabV3}
+\end{subfigure}
+\caption{\textbf{Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.}
+\label{fig:weight_map}
+\end{figure}
 \subsection{Neuroblastoma Instance Segmentation}
 
 
