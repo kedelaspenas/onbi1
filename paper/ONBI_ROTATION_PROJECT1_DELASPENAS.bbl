@@ -90,4 +90,18 @@ D.~Waithe, J.~M. Brown, K.~Reglinski, I.~Diez-Sevilla, D.~Roberts, and
   \url{https://www.biorxiv.org/content/early/2019/02/08/544833}
 \BIBentrySTDinterwordspacing
 
+\bibitem{DBLP:journals/corr/abs-1801-00868}
+\BIBentryALTinterwordspacing
+A.~Kirillov, K.~He, R.~B. Girshick, C.~Rother, and P.~Doll{\'{a}}r, ``Panoptic
+  segmentation,'' \emph{CoRR}, vol. abs/1801.00868, 2018. [Online]. Available:
+  \url{http://arxiv.org/abs/1801.00868}
+\BIBentrySTDinterwordspacing
+
+\bibitem{nature_unet}
+T.~Falk, D.~Mai, R.~Bensch, �.~Çiçek, A.~Abdulkadir, Y.~Marrakchi, A.~Böhm,
+  J.~Deubner, Z.~Jaeckel, K.~Seiwald, O.~Dovzhenko, O.~Tietz, C.~Dal~Bosco,
+  S.~Walsh, D.~Saltukoglu, T.~Leng~Tay, M.~Prinz, K.~Palme, M.~Simons, and
+  O.~Ronneberger, ``U-net: deep learning for cell counting, detection, and
+  morphometry,'' \emph{Nature Methods}, vol.~16, 01 2019.
+
 \end{thebibliography}

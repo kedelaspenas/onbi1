@@ -13,44 +13,44 @@ Database file #1: ONBI_ROTATION_PROJECT1_DELASPENAS.bib
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 
 Done.
-You've used 11 entries,
+You've used 13 entries,
             4087 wiz_defined-function locations,
-            894 strings with 9926 characters,
-and the built_in function-call counts, 7158 in all, are:
-= -- 541
-> -- 207
-< -- 29
-+ -- 103
-- -- 43
-* -- 363
-:= -- 1141
-add.period$ -- 24
-call.type$ -- 11
-change.case$ -- 14
+            906 strings with 10636 characters,
+and the built_in function-call counts, 8796 in all, are:
+= -- 644
+> -- 309
+< -- 31
++ -- 153
+- -- 68
+* -- 453
+:= -- 1380
+add.period$ -- 28
+call.type$ -- 13
+change.case$ -- 16
 chr.to.int$ -- 69
-cite$ -- 11
-duplicate$ -- 539
-empty$ -- 624
-format.name$ -- 55
-if$ -- 1631
+cite$ -- 13
+duplicate$ -- 660
+empty$ -- 743
+format.name$ -- 82
+if$ -- 2002
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 106
-newline$ -- 64
-num.names$ -- 13
-pop$ -- 277
+int.to.str$ -- 13
+missing$ -- 141
+newline$ -- 72
+num.names$ -- 15
+pop$ -- 370
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 543
+skip$ -- 657
 stack$ -- 0
-substring$ -- 174
-swap$ -- 373
-text.length$ -- 6
+substring$ -- 176
+swap$ -- 467
+text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 11
+type$ -- 13
 warning$ -- 0
-while$ -- 23
-width$ -- 13
-write$ -- 131
+while$ -- 25
+width$ -- 15
+write$ -- 152

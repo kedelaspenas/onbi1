@@ -228,10 +228,11 @@ For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 
 \subsubsection{Instance Segmentation}
 For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a filter size of 11, blur of 4, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term. The training, set for 10000 epochs, was done with a low learning rate of 1e-12 to account for the small batch size of 1. 
 \subsection{Evaluation Metrics}
-We assessed the trained models for detection and segmentation with mean average precision. For the instance segmentation, we used the panoptic quality metric proposed in %cite panoptic
+We assessed the trained models for detection and segmentation with mean average precision and mean intersection over union. For the instance segmentation, we used the panoptic quality metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
 \begin{equation}
 PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{2}|FP| + \frac{1}{2}|FN|}
 \end{equation}
+where \textit{p} and \textit{g} are pairs of output and target segmentation regions, \textit{TP} is the number of true positive detections, \textit{FP} is the number of false positives, and \textit{FN} is the number of false negatives. We use this metric because unlike the mIoU and mAP, the panoptic quality metric penalizes both poor segmentation and poor detections. As the problem only involves one class of object and a solid-colored background, it is to be expected to train models that would yield high IoU scores. Relying therefore only on IoU will not give true insight on how a model performs on delineating cell boundaries.
 \section{Results and Discussion}
 \subsection{Neuroblastoma Detection}
 \begin{figure}
@@ -248,7 +249,7 @@ PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{
 \label{fig:yolo_results}
 \end{figure}
 Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Figure \ref{fig:yolo_results} shows some of the boxed neuroblastoma cells in the test images.
-Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained an mAP of (value here).
+Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained an mAP of (value here) and mIoU of (value here).
 \subsection{Neuroblastoma Semantic Segmentation}
 While the Tiny YOLO network trained to detect neuroblastoma proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
 
@@ -265,7 +266,7 @@ While the Tiny YOLO network trained to detect neuroblastoma proved to be effecti
 \caption{\textbf{UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
 \label{fig:unet_results}
 \end{figure}
-We also trained a UNet model to perform semantic segmentation of neuroblastoma. As is to be expected, the trained UNet yielded a high intersection over union (IoU) score even after only a few epoch in training as seen in Figure \ref{fig:unet_epoch}. However, as the loss function used in training the UNet is the standard binary cross entropy function that minimizes pixel-wise the error in segmentation of the foreground (cells) from the background, without any special considerations for misclassified pixels that would result to joining neighboring cells, the UNet segmentation results have poor panoptic quality. Figure \ref{fig:unet_results} shows the UNet segmentation result of one of the test images with high IoU score but low panoptic quality.
+We also trained a UNet model to perform semantic segmentation of neuroblastoma. As is to be expected, the trained UNet yielded a high intersection over union (IoU) score even after only a few epochs in training. However, as the loss function used in training the UNet is the standard binary cross entropy function that minimizes pixel-wise the error in segmentation of the foreground (cells) from the background, without any special considerations for misclassified pixels that would result to joining neighboring cells, the UNet segmentation results have poor panoptic quality. Figure \ref{fig:unet_results} shows the UNet segmentation result of one of the test images with high IoU score but low panoptic quality.
 
 \begin{figure}
 \centering
@@ -280,9 +281,9 @@ We also trained a UNet model to perform semantic segmentation of neuroblastoma. 
 \caption{\textbf{DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
 \label{fig:deeplab_results}
 \end{figure}
-Another architecture explored for semantic segmentation is the version 3 of DeepLab(cite). Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image.
+Another architecture explored for semantic segmentation is the version 3 of DeepLab \cite{DBLP:journals/corr/ChenPSA17}. Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image.
 
-As described in (cite), we modify the training setup of the UNet segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
+As described in \cite{nature_unet}, we modify the training setup of the UNet segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
 Fo each individual pixel location \textit{x}, we determine \textit{$d_1$} and \textit{$d_2$} - the distances to the two nearest instances, and compute the weight maps as follows:
 \begin{equation}
 w_{sep}(x) = exp\left({-\frac{(d_1(x) + d_2(x))^2}{2\sigma^2_{sep}}}\right)
@@ -313,11 +314,24 @@ Figure \ref{fig:weight_map} shows the computed weight map for some of the traini
 \caption{DeepLabV3}
 \end{subfigure}
 \caption{\textbf{Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.}
-\label{fig:weight_map}
+\label{fig:segmentation_with_weight_map}
 \end{figure}
 \subsection{Neuroblastoma Instance Segmentation}
 
-
+\begin{figure}
+\centering
+\begin{subfigure}[b]{\linewidth}
+\includegraphics[width=\linewidth]{graphs/Test-Mean-Accuracy.eps}
+\end{subfigure}
+\begin{subfigure}[b]{\linewidth}
+\includegraphics[width=\linewidth]{graphs/Test-Mean-IoU.eps}
+\end{subfigure}
+\begin{subfigure}[b]{\linewidth}
+\includegraphics[width=\linewidth]{graphs/Test-Mean-Panoptic-Quality.eps}
+\end{subfigure}
+\caption{\textbf{Accuracy, Intersection over Union, and Panoptic Quality Results}.}
+\label{fig:graph_results}
+\end{figure}
 \section{Conclusion}
 The conclusion goes here.
 
