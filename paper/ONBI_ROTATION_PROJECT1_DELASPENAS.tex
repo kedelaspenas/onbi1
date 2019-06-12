@@ -19,7 +19,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Detection and Instance Segmentation of Neuroblastoma Cells using YOLO, UNet and Conditional Random Fields}
+\title{Cell Detection and Instance Segmentation in a Memory-Constrained Environment using YOLO, UNet, DeepLab, and Conditional Random Fields}
 
 \author{Kristofer delas Pe\~nas and
         Dominic Waithe% <-this % stops a space
@@ -65,7 +65,7 @@ The abstract goes here.
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-IEEE, IEEEtran, journal, \LaTeX, paper, template.
+Cell segmentation, YOLO, UNet, DeepLab, CRF.
 \end{IEEEkeywords}
 
 
@@ -93,7 +93,19 @@ A classic approach to the task of detecting and segmenting cells is through imag
 
 Another approach to the detection and segmentation of cells in microscopy images involves the use of convolutional neural networks. While most convolutional neural network architectures were built for general image recognition tasks, like cars, trees, and people in images from huge benchmark datasets of real world scenes such as ImageNet, COCO, and VOC Pascal, such architectures have been demonstrated to work well even for specialized tasks like cell detection and segmentation. 
 
+%previous research on cell segmentation
+Research on cell segmentation had been done extensively in the past decade using these approaches...
 %something about constrained environments, realtime processing, why the need for it
+Going further from building these models for effective segmentation is the integration of these models for real-time applications in microscopy, such as real-time feedback and annotation of a field of view under the microscope. This has been recently explored in \cite{Waithe544833} in which the detection from the trained model was integrated with the microscope through augmented reality. This setup however still requires an attached computer with dedicated graphics processing unit (GPU) to perform the detection and annotation, making it less ideal for transport. %?
+An improvement to this setup is housing the trained model on a small mobile unit that is capable of running the computationally-extensive algorithms for detection. The challenge however in this modification is the memory and speed constraints of the mobile unit. As recent approaches in cell segmentation involve the use of deep learning techniques and these techniques were only tested on servers, the choice of architecture is not straight-forward - a trade-off among performance, speed and memory needs to be considered.
+
+%discuss jetson
+\begin{figure}
+\includegraphics[width=\linewidth]{jetson.png}
+\caption{\textbf{Nvidia Jetson TX2}.}
+\label{fig:jetson}
+\end{figure}
+For this purpose, we test different models for cell segmentation on Nvidia Jetson TX2 \cite{jetson} (shown in Figure \ref{fig:jetson}). Nvidia Jetson TX2 is an embedded computer primarily targeted for AI applications. This unit works on 7.5W power. Integrated on its board is a 256-core NVIDIA Pascal GPU, Dual-Core NVIDIA Denver 2 64-Bit CPU and Quad-Core ARM® Cortex®-A57 MPCore, 8GB Memory and 32GB storage.
 \section{Literature Review}
 \subsection{Semantic Segmentation}
 Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. It is one of the key problems in computer vision. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
@@ -191,7 +203,13 @@ The $\Psi_{box}$ term encourages the pixel to be assigned to the instance corres
 
 \section{Experiment Setup}
 \subsection{Dataset}
-The dataset is composed of wide field fluorescent images of cultured \textit{Mus musculus} neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. The neuroblastoma cells were grown on 18 $\times$ 18 mm lamin coated glass coverslips maintained at 37 deg C in 5\% CO2. Images were acquired with a Zeiss epifluorescence microscope and a 20$\times$ objective.
+For training and testing different models for cell detection and segmentation, two datasets were used. The two datasets feature different cell types. For simplicity, we separately use the two datasets for training and testing, instead of building multi-class models. Both dataset are from \cite{waithe_dominic_2019_2632769}.
+
+The first dataset is composed of 360 wide field fluorescent images of cultured \textit{Mus musculus} neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. The neuroblastoma cells were grown on 18 $\times$ 18 mm lamin coated glass coverslips maintained at 37 deg C in 5\% CO2. Images were acquired with a Zeiss epifluorescence microscope and a 20$\times$ objective. The average number of cells per image is 11.7.
+
+The second dataset is composed of 60 images of C127 cells stained with DAPI and fixed and mounted in Vectashield. The average number of cells per image is 7.1.
+
+For all experiments, we performed a 50-50 train-test split for cross-validation of the trained models.
 \begin{figure*}
 \centering
 \begin{subfigure}[b]{0.24\linewidth}
@@ -215,20 +233,23 @@ The dataset is composed of wide field fluorescent images of cultured \textit{Mus
 \subsection{Model Architecture}
 \subsubsection{Detection}
 For detection, we employ the YOLO version 2 network because as reviewed previously, it is effective in detecting objects in real-time. Specifically, we use its `tiny' implementation. The tiny implementation of YOLO version 2 differs from its full counterpart in the number of filters in each convolutional layer. In each layer, the tiny implementation contains only half of the number of filters in the full implementation. With this reduction in the number of filters comes an improvement in the detection time of Tiny YOLO version 2. In a microscopy setting, especially dealing with fluorescence-labelled samples with the detection of cells done in an integrated manner like in \cite{Waithe544833}, real-time processing is desirable. Moreover, the small memory footprint of Tiny YOLO version 2 makes it an even more suitable detection algorithm to consider. We start the training with the convolutional weights pre-trained on Imagenet and fine-tune the network for neuroblastoma detection.
-\subsubsection{Semantic Segmentation}
-We compare three models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}. Lastly, we experiment on using the DeepLabV3 architecture with Mobilenet and Resnet as backened feature extractors.
-\subsubsection{Instance Segmentation}
+\subsubsection{Semantic and Instance Segmentation}
+We compare three models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}. Lastly, we experiment on using the DeepLabV3 architecture with Mobilenet and Resnet as backend feature extractors.
 \subsection{Training Parameters}
 \subsubsection{Detection}
-For training the tiny implementation of YOLO version 2 network for neuroblastoma detection, we employ 64 batch size, 8 subdivisions, 416 $\times$ 416 $\times$ 3 input image dimensions, 0.9 momentum, 0.0005 decay, 0.001 learning rate, and 120000 epochs. Additional image augmentation by vertical flips was done, as described in \cite{Waithe544833}, to introduce robustness in detection.
-\subsubsection{Semantic Segmentation}
+For training the tiny implementation of YOLO version 2 network for cell detection, we employ 64 batch size, 8 subdivisions, 416 $\times$ 416 $\times$ 3 input image dimensions, 0.9 momentum, 0.0005 decay, 0.001 learning rate, and 120000 epochs. Additional image augmentation by vertical flips was done, as described in \cite{Waithe544833}, to introduce robustness in detection. Training was done five times on each dataset to capture the variance in performance.
+\subsubsection{Semantic and Instance Segmentation}
 For training the UNet, we set the learning rate to 0.001, batch size to 16, momentum to 0.9, decay to 0.0005, and epochs to 8000. The binary cross entropy with logits loss was used as the objective function.
 
+For DeepLab, we train on a 0.001 learning rate, batch size of 16, 0.9 momentum, and 2000 epochs, with the standard cross entropy as loss function.
+
 For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 batch size, 1000 epochs, and binary cross entropy with logits loss as objective function. The Gaussian CRF is configured with a filter size of 3, blur of 8, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term.
-\subsubsection{Instance Segmentation}
+
 For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a filter size of 11, blur of 4, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term. The training, set for 10000 epochs, was done with a low learning rate of 1e-12 to account for the small batch size of 1. 
+
+Similar to the detection setup, training was done five times on each dataset for each model to capture the variance in performance.
 \subsection{Evaluation Metrics}
-We assessed the trained models for detection and segmentation with mean average precision and mean intersection over union. For the instance segmentation, we used the panoptic quality metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
+We assessed the trained models for detection and segmentation with mean average precision (mAP) and mean intersection over union (mIoU). For the instance segmentation, we used the panoptic quality metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
 \begin{equation}
 PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{2}|FP| + \frac{1}{2}|FN|}
 \end{equation}
@@ -250,7 +271,7 @@ where \textit{p} and \textit{g} are pairs of output and target segmentation regi
 \end{figure}
 Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Figure \ref{fig:yolo_results} shows some of the boxed neuroblastoma cells in the test images.
 Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained an mAP of (value here) and mIoU of (value here).
-\subsection{Neuroblastoma Semantic Segmentation}
+\subsection{Neuroblastoma Semantic and Instance Segmentation}
 While the Tiny YOLO network trained to detect neuroblastoma proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
 
 \begin{figure}
@@ -281,9 +302,9 @@ We also trained a UNet model to perform semantic segmentation of neuroblastoma. 
 \caption{\textbf{DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
 \label{fig:deeplab_results}
 \end{figure}
-Another architecture explored for semantic segmentation is the version 3 of DeepLab \cite{DBLP:journals/corr/ChenPSA17}. Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image.
+Another architecture explored for semantic segmentation is the version 3 of DeepLab \cite{DBLP:journals/corr/ChenPSA17}. Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image. Without a decoder route with shortcut connections to different resolution levels similar to UNet that would ensure that fine details like the narrow gaps between cells, the DeepLab model joined together multiple adjacent cells, yielding a high IoU score but low panoptic quality.
 
-As described in \cite{nature_unet}, we modify the training setup of the UNet segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
+With aim to increase the panoptic quality of the models, we modified the training setup of the UNet segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells as described in \cite{nature_unet}. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
 Fo each individual pixel location \textit{x}, we determine \textit{$d_1$} and \textit{$d_2$} - the distances to the two nearest instances, and compute the weight maps as follows:
 \begin{equation}
 w_{sep}(x) = exp\left({-\frac{(d_1(x) + d_2(x))^2}{2\sigma^2_{sep}}}\right)
@@ -300,9 +321,9 @@ $w_{sep}$ evaluates to a high value for locations in between  cells. Using this 
 \caption{\textbf{Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.}
 \label{fig:weight_map}
 \end{figure}
-
 Figure \ref{fig:weight_map} shows the computed weight map for some of the training images.
 
+Using these computed weight penalty maps, we retrained the semantic segmentation models. Figure \ref{fig:segmentation_with_weight_map} shows the result for one of the test images. For the DeepLab model, with the weight penalties, significant portions of the gaps between the cells are classified correctly. However, the problem still remains for tightly packed cells. On the other hand, UNet with the weight penalties resulted to an undersegmentation of cells. This means a lower IoU score compared to DeepLab, but with better recognition rate, a boost in panoptic quality.
 \begin{figure}
 \centering
 \begin{subfigure}[b]{0.45\linewidth}
@@ -316,7 +337,6 @@ Figure \ref{fig:weight_map} shows the computed weight map for some of the traini
 \caption{\textbf{Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.}
 \label{fig:segmentation_with_weight_map}
 \end{figure}
-\subsection{Neuroblastoma Instance Segmentation}
 
 \begin{figure}
 \centering
@@ -338,9 +358,7 @@ The conclusion goes here.
 
 % use section* for acknowledgment
 \section*{Acknowledgment}
-
-
-The authors would like to thank...
+K. delas Pe\~nas is supported by doctoral fellowships from the University of the Philippines under the Faculty, REPS and Administrative Staff Development Program and the Philippine Department of Science and Technology under the Engineering Research and Development for Technology (ERDT) Program.
 
 
 % Can use something like this to put references on a page

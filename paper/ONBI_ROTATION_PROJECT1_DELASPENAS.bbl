@@ -21,6 +21,21 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{Waithe544833}
+\BIBentryALTinterwordspacing
+D.~Waithe, J.~M. Brown, K.~Reglinski, I.~Diez-Sevilla, D.~Roberts, and
+  C.~Eggeling, ``Object detection networks and augmented reality for cellular
+  detection in fluorescence microscopy acquisition and analysis.''
+  \emph{bioRxiv}, 2019. [Online]. Available:
+  \url{https://www.biorxiv.org/content/early/2019/02/08/544833}
+\BIBentrySTDinterwordspacing
+
+\bibitem{jetson}
+\BIBentryALTinterwordspacing
+{NVIDIA Developer}. (2019) Hardware for every situation. [Online]. Available:
+  \url{https://developer.nvidia.com/embedded/develop/hardware}
+\BIBentrySTDinterwordspacing
+
 \bibitem{redmon2016yolo9000}
 J.~Redmon and A.~Farhadi, ``Yolo9000: Better, faster, stronger,'' \emph{arXiv
   preprint arXiv:1612.08242}, 2016.
@@ -81,13 +96,12 @@ Q.~Li, A.~Arnab, and P.~H. Torr, ``Weakly- and semi-supervised panoptic
   segmentation,'' in \emph{The European Conference on Computer Vision (ECCV)},
   September 2018.
 
-\bibitem{Waithe544833}
+\bibitem{waithe_dominic_2019_2632769}
 \BIBentryALTinterwordspacing
 D.~Waithe, J.~M. Brown, K.~Reglinski, I.~Diez-Sevilla, D.~Roberts, and
-  C.~Eggeling, ``Object detection networks and augmented reality for cellular
-  detection in fluorescence microscopy acquisition and analysis.''
-  \emph{bioRxiv}, 2019. [Online]. Available:
-  \url{https://www.biorxiv.org/content/early/2019/02/08/544833}
+  C.~Eggeling, ``{Fluorescence Microscopy Data for Cellular Detection using
+  Object Detection Networks.}'' Mar. 2019. [Online]. Available:
+  \url{https://doi.org/10.5281/zenodo.2632769}
 \BIBentrySTDinterwordspacing
 
 \bibitem{DBLP:journals/corr/abs-1801-00868}
