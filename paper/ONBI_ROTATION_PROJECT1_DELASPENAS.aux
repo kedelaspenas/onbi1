@@ -2,7 +2,7 @@
 \citation{Waithe544833}
 \citation{jetson}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Nvidia Jetson TX2}.\relax }}{1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {NVIDIA Jetson TX2}.\relax }}{1}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:jetson}{{1}{1}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Literature Review}{1}}
@@ -14,13 +14,16 @@
 \citation{RFB15a}
 \citation{RFB15a}
 \citation{DBLP:journals/corr/ChenPSA17}
+\citation{DBLP:journals/corr/ChenPSA17}
+\citation{DBLP:journals/corr/ChenPSA17}
+\citation{DBLP:journals/corr/ChenPSA17}
+\citation{DBLP:journals/corr/ChenPSA17}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-B}}Instance Segmentation}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-C}}YOLO}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-D}}UNet}{2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces \textbf  {U-net architecture} \cite  {RFB15a} (example for 32x32 pixels in the lowest resolution). Each blue box corresponds to a multi-channel feature map. The number of channels is denoted on top of the box. The x-y-size is provided at the lower left edge of the box. White boxes represent copied feature maps. The arrows denote the different operations.\relax }}{2}}
 \newlabel{fig:unet}{{2}{2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-E}}DeepLabv3}{2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-F}}Conditional Random Fields}{2}}
 \citation{NIPS2011_4296}
 \citation{crfasrnn_ICCV2015}
 \citation{higherordercrf_ECCV2016}
@@ -30,38 +33,44 @@
 \citation{Teichmann2018ConvolutionalCF}
 \citation{Arnab2017PixelwiseIS}
 \citation{Li_2018_ECCV}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {Atrous Convolution}. Atrous convolution with kernel size 3 × 3 and different rates. Standard convolution corresponds to atrous convolution with rate = 1. Employing large value of atrous rate enlarges the model’s field-of-view, enabling object encoding at multiple scales. Image taken from \cite  {DBLP:journals/corr/ChenPSA17}.\relax }}{3}}
+\newlabel{fig:deeplab_atrous_conv}{{3}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {II-F}}Conditional Random Fields}{3}}
 \citation{waithe_dominic_2019_2632769}
 \citation{Waithe544833}
-\@writefile{toc}{\contentsline {section}{\numberline {III}Experiment Setup}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}Dataset}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}Model Architecture}{3}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-B}1}Detection}{3}}
 \citation{NIPS2011_4296}
 \citation{Teichmann2018ConvolutionalCF}
 \citation{Waithe544833}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Mean Field Inference\relax }}{4}}
-\newlabel{alg:meanfieldinference}{{1}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and C127 cells (b,d) and their corresponding segmentation masks (b,d,f,h). \relax }}{4}}
+\@writefile{toc}{\contentsline {section}{\numberline {III}Experiment Setup}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-A}}Dataset}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}Model Architecture}{4}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-B}1}Detection}{4}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-B}2}Semantic and Instance Segmentation}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-C}}Training Parameters}{4}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-C}1}Detection}{4}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-C}2}Semantic and Instance Segmentation}{4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Evaluation Metrics}{4}}
 \citation{DBLP:journals/corr/abs-1801-00868}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Evaluation Metrics}{5}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Mean Field Inference\relax }}{5}}
+\newlabel{alg:meanfieldinference}{{1}{5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and C127 cells (b,d) and their corresponding segmentation masks (b,d,f,h). \relax }}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}Computer Hardware}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Neuroblastoma Detection}. Shown are some of the detected neuroblastoma cells using the Tiny YOLO network with the corresponding detection scores\relax }}{5}}
-\newlabel{fig:neuroblastoma_yolo_results}{{4}{5}}
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Results and Discussion}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Neuroblastoma Detection}{5}}
-\citation{DBLP:journals/corr/ChenPSA17}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {C127 Detection}. Shown are some of the detected C127 cells using the Tiny YOLO network with the corresponding detection scores\relax }}{6}}
-\newlabel{fig:c127_yolo_results}{{5}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {Neuroblastoma Detection}. Shown are some of the detected neuroblastoma cells using the Tiny YOLO network with the corresponding detection scores\relax }}{6}}
+\newlabel{fig:neuroblastoma_yolo_results}{{5}{6}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Results and Discussion}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Neuroblastoma Detection}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {C127 Detection}. Shown are some of the detected C127 cells using the Tiny YOLO network with the corresponding detection scores\relax }}{6}}
+\newlabel{fig:c127_yolo_results}{{6}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Neuroblastoma Semantic and Instance Segmentation}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{6}}
-\newlabel{fig:unet_results}{{6}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{6}}
-\newlabel{fig:deeplab_results}{{7}{6}}
+\citation{DBLP:journals/corr/ChenPSA17}
 \citation{nature_unet}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{7}}
+\newlabel{fig:unet_results}{{7}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{7}}
+\newlabel{fig:deeplab_results}{{8}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.\relax }}{7}}
+\newlabel{fig:weight_map}{{9}{7}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Performance Tests on the NVIDIA Jetson TX2}{7}}
 \bibstyle{IEEEtran}
 \bibdata{ONBI_ROTATION_PROJECT1_DELASPENAS}
 \bibcite{Waithe544833}{1}
@@ -74,14 +83,14 @@
 \bibcite{crfasrnn_ICCV2015}{8}
 \bibcite{higherordercrf_ECCV2016}{9}
 \bibcite{Teichmann2018ConvolutionalCF}{10}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces \textbf  {Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.\relax }}{8}}
+\newlabel{fig:segmentation_with_weight_map}{{10}{8}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{8}}
+\@writefile{toc}{\contentsline {section}{References}{8}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces \textbf  {Accuracy, Intersection over Union, and Panoptic Quality Results}.\relax }}{8}}
+\newlabel{fig:graph_results}{{11}{8}}
 \bibcite{Arnab2017PixelwiseIS}{11}
 \bibcite{Li_2018_ECCV}{12}
 \bibcite{waithe_dominic_2019_2632769}{13}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.\relax }}{7}}
-\newlabel{fig:weight_map}{{8}{7}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{7}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.\relax }}{7}}
-\newlabel{fig:segmentation_with_weight_map}{{9}{7}}
-\@writefile{toc}{\contentsline {section}{References}{7}}
 \bibcite{DBLP:journals/corr/abs-1801-00868}{14}
 \bibcite{nature_unet}{15}

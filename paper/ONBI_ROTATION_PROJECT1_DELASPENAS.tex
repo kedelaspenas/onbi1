@@ -60,7 +60,7 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
-The abstract goes here.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -96,16 +96,16 @@ Another approach to the detection and segmentation of cells in microscopy images
 %previous research on cell segmentation
 Research on cell segmentation had been done extensively in the past decade using these approaches...
 %something about constrained environments, realtime processing, why the need for it
-Going further from building these models for effective segmentation is the integration of these models for real-time applications in microscopy, such as real-time feedback and annotation of a field of view under the microscope. This has been recently explored in \cite{Waithe544833} in which the detection from the trained model was integrated with the microscope through augmented reality. This setup however still requires an attached computer with dedicated graphics processing unit (GPU) to perform the detection and annotation, making it less ideal for transport. %?
-An improvement to this setup is housing the trained model on a small mobile unit that is capable of running the computationally-extensive algorithms for detection. The challenge however in this modification is the memory and speed constraints of the mobile unit. As recent approaches in cell segmentation involve the use of deep learning techniques and these techniques were only tested on servers, the choice of architecture is not straight-forward - a trade-off among performance, speed and memory needs to be considered.
+Going further from building these models for effective segmentation is their integration for real-time applications in microscopy, such as real-time feedback and annotation of a field of view under the microscope. This has been recently explored in \cite{Waithe544833} in which the detection from the trained model was integrated with the microscope through augmented reality. This setup however still requires an attached computer with dedicated graphics processing unit (GPU) to perform the detection and annotation, making it less ideal for transport. %?
+An improvement to this setup is housing the trained model on a small mobile unit that is capable of running the computationally-extensive algorithms for detection. The challenge in this modification is the memory and speed constraints of the mobile unit. As recent approaches in cell segmentation involve the use of deep learning techniques and these techniques were only tested on servers, the choice of architecture is not straight-forward - a trade-off among performance, speed and memory needs to be considered.
 
 %discuss jetson
 \begin{figure}
 \includegraphics[width=\linewidth]{jetson.png}
-\caption{\textbf{Nvidia Jetson TX2}.}
+\caption{\textbf{NVIDIA Jetson TX2}.}
 \label{fig:jetson}
 \end{figure}
-For this purpose, we test different models for cell segmentation on Nvidia Jetson TX2 \cite{jetson} (shown in Figure \ref{fig:jetson}). Nvidia Jetson TX2 is an embedded computer primarily targeted for AI applications. This unit works on 7.5W power. Integrated on its board is a 256-core NVIDIA Pascal GPU, Dual-Core NVIDIA Denver 2 64-Bit CPU and Quad-Core ARM® Cortex®-A57 MPCore, 8GB Memory and 32GB storage.
+For this purpose, we test different models for cell segmentation on NVIDIA Jetson TX2 \cite{jetson} (shown in Figure \ref{fig:jetson}). Nvidia Jetson TX2 is an embedded computer primarily targeted for AI applications. This unit works on 7.5W power. Integrated on its board is a 256-core NVIDIA Pascal GPU, Dual-Core NVIDIA Denver 2 64-Bit CPU and Quad-Core ARM® Cortex®-A57 MPCore, 8GB Memory and 32GB storage.
 \section{Literature Review}
 \subsection{Semantic Segmentation}
 Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. It is one of the key problems in computer vision. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
@@ -139,10 +139,22 @@ boxes represent copied feature maps. The arrows denote the different operations.
 \label{fig:unet}
 \end{figure}
 \subsection{DeepLabv3}
-DeepLab\cite{DBLP:journals/corr/ChenPSA17} is a recent architecture for semantic segmentation. DeepLab employs a special kind of convolution - the \textit{atrous} or dilated convolution. 
+DeepLab\cite{DBLP:journals/corr/ChenPSA17} is a recent architecture for semantic segmentation. DeepLab employs a special kind of convolution - the \textit{atrous} or dilated convolution. The primary motivation behind the use of atrous convolution filters is the observation that in convolutional networks with consecutive pooling and striding, there is a significant reduction in the spatial resolution of the generated feature maps. Transposed convolutional layers address this problem. However, this approach adds additional complexity to the network. \cite{DBLP:journals/corr/ChenPSA17} advocates the use of atrous convolution instead such that we can explicitly control the density of the feature response, and in turn, the spatial resolution of the feature map. Formally, for each pixel location \textit{i} on an input image \textit{y} and a filter \textit{w}, applying atrous convolution yields
+\begin{equation}
+y[i] = \sum_k x[i+rk]w[k]
+\end{equation}
+where \textit{r} is the atrous rate corresponding the stride with which the input is sampled. Equivalently, an atrous convolution with rate \textit{r} can be viewed as a convolution with an upsampled filter \textit{w} produced by inserting \textit{r-1} zeros between the rows and columns of \textit{w}. Figure \ref{fig:deeplab_atrous_conv} illustrates different atrous rate for a 3x3 convoltional filter.
 
+Popular convolutional neural network architectures for feature extraction such as MobileNet and ResNet can be used as backend for DeepLab. The modification is that the convolution layers are replaced with atrous convolutions to control the spatial resolution of the output feature maps. We do this by setting the \textit{output\_stride} parameter which is the ratio of the input image dimension to the output feature map dimension. With this, DeepLab is able to extract denser feature maps without any additional learning parameters \cite{DBLP:journals/corr/ChenPSA17}.
 %spatial pooling
-
+(expand)
+\begin{figure}
+\includegraphics[width=\linewidth]{atrous_conv.png}
+\caption{\textbf{Atrous Convolution}. Atrous convolution with kernel size 3 × 3 and different rates. Standard convolution corresponds to atrous convolution
+with rate = 1. Employing large value of atrous rate enlarges the
+model’s field-of-view, enabling object encoding at multiple scales. Image taken from \cite{DBLP:journals/corr/ChenPSA17}.}
+\label{fig:deeplab_atrous_conv}
+\end{figure}
 \subsection{Conditional Random Fields}
 Many learning problems can be described as a graphical model. In artificial intelligence, one common way to model these problems is a probabilistic approach wherein probability distributions \textit{$\Psi$} are assigned over the random variables \textit{Y}. Formally, the problem can be modelled as the product of all \textit{$\Psi_i$} distributions
 \begin{equation}
@@ -155,7 +167,7 @@ Markov networks and conditional random fields (CRF) are formulated similarly in 
 %put figure here
 Exact inference on conditional random fields is computationally expensive and usually impossible. If exact inference is possible, performing naively the sum of products of potentials (\textbf{message passing}) for all variables, can take a long time, especially for dense graphs. Current implementations of CRFs perform inference by approximation, with the speedup by employing dynamic programming. One inference algorithm is the mean field inference described in Algorithm \ref{alg:meanfieldinference}.
 
-Each iteration of the mean field inference described in Algorithm \ref{alg:meanfieldinference} performs a message passing step, compatibility transform, and local update and normalization. Each step, except the message passing, runs in linear time. Message passing is the computational bottleneck. For a naive solution, it requires summing up over all variables and runs in quadratic time. For this very reason, the conditional random fields gained the reputation of being nooriously slow and impractical for a lot of machine learning tasks, especially those involving dense graph representations like image segmentation.
+Each iteration of the mean field inference described in Algorithm \ref{alg:meanfieldinference} performs a message passing step, compatibility transform, and local update and normalization. Each step, except the message passing, runs in linear time. Message passing is the computational bottleneck. For a naive solution, it requires summing up over all variables and runs in quadratic time. For this very reason, the conditional random fields gained the reputation of being notoriously slow and impractical for a lot of machine learning tasks, especially those involving dense graph representations like image segmentation.
 
 %message passing as convolution
 Addressing the slow inference in CRFs, \cite{NIPS2011_4296} showed that message passing can be approximated and expressed as a convolution with a Gaussian kernel as follows:
@@ -182,7 +194,7 @@ G_{smoothness} = exp\left(-\frac{|p_i - p_j|^2}{2\theta_\gamma^2}\right)
 \end{equation}
 The two terms in the pairwise potential encourages neighboring pairs of pixels that look similar to be assigned the same semantic label.
 
-Extending from this, \cite{Arnab2017PixelwiseIS} and \cite{Li_2018_ECCV} introduced some modification to this energy function to be able to perform  pixelwise instance segmentation. The systems described for this task works on an initial instance segmentation from a detection algorithm, where each detection has a corresponding prediction score. This instance segmentation is further refined by adding information from semantic segmentation and the gaussian pairwise potentials. To do this, They have broken down the unary potential to accommodate two distinct terms $\Psi_{box}$ and $\Psi_{global}$ as follows:
+Extending from this, \cite{Arnab2017PixelwiseIS} and \cite{Li_2018_ECCV} introduced some modification to this energy function to be able to perform  pixelwise instance segmentation. The systems described for this task work on an initial instance segmentation from a detection algorithm, where each detection has a corresponding prediction score. This instance segmentation is further refined by adding information from semantic segmentation and the gaussian pairwise potentials. To do this, they have broken down the unary potential to accommodate two distinct terms $\Psi_{box}$ and $\Psi_{global}$ as follows:
 \begin{equation}
 U(x_i) = -ln[w_1\Psi_{box}(x_i) + w_2\Psi_{global}(x_i)]
 \end{equation}
@@ -257,7 +269,7 @@ For training the tiny implementation of YOLO version 2 network for cell detectio
 \subsubsection{Semantic and Instance Segmentation}
 For training the UNet, we set the learning rate to 0.001, batch size to 16, momentum to 0.9, decay to 0.0005, and epochs to 8000. The binary cross entropy with logits loss was used as the objective function.
 
-For DeepLab, we train on a 0.001 learning rate, batch size of 16, 0.9 momentum, and 2000 epochs, with the standard cross entropy as loss function.
+For DeepLab, we train on a 0.001 learning rate, batch size of 16, 0.9 momentum, output stride of 16, and 2000 epochs, with the standard cross entropy as loss function.
 
 For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 batch size, 1000 epochs, and binary cross entropy with logits loss as objective function. The Gaussian CRF is configured with a filter size of 3, blur of 8, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term.
 
@@ -281,7 +293,9 @@ PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{
 \end{equation}
 where \textit{p} and \textit{g} are pairs of output and target segmentation regions, \textit{TP} is the number of true positive detections, \textit{FP} is the number of false positives, and \textit{FN} is the number of false negatives. We use this metric because unlike the mIoU and mAP, the panoptic quality metric penalizes both poor segmentation and poor detections. As the problem only involves one class of object and a solid-colored background, it is to be expected to train models that would yield high IoU scores. Relying therefore only on IoU will not give true insight on how a model performs on delineating cell boundaries.
 \subsection{Computer Hardware}
-(server details)
+UNet and YOLO experiments were run on a server with Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz and NVIDIA Tesla K80 24GB VRAM.
+
+The YOLO-CRF hybrid models were trained on a Lenovo Envy (build number) with (CPU) and (GPU).
 
 Experiments on DeepLab were run on an ASUS TUF FX705GM-EV101T laptop: Intel® Core™ i7-8750H CPU @ 2.20GHz x 12, 16GB RAM, NVIDIA GeForce GTX 1060 with Ubuntu 18.04 installed.
 
@@ -386,23 +400,25 @@ Using these computed weight penalty maps, we retrained the semantic segmentation
 \caption{\textbf{Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.}
 \label{fig:segmentation_with_weight_map}
 \end{figure}
-%
-%\begin{figure}
-%\centering
-%\begin{subfigure}[b]{\linewidth}
-%\includegraphics[width=\linewidth]{graphs/Test-Mean-Accuracy.eps}
-%\end{subfigure}
-%\begin{subfigure}[b]{\linewidth}
-%\includegraphics[width=\linewidth]{graphs/Test-Mean-IoU.eps}
-%\end{subfigure}
-%\begin{subfigure}[b]{\linewidth}
-%\includegraphics[width=\linewidth]{graphs/Test-Mean-Panoptic-Quality.eps}
-%\end{subfigure}
-%\caption{\textbf{Accuracy, Intersection over Union, and Panoptic Quality Results}.}
-%\label{fig:graph_results}
-%\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{\linewidth}
+\includegraphics[width=\linewidth]{graphs/Test-Mean-Accuracy.eps}
+\end{subfigure}
+\begin{subfigure}[b]{\linewidth}
+\includegraphics[width=\linewidth]{graphs/Test-Mean-IoU.eps}
+\end{subfigure}
+\begin{subfigure}[b]{\linewidth}
+\includegraphics[width=\linewidth]{graphs/Test-Mean-Panoptic-Quality.eps}
+\end{subfigure}
+\caption{\textbf{Accuracy, Intersection over Union, and Panoptic Quality Results}.}
+\label{fig:graph_results}
+\end{figure}
+\subsection{Performance Tests on the NVIDIA Jetson TX2}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 \section{Conclusion}
-The conclusion goes here.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 
 % use section* for acknowledgment
