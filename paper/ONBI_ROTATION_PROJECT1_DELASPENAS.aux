@@ -39,24 +39,29 @@
 \citation{NIPS2011_4296}
 \citation{Teichmann2018ConvolutionalCF}
 \citation{Waithe544833}
-\citation{DBLP:journals/corr/abs-1801-00868}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Mean Field Inference\relax }}{4}}
 \newlabel{alg:meanfieldinference}{{1}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and their corresponding segmentation masks (b,d). \relax }}{4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces \textbf  {The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and C127 cells (b,d) and their corresponding segmentation masks (b,d,f,h). \relax }}{4}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-B}2}Semantic and Instance Segmentation}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-C}}Training Parameters}{4}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-C}1}Detection}{4}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {III-C}2}Semantic and Instance Segmentation}{4}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Evaluation Metrics}{4}}
-\citation{DBLP:journals/corr/ChenPSA17}
-\citation{nature_unet}
+\citation{DBLP:journals/corr/abs-1801-00868}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-D}}Evaluation Metrics}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-E}}Computer Hardware}{5}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces \textbf  {Neuroblastoma Detection}. Shown are some of the detected neuroblastoma cells using the Tiny YOLO network with the corresponding detection scores\relax }}{5}}
-\newlabel{fig:yolo_results}{{4}{5}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{5}}
-\newlabel{fig:unet_results}{{5}{5}}
+\newlabel{fig:neuroblastoma_yolo_results}{{4}{5}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Results and Discussion}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Neuroblastoma Detection}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Neuroblastoma Semantic and Instance Segmentation}{5}}
+\citation{DBLP:journals/corr/ChenPSA17}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces \textbf  {C127 Detection}. Shown are some of the detected C127 cells using the Tiny YOLO network with the corresponding detection scores\relax }}{6}}
+\newlabel{fig:c127_yolo_results}{{5}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Neuroblastoma Semantic and Instance Segmentation}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{6}}
+\newlabel{fig:unet_results}{{6}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{6}}
+\newlabel{fig:deeplab_results}{{7}{6}}
+\citation{nature_unet}
 \bibstyle{IEEEtran}
 \bibdata{ONBI_ROTATION_PROJECT1_DELASPENAS}
 \bibcite{Waithe544833}{1}
@@ -67,20 +72,16 @@
 \bibcite{DBLP:journals/corr/ChenPSA17}{6}
 \bibcite{NIPS2011_4296}{7}
 \bibcite{crfasrnn_ICCV2015}{8}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces \textbf  {DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.\relax }}{6}}
-\newlabel{fig:deeplab_results}{{6}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces \textbf  {Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.\relax }}{6}}
-\newlabel{fig:weight_map}{{7}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.\relax }}{6}}
-\newlabel{fig:segmentation_with_weight_map}{{8}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{6}}
-\@writefile{toc}{\contentsline {section}{References}{6}}
 \bibcite{higherordercrf_ECCV2016}{9}
 \bibcite{Teichmann2018ConvolutionalCF}{10}
 \bibcite{Arnab2017PixelwiseIS}{11}
 \bibcite{Li_2018_ECCV}{12}
 \bibcite{waithe_dominic_2019_2632769}{13}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces \textbf  {Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.\relax }}{7}}
+\newlabel{fig:weight_map}{{8}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.\relax }}{7}}
+\newlabel{fig:segmentation_with_weight_map}{{9}{7}}
+\@writefile{toc}{\contentsline {section}{References}{7}}
 \bibcite{DBLP:journals/corr/abs-1801-00868}{14}
 \bibcite{nature_unet}{15}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces \textbf  {Accuracy, Intersection over Union, and Panoptic Quality Results}.\relax }}{7}}
-\newlabel{fig:graph_results}{{9}{7}}

@@ -228,7 +228,23 @@ For all experiments, we performed a 50-50 train-test split for cross-validation 
 \includegraphics[width=\linewidth]{../label/110093.jpg}
 \caption{}
 \end{subfigure}
-\caption{\textbf{The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and their corresponding segmentation masks (b,d). }
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{c127/108636.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{c127/108636-label.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{c127/108641.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.24\linewidth}
+\includegraphics[width=\linewidth]{c127/108641-label.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{The Dataset}. Shown here are sample images of neuroblastoma cells (a,c) and C127 cells (b,d) and their corresponding segmentation masks (b,d,f,h). }
 \end{figure*}
 \subsection{Model Architecture}
 \subsubsection{Detection}
@@ -249,11 +265,27 @@ For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a filter
 
 Similar to the detection setup, training was done five times on each dataset for each model to capture the variance in performance.
 \subsection{Evaluation Metrics}
-We assessed the trained models for detection and segmentation with mean average precision (mAP) and mean intersection over union (mIoU). For the instance segmentation, we used the panoptic quality metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
+We assessed the trained models for detection and segmentation with mean intersection over union (mIoU) and mean average precision (mAP). 
+
+Mean Intersection over Union is the average intersection over union (IoU) of all the images, given by
+\begin{equation}
+IoU = \frac{area(B_{p}\cap B_{g})}{area(B_{p}\cup B_{g})}
+\end{equation}
+where \textit{$B_p$} is the predicted box and \textit{$B_g$} is the ground truth box. Although this metric measures how well fit the predicted bounding boxes are to the ground truth, it does not penalize over- and underdetection.
+
+On the other hand, Mean Average Precision measures the recognition quality of the model by penalizing for false negatives (FN) and false positives (FP) in detection. With a threshold IoU score, true positives (TP) are counted if the box pair exceeds this score. The prediction confidence of the model is then used to compute the precision-recall curve. We take the maximum precision for all recall values in this curve and report the average of these maximum precision values as Average Precision (AP). For multi-class problems, we then compute mAP by taking the average of the APs for each class.
+
+For the instance segmentation, we used the panoptic quality metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
 \begin{equation}
 PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{2}|FP| + \frac{1}{2}|FN|}
 \end{equation}
 where \textit{p} and \textit{g} are pairs of output and target segmentation regions, \textit{TP} is the number of true positive detections, \textit{FP} is the number of false positives, and \textit{FN} is the number of false negatives. We use this metric because unlike the mIoU and mAP, the panoptic quality metric penalizes both poor segmentation and poor detections. As the problem only involves one class of object and a solid-colored background, it is to be expected to train models that would yield high IoU scores. Relying therefore only on IoU will not give true insight on how a model performs on delineating cell boundaries.
+\subsection{Computer Hardware}
+(server details)
+
+Experiments on DeepLab were run on an ASUS TUF FX705GM-EV101T laptop: Intel® Core™ i7-8750H CPU @ 2.20GHz x 12, 16GB RAM, NVIDIA GeForce GTX 1060 with Ubuntu 18.04 installed.
+
+After training and evaluation, the models were transferred to the NVidia Jetson TX2 to benchmark the performance on this memory-constrained environment.
 \section{Results and Discussion}
 \subsection{Neuroblastoma Detection}
 \begin{figure}
@@ -267,12 +299,29 @@ where \textit{p} and \textit{g} are pairs of output and target segmentation regi
 \caption{}
 \end{subfigure}
 \caption{\textbf{Neuroblastoma Detection}. Shown are some of the detected neuroblastoma cells using the Tiny YOLO network with the corresponding detection scores}
-\label{fig:yolo_results}
+\label{fig:neuroblastoma_yolo_results}
 \end{figure}
-Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Figure \ref{fig:yolo_results} shows some of the boxed neuroblastoma cells in the test images.
-Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained an mAP of (value here) and mIoU of (value here).
+Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Figure \ref{fig:neuroblastoma_yolo_results} shows some of the boxed neuroblastoma cells in the test images.
+Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained 0.7678 mAP$_{0.5}$ (0.8717 mAP$_{0.3}$) and 0.8054 mIoU.
+
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.9\linewidth}
+\includegraphics[width=\linewidth]{c127/yolo/108636.png}
+\caption{}
+\end{subfigure}\vspace{2pt}
+\begin{subfigure}[b]{0.9\linewidth}
+\includegraphics[width=\linewidth]{c127/yolo/108641.png}
+\caption{}
+\end{subfigure}
+\caption{\textbf{C127 Detection}. Shown are some of the detected C127 cells using the Tiny YOLO network with the corresponding detection scores}
+\label{fig:c127_yolo_results}
+\end{figure}
+For C127 detection, the Tiny YOLO network also yielded good results, with an mAP$_{0.5}$ of 0.9626 and mIoU of 0.8318. As shown in Figure \ref{fig:c127_yolo_results}, even varying intensities and sizes, the trained model was still able to detect the C127 cells.
 \subsection{Neuroblastoma Semantic and Instance Segmentation}
 While the Tiny YOLO network trained to detect neuroblastoma proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
+
+(yolocrf results)
 
 \begin{figure}
 \centering
@@ -337,21 +386,21 @@ Using these computed weight penalty maps, we retrained the semantic segmentation
 \caption{\textbf{Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.}
 \label{fig:segmentation_with_weight_map}
 \end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}[b]{\linewidth}
-\includegraphics[width=\linewidth]{graphs/Test-Mean-Accuracy.eps}
-\end{subfigure}
-\begin{subfigure}[b]{\linewidth}
-\includegraphics[width=\linewidth]{graphs/Test-Mean-IoU.eps}
-\end{subfigure}
-\begin{subfigure}[b]{\linewidth}
-\includegraphics[width=\linewidth]{graphs/Test-Mean-Panoptic-Quality.eps}
-\end{subfigure}
-\caption{\textbf{Accuracy, Intersection over Union, and Panoptic Quality Results}.}
-\label{fig:graph_results}
-\end{figure}
+%
+%\begin{figure}
+%\centering
+%\begin{subfigure}[b]{\linewidth}
+%\includegraphics[width=\linewidth]{graphs/Test-Mean-Accuracy.eps}
+%\end{subfigure}
+%\begin{subfigure}[b]{\linewidth}
+%\includegraphics[width=\linewidth]{graphs/Test-Mean-IoU.eps}
+%\end{subfigure}
+%\begin{subfigure}[b]{\linewidth}
+%\includegraphics[width=\linewidth]{graphs/Test-Mean-Panoptic-Quality.eps}
+%\end{subfigure}
+%\caption{\textbf{Accuracy, Intersection over Union, and Panoptic Quality Results}.}
+%\label{fig:graph_results}
+%\end{figure}
 \section{Conclusion}
 The conclusion goes here.
 
