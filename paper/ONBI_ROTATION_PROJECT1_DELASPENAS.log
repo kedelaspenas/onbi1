@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.27)  18 JUN 2019 12:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.27)  21 JUN 2019 16:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -370,42 +370,38 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 71.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 70.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <8.03> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 71.
-LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 71
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 70.
+LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 70
 .
-LaTeX Font Info:    Try loading font information for U+pzd on input line 71.
+LaTeX Font Info:    Try loading font information for U+pzd on input line 70.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/upzd.fd
 File: upzd.fd 2001/06/04 font definitions for U/pzd.
 )
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 71.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 71.
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 70.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 70.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <8.03> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 71.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 70.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <11.04124> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 91.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 90.
 LaTeX Font Info:    Font shape `OT1/phv/bx/sc' in size <11.04124> not available
 
-(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 91.
+(Font)              Font shape `OT1/phv/b/sc' tried instead on input line 90.
 <jetson.png, id=1, 581.17125pt x 333.245pt>
 File: jetson.png Graphic file (type png)
 <use jetson.png>
-Package pdftex.def Info: jetson.png  used on input line 107.
+Package pdftex.def Info: jetson.png  used on input line 99.
 (pdftex.def)             Requested size: 252.94499pt x 145.04175pt.
-Missing character: There is no Â in font pplr7t!
-Missing character: There is no ® in font pplr7t!
-Missing character: There is no Â in font pplr7t!
-Missing character: There is no ® in font pplr7t!
 
 Underfull \vbox (badness 3179) has occurred while \output is active []
 
@@ -413,84 +409,84 @@ Underfull \vbox (badness 3179) has occurred while \output is active []
 
 
  <./jetson.png>]
+Missing character: There is no Â in font pplr7t!
+Missing character: There is no ® in font pplr7t!
+Missing character: There is no Â in font pplr7t!
+Missing character: There is no ® in font pplr7t!
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9.53561> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 113.
-LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 122
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 109.
+LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 114
 .
 <unet.png, id=17, 1560.83125pt x 1039.885pt>
 File: unet.png Graphic file (type png)
 <use unet.png>
-Package pdftex.def Info: unet.png  used on input line 137.
+Package pdftex.def Info: unet.png  used on input line 133.
 (pdftex.def)             Requested size: 216.81pt x 144.44046pt.
- [2 <./unet.png>]
-<atrous_conv.png, id=22, 895.345pt x 420.57124pt>
+ [2]
+<atrous_conv.png, id=23, 895.345pt x 420.57124pt>
 File: atrous_conv.png Graphic file (type png)
 <use atrous_conv.png>
-Package pdftex.def Info: atrous_conv.png  used on input line 155.
+Package pdftex.def Info: atrous_conv.png  used on input line 149.
 (pdftex.def)             Requested size: 252.94499pt x 118.81801pt.
-Missing character: There is no Ã in font pplr7t!
-Missing character: There is no — in font pplr7t!
 Missing character: There is no â in font pplr7t!
 Missing character: There is no € in font pplr7t!
 Missing character: There is no ™ in font pplr7t!
-Missing character: There is no Ã in font pplr7t!
-Missing character: There is no — in font pplr7t!
 Missing character: There is no â in font pplr7t!
 Missing character: There is no € in font pplr7t!
 Missing character: There is no ™ in font pplr7t!
-LaTeX Font Info:    Try loading font information for OMS+ppl on input line 166.
+LaTeX Font Info:    Try loading font information for OMS+ppl on input line 160.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsppl.fd
 File: omsppl.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ppl/m/n' in size <9.53561> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 166.
- [3 <./atrous_conv.png>]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 160.
+ [3 <./unet.png> <./atrous_conv.png>]
 <../neuroblastoma/110082.jpg, id=33, 513.92pt x 513.92pt>
 File: ../neuroblastoma/110082.jpg Graphic file (type jpg)
 <use ../neuroblastoma/110082.jpg>
-Package pdftex.def Info: ../neuroblastoma/110082.jpg  used on input line 231.
+Package pdftex.def Info: ../neuroblastoma/110082.jpg  used on input line 227.
 (pdftex.def)             Requested size: 124.30724pt x 124.30785pt.
 <../label/110082.jpg, id=34, 513.92pt x 513.92pt>
 File: ../label/110082.jpg Graphic file (type jpg)
 <use ../label/110082.jpg>
-Package pdftex.def Info: ../label/110082.jpg  used on input line 235.
+Package pdftex.def Info: ../label/110082.jpg  used on input line 231.
 (pdftex.def)             Requested size: 124.30724pt x 124.30785pt.
 <../neuroblastoma/110093.jpg, id=35, 513.92pt x 513.92pt>
 File: ../neuroblastoma/110093.jpg Graphic file (type jpg)
 <use ../neuroblastoma/110093.jpg>
-Package pdftex.def Info: ../neuroblastoma/110093.jpg  used on input line 239.
+Package pdftex.def Info: ../neuroblastoma/110093.jpg  used on input line 235.
 (pdftex.def)             Requested size: 124.30724pt x 124.30785pt.
 <../label/110093.jpg, id=36, 513.92pt x 513.92pt>
 File: ../label/110093.jpg Graphic file (type jpg)
 <use ../label/110093.jpg>
-Package pdftex.def Info: ../label/110093.jpg  used on input line 243.
+Package pdftex.def Info: ../label/110093.jpg  used on input line 239.
 (pdftex.def)             Requested size: 124.30724pt x 124.30785pt.
 <c127/108636.jpg, id=37, 533.995pt x 533.995pt>
 File: c127/108636.jpg Graphic file (type jpg)
 <use c127/108636.jpg>
-Package pdftex.def Info: c127/108636.jpg  used on input line 247.
+Package pdftex.def Info: c127/108636.jpg  used on input line 243.
 (pdftex.def)             Requested size: 124.30724pt x 124.30736pt.
 <c127/108636-label.jpg, id=38, 533.995pt x 533.995pt>
 File: c127/108636-label.jpg Graphic file (type jpg)
 <use c127/108636-label.jpg>
-Package pdftex.def Info: c127/108636-label.jpg  used on input line 251.
+Package pdftex.def Info: c127/108636-label.jpg  used on input line 247.
 (pdftex.def)             Requested size: 124.30724pt x 124.30736pt.
 <c127/108641.jpg, id=39, 533.995pt x 533.995pt>
 File: c127/108641.jpg Graphic file (type jpg)
 <use c127/108641.jpg>
-Package pdftex.def Info: c127/108641.jpg  used on input line 255.
+Package pdftex.def Info: c127/108641.jpg  used on input line 251.
 (pdftex.def)             Requested size: 124.30724pt x 124.30736pt.
 <c127/108641-label.jpg, id=40, 533.995pt x 533.995pt>
 File: c127/108641-label.jpg Graphic file (type jpg)
 <use c127/108641-label.jpg>
-Package pdftex.def Info: c127/108641-label.jpg  used on input line 259.
+Package pdftex.def Info: c127/108641-label.jpg  used on input line 255.
 (pdftex.def)             Requested size: 124.30724pt x 124.30736pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9.53561> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 265.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 261.
  [4]
-Underfull \vbox (badness 4060) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [5 <../neuroblastoma/110082.jpg> <../label/110082.jpg> <../neuroblastoma/11009
 3.jpg> <../label/110093.jpg> <./c127/108636.jpg> <./c127/108636-label.jpg> <./c
@@ -503,199 +499,302 @@ Missing character: There is no ¢ in font pplr7t!
 <110084.png, id=48, 513.92pt x 513.92pt>
 File: 110084.png Graphic file (type png)
 <use 110084.png>
-Package pdftex.def Info: 110084.png  used on input line 311.
+Package pdftex.def Info: 110084.png  used on input line 307.
 (pdftex.def)             Requested size: 253.79099pt x 253.79128pt.
-<110085.png, id=49, 513.92pt x 513.92pt>
-File: 110085.png Graphic file (type png)
-<use 110085.png>
-Package pdftex.def Info: 110085.png  used on input line 315.
-(pdftex.def)             Requested size: 253.79099pt x 253.79128pt.
-<c127/yolo/108636.png, id=50, 533.995pt x 533.995pt>
+<c127/yolo/108636.png, id=49, 533.995pt x 533.995pt>
 File: c127/yolo/108636.png Graphic file (type png)
 <use c127/yolo/108636.png>
-Package pdftex.def Info: c127/yolo/108636.png  used on input line 319.
+Package pdftex.def Info: c127/yolo/108636.png  used on input line 310.
 (pdftex.def)             Requested size: 253.79099pt x 253.78877pt.
+<110085.png, id=50, 513.92pt x 513.92pt>
+File: 110085.png Graphic file (type png)
+<use 110085.png>
+Package pdftex.def Info: 110085.png  used on input line 313.
+(pdftex.def)             Requested size: 253.79099pt x 253.79128pt.
 <c127/yolo/108641.png, id=51, 533.995pt x 533.995pt>
 File: c127/yolo/108641.png Graphic file (type png)
 <use c127/yolo/108641.png>
-Package pdftex.def Info: c127/yolo/108641.png  used on input line 323.
+Package pdftex.def Info: c127/yolo/108641.png  used on input line 317.
 (pdftex.def)             Requested size: 253.79099pt x 253.78877pt.
-
-Underfull \hbox (badness 1558) in paragraph at lines 331--332
-[]\OT1/ppl/m/n/9.53561 For C127 de-tec-tion, the Tiny YOLO net-work also
- []
-
-<unet/110115.jpg, id=52, 513.92pt x 513.92pt>
+<yolocrf/110127.jpg, id=52, 417.56pt x 417.56pt>
+File: yolocrf/110127.jpg Graphic file (type jpg)
+<use yolocrf/110127.jpg>
+Package pdftex.def Info: yolocrf/110127.jpg  used on input line 335.
+(pdftex.def)             Requested size: 123.94443pt x 123.9437pt.
+<yolocrf/110127-label.jpg, id=53, 513.92pt x 513.92pt>
+File: yolocrf/110127-label.jpg Graphic file (type jpg)
+<use yolocrf/110127-label.jpg>
+Package pdftex.def Info: yolocrf/110127-label.jpg  used on input line 339.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<yolocrf/110137.jpg, id=54, 417.56pt x 417.56pt>
+File: yolocrf/110137.jpg Graphic file (type jpg)
+<use yolocrf/110137.jpg>
+Package pdftex.def Info: yolocrf/110137.jpg  used on input line 343.
+(pdftex.def)             Requested size: 123.94443pt x 123.9437pt.
+<yolocrf/110137-label.jpg, id=55, 513.92pt x 513.92pt>
+File: yolocrf/110137-label.jpg Graphic file (type jpg)
+<use yolocrf/110137-label.jpg>
+Package pdftex.def Info: yolocrf/110137-label.jpg  used on input line 347.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<unet/110115-semantic.jpg, id=56, 513.92pt x 513.92pt>
+File: unet/110115-semantic.jpg Graphic file (type jpg)
+<use unet/110115-semantic.jpg>
+Package pdftex.def Info: unet/110115-semantic.jpg  used on input line 357.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<unet/110115.jpg, id=57, 513.92pt x 513.92pt>
 File: unet/110115.jpg Graphic file (type jpg)
 <use unet/110115.jpg>
-Package pdftex.def Info: unet/110115.jpg  used on input line 350.
-(pdftex.def)             Requested size: 113.82446pt x 113.8234pt.
-<unet/110115-instance.jpg, id=53, 417.56pt x 417.56pt>
-File: unet/110115-instance.jpg Graphic file (type jpg)
-<use unet/110115-instance.jpg>
-Package pdftex.def Info: unet/110115-instance.jpg  used on input line 362.
-(pdftex.def)             Requested size: 113.82446pt x 113.81947pt.
-File: unet/110115.jpg Graphic file (type jpg)
-<use unet/110115.jpg>
-Package pdftex.def Info: unet/110115.jpg  used on input line 366.
-(pdftex.def)             Requested size: 113.82446pt x 113.8234pt.
-<deeplab/110115.jpg, id=54, 417.56pt x 417.56pt>
+Package pdftex.def Info: unet/110115.jpg  used on input line 361.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<c127/unet/108641-semantic.jpg, id=58, 533.995pt x 533.995pt>
+File: c127/unet/108641-semantic.jpg Graphic file (type jpg)
+<use c127/unet/108641-semantic.jpg>
+Package pdftex.def Info: c127/unet/108641-semantic.jpg  used on input line 365.
+
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
+File: c127/108641-label.jpg Graphic file (type jpg)
+<use c127/108641-label.jpg>
+Package pdftex.def Info: c127/108641-label.jpg  used on input line 369.
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
+<deeplab/110115.jpg, id=59, 417.56pt x 417.56pt>
 File: deeplab/110115.jpg Graphic file (type jpg)
 <use deeplab/110115.jpg>
-Package pdftex.def Info: deeplab/110115.jpg  used on input line 377.
-(pdftex.def)             Requested size: 113.82446pt x 113.81947pt.
+Package pdftex.def Info: deeplab/110115.jpg  used on input line 380.
+(pdftex.def)             Requested size: 123.94443pt x 123.9437pt.
 File: unet/110115.jpg Graphic file (type jpg)
 <use unet/110115.jpg>
-Package pdftex.def Info: unet/110115.jpg  used on input line 381.
-(pdftex.def)             Requested size: 113.82446pt x 113.8234pt.
-Package epstopdf Info: Source file: <weights/110082-wmap.eps>
-(epstopdf)                    date: 2019-06-11 12:46:13
-(epstopdf)                    size: 288285 bytes
-(epstopdf)             Output file: <weights/110082-wmap-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-06-11 13:04:30
-(epstopdf)                    size: 34168 bytes
-(epstopdf)             Command: <repstopdf --outfile=weights/110082-wmap-eps-co
-nverted-to.pdf weights/110082-wmap.eps>
-(epstopdf)             \includegraphics on input line 398.
-Package epstopdf Info: Output file is already uptodate.
-
-
-pdfTeX warning: pdflatex (file ./weights/110082-wmap-eps-converted-to.pdf): PDF
- inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<weights/110082-wmap-eps-converted-to.pdf, id=55, 231.86626pt x 231.86626pt>
-File: weights/110082-wmap-eps-converted-to.pdf Graphic file (type pdf)
-<use weights/110082-wmap-eps-converted-to.pdf>
-Package pdftex.def Info: weights/110082-wmap-eps-converted-to.pdf  used on inpu
-t line 398.
-(pdftex.def)             Requested size: 113.82446pt x 113.82419pt.
+Package pdftex.def Info: unet/110115.jpg  used on input line 384.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<c127/deeplab/108641.jpg, id=60, 533.995pt x 533.995pt>
+File: c127/deeplab/108641.jpg Graphic file (type jpg)
+<use c127/deeplab/108641.jpg>
+Package pdftex.def Info: c127/deeplab/108641.jpg  used on input line 388.
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
+File: c127/108641-label.jpg Graphic file (type jpg)
+<use c127/108641-label.jpg>
+Package pdftex.def Info: c127/108641-label.jpg  used on input line 392.
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
 Package epstopdf Info: Source file: <weights/110115-wmap.eps>
-(epstopdf)                    date: 2019-06-11 13:02:57
-(epstopdf)                    size: 288285 bytes
+(epstopdf)                    date: 2019-06-19 16:40:33
+(epstopdf)                    size: 288272 bytes
 (epstopdf)             Output file: <weights/110115-wmap-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-06-11 13:04:30
+(epstopdf)                    date: 2019-06-19 16:41:02
 (epstopdf)                    size: 33949 bytes
 (epstopdf)             Command: <repstopdf --outfile=weights/110115-wmap-eps-co
 nverted-to.pdf weights/110115-wmap.eps>
-(epstopdf)             \includegraphics on input line 401.
+(epstopdf)             \includegraphics on input line 409.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: pdflatex (file ./weights/110115-wmap-eps-converted-to.pdf): PDF
  inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<weights/110115-wmap-eps-converted-to.pdf, id=56, 231.86626pt x 231.86626pt>
+<weights/110115-wmap-eps-converted-to.pdf, id=61, 217.81375pt x 217.81375pt>
 File: weights/110115-wmap-eps-converted-to.pdf Graphic file (type pdf)
 <use weights/110115-wmap-eps-converted-to.pdf>
 Package pdftex.def Info: weights/110115-wmap-eps-converted-to.pdf  used on inpu
-t line 401.
-(pdftex.def)             Requested size: 113.82446pt x 113.82419pt.
+t line 409.
+(pdftex.def)             Requested size: 123.94443pt x 123.9424pt.
+File: unet/110115.jpg Graphic file (type jpg)
+<use unet/110115.jpg>
+Package pdftex.def Info: unet/110115.jpg  used on input line 412.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
 Package epstopdf Info: Source file: <weights/108641-wmap.eps>
-(epstopdf)                    date: 2019-06-17 10:23:02
-(epstopdf)                    size: 288285 bytes
+(epstopdf)                    date: 2019-06-19 16:41:27
+(epstopdf)                    size: 288272 bytes
 (epstopdf)             Output file: <weights/108641-wmap-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-06-17 10:25:24
+(epstopdf)                    date: 2019-06-19 16:41:45
 (epstopdf)                    size: 16141 bytes
 (epstopdf)             Command: <repstopdf --outfile=weights/108641-wmap-eps-co
 nverted-to.pdf weights/108641-wmap.eps>
-(epstopdf)             \includegraphics on input line 404.
+(epstopdf)             \includegraphics on input line 415.
 Package epstopdf Info: Output file is already uptodate.
 
 
 pdfTeX warning: pdflatex (file ./weights/108641-wmap-eps-converted-to.pdf): PDF
  inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<weights/108641-wmap-eps-converted-to.pdf, id=57, 231.86626pt x 231.86626pt>
+<weights/108641-wmap-eps-converted-to.pdf, id=62, 217.81375pt x 217.81375pt>
 File: weights/108641-wmap-eps-converted-to.pdf Graphic file (type pdf)
 <use weights/108641-wmap-eps-converted-to.pdf>
 Package pdftex.def Info: weights/108641-wmap-eps-converted-to.pdf  used on inpu
-t line 404.
-(pdftex.def)             Requested size: 113.82446pt x 113.82419pt.
-Package epstopdf Info: Source file: <weights/108681-wmap.eps>
-(epstopdf)                    date: 2019-06-17 10:23:54
-(epstopdf)                    size: 288285 bytes
-(epstopdf)             Output file: <weights/108681-wmap-eps-converted-to.pdf>
-(epstopdf)                    date: 2019-06-17 10:25:24
-(epstopdf)                    size: 13996 bytes
-(epstopdf)             Command: <repstopdf --outfile=weights/108681-wmap-eps-co
-nverted-to.pdf weights/108681-wmap.eps>
-(epstopdf)             \includegraphics on input line 407.
-Package epstopdf Info: Output file is already uptodate.
+t line 415.
+(pdftex.def)             Requested size: 123.94443pt x 123.9424pt.
+File: c127/108641-label.jpg Graphic file (type jpg)
+<use c127/108641-label.jpg>
+Package pdftex.def Info: c127/108641-label.jpg  used on input line 418.
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
+[6]
+Underfull \vbox (badness 1609) has occurred while \output is active []
 
 
-pdfTeX warning: pdflatex (file ./weights/108681-wmap-eps-converted-to.pdf): PDF
- inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<weights/108681-wmap-eps-converted-to.pdf, id=58, 231.86626pt x 231.86626pt>
-File: weights/108681-wmap-eps-converted-to.pdf Graphic file (type pdf)
-<use weights/108681-wmap-eps-converted-to.pdf>
-Package pdftex.def Info: weights/108681-wmap-eps-converted-to.pdf  used on inpu
-t line 407.
-(pdftex.def)             Requested size: 113.82446pt x 113.82419pt.
-[6] [7 <./110084.png (PNG copy)> <./110085.png (PNG copy)> <./c127/yolo/108636.
-png (PNG copy)> <./c127/yolo/108641.png (PNG copy)>]
-<weighted/110115-unet.jpg, id=66, 513.92pt x 513.92pt>
+Underfull \vbox (badness 1609) has occurred while \output is active []
+
+ [7 <./110084.png (PNG copy)> <./c127/yolo/108636.png (PNG copy)> <./110085.png
+ (PNG copy)> <./c127/yolo/108641.png (PNG copy)>]
+<weighted/110115-unet.jpg, id=70, 513.92pt x 513.92pt>
 File: weighted/110115-unet.jpg Graphic file (type jpg)
 <use weighted/110115-unet.jpg>
-Package pdftex.def Info: weighted/110115-unet.jpg  used on input line 426.
-(pdftex.def)             Requested size: 113.82446pt x 113.8234pt.
-<weighted/110115-deeplab.jpg, id=67, 513.92pt x 513.92pt>
+Package pdftex.def Info: weighted/110115-unet.jpg  used on input line 439.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<weighted/110115-deeplab.jpg, id=71, 513.92pt x 513.92pt>
 File: weighted/110115-deeplab.jpg Graphic file (type jpg)
 <use weighted/110115-deeplab.jpg>
-Package pdftex.def Info: weighted/110115-deeplab.jpg  used on input line 430.
-(pdftex.def)             Requested size: 113.82446pt x 113.8234pt.
-Package epstopdf Info: Source file: <graphs/Test-Mean-IoU.eps>
-(epstopdf)                    date: 2019-06-11 13:59:34
-(epstopdf)                    size: 26196 bytes
-(epstopdf)             Output file: <graphs/Test-Mean-IoU-eps-converted-to.pdf>
+Package pdftex.def Info: weighted/110115-deeplab.jpg  used on input line 442.
+(pdftex.def)             Requested size: 123.94443pt x 123.93929pt.
+<c127/unet-weighted/108641.jpg, id=72, 533.995pt x 533.995pt>
+File: c127/unet-weighted/108641.jpg Graphic file (type jpg)
+<use c127/unet-weighted/108641.jpg>
+Package pdftex.def Info: c127/unet-weighted/108641.jpg  used on input line 445.
 
-(epstopdf)                    date: 2019-06-11 14:00:58
-(epstopdf)                    size: 14497 bytes
-(epstopdf)             Command: <repstopdf --outfile=graphs/Test-Mean-IoU-eps-c
-onverted-to.pdf graphs/Test-Mean-IoU.eps>
-(epstopdf)             \includegraphics on input line 440.
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
+<c127/deeplab-weighted/108641.jpg, id=73, 533.995pt x 533.995pt>
+File: c127/deeplab-weighted/108641.jpg Graphic file (type jpg)
+<use c127/deeplab-weighted/108641.jpg>
+Package pdftex.def Info: c127/deeplab-weighted/108641.jpg  used on input line 4
+49.
+(pdftex.def)             Requested size: 123.94443pt x 123.9407pt.
+<yolounetcrf/110115-yolounetcrf.jpg, id=74, 272.01625pt x 272.01625pt>
+File: yolounetcrf/110115-yolounetcrf.jpg Graphic file (type jpg)
+<use yolounetcrf/110115-yolounetcrf.jpg>
+Package pdftex.def Info: yolounetcrf/110115-yolounetcrf.jpg  used on input line
+ 457.
+(pdftex.def)             Requested size: 123.94443pt x 123.94606pt.
+<yolounetcrf/110115-label.jpg, id=75, 217.81375pt x 217.81375pt>
+File: yolounetcrf/110115-label.jpg Graphic file (type jpg)
+<use yolounetcrf/110115-label.jpg>
+Package pdftex.def Info: yolounetcrf/110115-label.jpg  used on input line 461.
+(pdftex.def)             Requested size: 123.94443pt x 123.9424pt.
+<yolounetcrf/108641-yolounetcrf.jpg, id=76, 272.01625pt x 272.01625pt>
+File: yolounetcrf/108641-yolounetcrf.jpg Graphic file (type jpg)
+<use yolounetcrf/108641-yolounetcrf.jpg>
+Package pdftex.def Info: yolounetcrf/108641-yolounetcrf.jpg  used on input line
+ 465.
+(pdftex.def)             Requested size: 123.94443pt x 123.94606pt.
+<yolounetcrf/108641-label.jpg, id=77, 217.81375pt x 217.81375pt>
+File: yolounetcrf/108641-label.jpg Graphic file (type jpg)
+<use yolounetcrf/108641-label.jpg>
+Package pdftex.def Info: yolounetcrf/108641-label.jpg  used on input line 469.
+(pdftex.def)             Requested size: 123.94443pt x 123.9424pt.
+Package epstopdf Info: Source file: <graphs/Mean-Intersection-over-Union-(Neuro
+blastoma).eps>
+(epstopdf)                    date: 2019-06-21 16:37:34
+(epstopdf)                    size: 31668 bytes
+(epstopdf)             Output file: <graphs/Mean-Intersection-over-Union-(Neuro
+blastoma)-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-06-21 16:37:58
+(epstopdf)                    size: 17111 bytes
+(epstopdf)             Command: <repstopdf --outfile=graphs/Mean-Intersection-o
+ver-Union-(Neuroblastoma)-eps-converted-to.pdf graphs/Mean-Intersection-over-Un
+ion-(Neuroblastoma).eps>
+(epstopdf)             \includegraphics on input line 479.
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file ./graphs/Test-Mean-IoU-eps-converted-to.pdf): PD
-F inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<graphs/Test-Mean-IoU-eps-converted-to.pdf, id=68, 433.62pt x 289.08pt>
-File: graphs/Test-Mean-IoU-eps-converted-to.pdf Graphic file (type pdf)
-<use graphs/Test-Mean-IoU-eps-converted-to.pdf>
-Package pdftex.def Info: graphs/Test-Mean-IoU-eps-converted-to.pdf  used on inp
-ut line 440.
-(pdftex.def)             Requested size: 252.94499pt x 168.63252pt.
-Package epstopdf Info: Source file: <graphs/Test-Mean-Panoptic-Quality.eps>
-(epstopdf)                    date: 2019-06-11 14:00:15
-(epstopdf)                    size: 29615 bytes
-(epstopdf)             Output file: <graphs/Test-Mean-Panoptic-Quality-eps-conv
-erted-to.pdf>
-(epstopdf)                    date: 2019-06-11 14:00:58
-(epstopdf)                    size: 16774 bytes
-(epstopdf)             Command: <repstopdf --outfile=graphs/Test-Mean-Panoptic-
-Quality-eps-converted-to.pdf graphs/Test-Mean-Panoptic-Quality.eps>
-(epstopdf)             \includegraphics on input line 443.
+pdfTeX warning: pdflatex (file ./graphs/Mean-Intersection-over-Union-(Neuroblas
+toma)-eps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at mos
+t version <1.5> allowed
+<graphs/Mean-Intersection-over-Union-(Neuroblastoma)-eps-converted-to.pdf, id=7
+8, 433.62pt x 289.08pt>
+File: graphs/Mean-Intersection-over-Union-(Neuroblastoma)-eps-converted-to.pdf 
+Graphic file (type pdf)
+<use graphs/Mean-Intersection-over-Union-(Neuroblastoma)-eps-converted-to.pdf>
+Package pdftex.def Info: graphs/Mean-Intersection-over-Union-(Neuroblastoma)-ep
+s-converted-to.pdf  used on input line 479.
+(pdftex.def)             Requested size: 253.79099pt x 169.19713pt.
+Package epstopdf Info: Source file: <graphs/Mean-Intersection-over-Union-(C127)
+.eps>
+(epstopdf)                    date: 2019-06-21 16:37:34
+(epstopdf)                    size: 31656 bytes
+(epstopdf)             Output file: <graphs/Mean-Intersection-over-Union-(C127)
+-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-06-21 16:37:58
+(epstopdf)                    size: 17092 bytes
+(epstopdf)             Command: <repstopdf --outfile=graphs/Mean-Intersection-o
+ver-Union-(C127)-eps-converted-to.pdf graphs/Mean-Intersection-over-Union-(C127
+).eps>
+(epstopdf)             \includegraphics on input line 482.
 Package epstopdf Info: Output file is already uptodate.
 
 
-pdfTeX warning: pdflatex (file ./graphs/Test-Mean-Panoptic-Quality-eps-converte
-d-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> al
-lowed
-<graphs/Test-Mean-Panoptic-Quality-eps-converted-to.pdf, id=69, 433.62pt x 289.
-08pt>
-File: graphs/Test-Mean-Panoptic-Quality-eps-converted-to.pdf Graphic file (type
- pdf)
-<use graphs/Test-Mean-Panoptic-Quality-eps-converted-to.pdf>
-Package pdftex.def Info: graphs/Test-Mean-Panoptic-Quality-eps-converted-to.pdf
-  used on input line 443.
-(pdftex.def)             Requested size: 252.94499pt x 168.63252pt.
-[8 <./unet/110115.jpg> <./unet/110115-instance.jpg> <./deeplab/110115.jpg> <./w
-eights/110082-wmap-eps-converted-to.pdf> <./weights/110115-wmap-eps-converted-t
-o.pdf> <./weights/108641-wmap-eps-converted-to.pdf> <./weights/108681-wmap-eps-
-converted-to.pdf> <./weighted/110115-unet.jpg> <./weighted/110115-deeplab.jpg>]
-(./ONBI_ROTATION_PROJECT1_DELASPENAS.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 35--38
+pdfTeX warning: pdflatex (file ./graphs/Mean-Intersection-over-Union-(C127)-eps
+-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version
+ <1.5> allowed
+<graphs/Mean-Intersection-over-Union-(C127)-eps-converted-to.pdf, id=79, 433.62
+pt x 289.08pt>
+File: graphs/Mean-Intersection-over-Union-(C127)-eps-converted-to.pdf Graphic f
+ile (type pdf)
+<use graphs/Mean-Intersection-over-Union-(C127)-eps-converted-to.pdf>
+Package pdftex.def Info: graphs/Mean-Intersection-over-Union-(C127)-eps-convert
+ed-to.pdf  used on input line 482.
+(pdftex.def)             Requested size: 253.79099pt x 169.19713pt.
+Package epstopdf Info: Source file: <graphs/Mean-Panoptic-Quality-(Neuroblastom
+a).eps>
+(epstopdf)                    date: 2019-06-21 16:37:34
+(epstopdf)                    size: 31123 bytes
+(epstopdf)             Output file: <graphs/Mean-Panoptic-Quality-(Neuroblastom
+a)-eps-converted-to.pdf>
+(epstopdf)                    date: 2019-06-21 16:37:58
+(epstopdf)                    size: 17859 bytes
+(epstopdf)             Command: <repstopdf --outfile=graphs/Mean-Panoptic-Quali
+ty-(Neuroblastoma)-eps-converted-to.pdf graphs/Mean-Panoptic-Quality-(Neuroblas
+toma).eps>
+(epstopdf)             \includegraphics on input line 485.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: pdflatex (file ./graphs/Mean-Panoptic-Quality-(Neuroblastoma)-e
+ps-converted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most versi
+on <1.5> allowed
+<graphs/Mean-Panoptic-Quality-(Neuroblastoma)-eps-converted-to.pdf, id=80, 433.
+62pt x 289.08pt>
+File: graphs/Mean-Panoptic-Quality-(Neuroblastoma)-eps-converted-to.pdf Graphic
+ file (type pdf)
+<use graphs/Mean-Panoptic-Quality-(Neuroblastoma)-eps-converted-to.pdf>
+Package pdftex.def Info: graphs/Mean-Panoptic-Quality-(Neuroblastoma)-eps-conve
+rted-to.pdf  used on input line 485.
+(pdftex.def)             Requested size: 253.79099pt x 169.19713pt.
+Package epstopdf Info: Source file: <graphs/Mean-Panoptic-Quality-(C127).eps>
+(epstopdf)                    date: 2019-06-21 16:37:34
+(epstopdf)                    size: 32883 bytes
+(epstopdf)             Output file: <graphs/Mean-Panoptic-Quality-(C127)-eps-co
+nverted-to.pdf>
+(epstopdf)                    date: 2019-06-21 16:37:58
+(epstopdf)                    size: 17727 bytes
+(epstopdf)             Command: <repstopdf --outfile=graphs/Mean-Panoptic-Quali
+ty-(C127)-eps-converted-to.pdf graphs/Mean-Panoptic-Quality-(C127).eps>
+(epstopdf)             \includegraphics on input line 489.
+Package epstopdf Info: Output file is already uptodate.
+
+
+pdfTeX warning: pdflatex (file ./graphs/Mean-Panoptic-Quality-(C127)-eps-conver
+ted-to.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> 
+allowed
+<graphs/Mean-Panoptic-Quality-(C127)-eps-converted-to.pdf, id=81, 433.62pt x 28
+9.08pt>
+File: graphs/Mean-Panoptic-Quality-(C127)-eps-converted-to.pdf Graphic file (ty
+pe pdf)
+<use graphs/Mean-Panoptic-Quality-(C127)-eps-converted-to.pdf>
+Package pdftex.def Info: graphs/Mean-Panoptic-Quality-(C127)-eps-converted-to.p
+df  used on input line 489.
+(pdftex.def)             Requested size: 253.79099pt x 169.19713pt.
+[8 <./yolocrf/110127.jpg> <./yolocrf/110127-label.jpg> <./yolocrf/110137.jpg> <
+./yolocrf/110137-label.jpg> <./unet/110115-semantic.jpg> <./unet/110115.jpg> <.
+/c127/unet/108641-semantic.jpg>] [9 <./deeplab/110115.jpg> <./c127/deeplab/1086
+41.jpg> <./weights/110115-wmap-eps-converted-to.pdf> <./weights/108641-wmap-eps
+-converted-to.pdf> <./weighted/110115-unet.jpg> <./weighted/110115-deeplab.jpg>
+ <./c127/unet-weighted/108641.jpg> <./c127/deeplab-weighted/108641.jpg> <./yolo
+unetcrf/110115-yolounetcrf.jpg> <./yolounetcrf/110115-label.jpg> <./yolounetcrf
+/108641-yolounetcrf.jpg> <./yolounetcrf/108641-label.jpg>]
+(./ONBI_ROTATION_PROJECT1_DELASPENAS.bbl [10 <./graphs/Mean-Intersection-over-U
+nion-(Neuroblastoma)-eps-converted-to.pdf> <./graphs/Mean-Intersection-over-Uni
+on-(C127)-eps-converted-to.pdf> <./graphs/Mean-Panoptic-Quality-(Neuroblastoma)
+-eps-converted-to.pdf> <./graphs/Mean-Panoptic-Quality-(C127)-eps-converted-to.
+pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 63--66
 []\OT1/ppl/m/n/8.03 NVIDIA De-vel-oper. (2019) Hard-ware
  []
 
 
-Underfull \hbox (badness 5985) in paragraph at lines 35--38
+Underfull \hbox (badness 5985) in paragraph at lines 63--66
 \OT1/ppl/m/n/8.03 for ev-ery sit-u-a-tion. [On-line]. Avail-able:
  []
 
@@ -706,37 +805,36 @@ Missing character: There is no Ã in font pplr7t!
 Missing character: There is no § in font pplr7t!
 Missing character: There is no Ã in font pplr7t!
 Missing character: There is no ¶ in font pplr7t!
-) [9 <./graphs/Test-Mean-IoU-eps-converted-to.pdf> <./graphs/Test-Mean-Panoptic
--Quality-eps-converted-to.pdf>] (./ONBI_ROTATION_PROJECT1_DELASPENAS.aux) ) 
+) [11] (./ONBI_ROTATION_PROJECT1_DELASPENAS.aux) ) 
 Here is how much of TeX's memory you used:
- 5004 strings out of 492982
- 81292 string characters out of 6134896
- 152932 words of memory out of 5000000
- 8457 multiletter control sequences out of 15000+600000
+ 5072 strings out of 492982
+ 83501 string characters out of 6134896
+ 153952 words of memory out of 5000000
+ 8511 multiletter control sequences out of 15000+600000
  49258 words of font info for 106 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 42i,8n,40p,1159b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/us
-r/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-sy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/font
-s/type1/urw/helvetic/uhvro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
-/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/up
-lr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on ONBI_ROTATION_PROJECT1_DELASPENAS.pdf (9 pages, 2486854 bytes
-).
+ 42i,8n,40p,1281b,417s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dis
+t/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
+elvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr
+o8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on ONBI_ROTATION_PROJECT1_DELASPENAS.pdf (11 pages, 2873356 byte
+s).
 PDF statistics:
- 222 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
+ 335 PDF objects out of 1000 (max. 8388607)
+ 98 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 131 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 191 words of extra memory for PDF output out of 10000 (max. 10000000)
 

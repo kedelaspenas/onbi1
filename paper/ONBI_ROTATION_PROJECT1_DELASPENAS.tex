@@ -56,8 +56,7 @@ E-mail: \texttt{kristofer.delaspenas@wolfson.ox.ac.uk}.}% <-this % stops a space
 % in the abstract or keywords.
 \IEEEtitleabstractindextext{%
 \begin{abstract}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Image analysis in microscopy often involves the detection and segmentation of cells. This analysis leads to understanding of many biological processes. In this paper, we examined different deep learning techniques which address cell detection and segmentation even on resource-constrained environments like the NVIDIA Jetson TX2. The trained YOLO-CRF, UNet, and DeepLab, performed oversegmentation resulting to poor panoptic quality, but with the use of weight penalty maps, the overall panoptic quality was shown to improve. Next, we demonstrated combining the localization information from the Tiny YOLO version 2 models and the initial semantic segmentation from UNet in a CRF model to further increase the panoptic quality of the segmentation. Lastly, we benchmarked the algorithms in terms of speed and peak memory usage on the Jetson TX2 and showed the varying performances of the models, with DeepLab-MobileNet as fastest and least memory-intensive, and UNet and YOLO-UNet-CRF as the slowest and most memory-intensive.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -89,18 +88,11 @@ Cell segmentation, YOLO, UNet, DeepLab, CRF.
 
 
 \section{Introduction}
-\IEEEPARstart{A}{nalysis} of cells in microscopy images play a vital role in understanding the structure, interactions, and mechanisms involved in several 
-biological processes and drug discovery. Depending on the cell interactions involved and the preparation process used, cells in the sample could be isolated from each other and overlapping. For many applications and purposes, it is crucial to detect and to accurately characterize the morphology of the cells. In such cases, the overlapping cells in the samples pose a challenge in the effective segmentation of individual cells. 
+\IEEEPARstart{A}{nalysis} of cells in microscopy images play a vital role in understanding the structure, interactions, and mechanisms involved in many biological processes and drug discovery. Depending on the cell interactions involved and the preparation process used, cells in the sample could be isolated from each other or overlapping. For many applications and purposes, it is crucial to detect and to accurately characterize the morphology of the cells. In such cases, the overlapping cells in the samples pose a challenge in the effective segmentation of individual cells. 
 
-A classic approach to the task of detecting and segmenting cells is through image processing. Simple and well-established algorithms for thresholding and obtaining contours are shown to be effective in segmenting cells and approximating their morphologies. 
+A classic approach to the task of detecting and segmenting cells is through image processing. Simple and well-established algorithms for thresholding and obtaining contours are shown to be effective in segmenting cells and approximating their morphologies. \cite{5775215} used a lifted wavelet filter to denoise images of white blood cells and a two-step thresholding to segment the cells. \cite{7407919} performed the segmentation using the watershed algorithm with results from Otsu thresholding and distance transform as seed points.
 
-Another approach to the detection and segmentation of cells in microscopy images involves the use of convolutional neural networks. While most convolutional neural network architectures were built for general image recognition tasks, like cars, trees, and people in images from huge benchmark datasets of real world scenes such as ImageNet, COCO, and VOC Pascal, such architectures have been demonstrated to work well even for specialized tasks like cell detection and segmentation. 
-
-%previous research on cell segmentation
-Research on cell segmentation had been done extensively in the past decade using these approaches...
-%something about constrained environments, realtime processing, why the need for it
-Going further from building these models for effective segmentation is their integration for real-time applications in microscopy, such as real-time feedback and annotation of a field of view under the microscope. This has been recently explored in \cite{Waithe544833} in which the detection from the trained model was integrated with the microscope through augmented reality. This setup however still requires an attached computer with dedicated graphics processing unit (GPU) to perform the detection and annotation, making it less ideal for transport. %?
-An improvement to this setup is housing the trained model on a small mobile unit that is capable of running the computationally-extensive algorithms for detection. The challenge in this modification is the memory and speed constraints of the mobile unit. As recent approaches in cell segmentation involve the use of deep learning techniques and these techniques were only tested on servers, the choice of architecture is not straight-forward - a trade-off among performance, speed and memory needs to be considered.
+Another approach to the detection and segmentation of cells in microscopy images involves the use of convolutional neural networks (CNNs). While most CNN architectures were built for general image recognition tasks, like cars, trees, and people in images from huge benchmark datasets of real world scenes such as ImageNet, COCO, and VOC Pascal, such architectures have been demonstrated to work well even for specialized tasks like cell detection and segmentation. \cite{8264783}, \cite{7932065}, and  \cite{7874113} are some recent works applying CNNs to segment cells in microscopy images. \cite{8264783} and  \cite{7932065} used the CNNs to segment and to identify breast and cervical cancer cells. \cite{7874113} worked on neurons and used the segmentation obtained from CNN to do 3D reconstruction of the neurons.
 
 %discuss jetson
 \begin{figure}
@@ -108,52 +100,54 @@ An improvement to this setup is housing the trained model on a small mobile unit
 \caption{\textbf{NVIDIA Jetson TX2}.}
 \label{fig:jetson}
 \end{figure}
-For this purpose, we test different models for cell segmentation on NVIDIA Jetson TX2 \cite{jetson} (shown in Figure \ref{fig:jetson}). Nvidia Jetson TX2 is an embedded computer primarily targeted for AI applications. This unit works on 7.5W power. Integrated on its board is a 256-core NVIDIA Pascal GPU, Dual-Core NVIDIA Denver 2 64-Bit CPU and Quad-Core ARM® Cortex®-A57 MPCore, 8GB Memory and 32GB storage.
+
+Going further from building these models for effective segmentation is their integration for real-time applications in microscopy, such as real-time feedback and annotation of a field of view under the microscope. This has been recently explored in \cite{Waithe544833} in which the detection from the trained model was integrated with the microscope through augmented reality. This setup however still requires an attached computer with dedicated graphics processing unit (GPU) to perform the detection and annotation, making it less ideal for transport. %?
+An improvement to this setup is housing the trained model on a small mobile unit that is capable of running the computationally-extensive algorithms for detection. The challenge in this modification is the memory and speed constraints of the mobile unit. As recent approaches in cell segmentation involve the use of deep learning techniques and these techniques were only tested on servers, the choice of architecture is not straight-forward - a trade-off among performance, speed and memory needs to be considered.
+
+For this purpose, we test different models for cell segmentation on NVIDIA Jetson TX2\cite{jetson} (shown in Figure \ref{fig:jetson}). Nvidia Jetson TX2 is an embedded computer primarily targeted for AI applications. This unit works on 7.5W power. Integrated on its board is a 256-core NVIDIA Pascal GPU, Dual-Core NVIDIA Denver 2 64-Bit CPU and Quad-Core ARM® Cortex®-A57 MPCore, 8GB Memory and 32GB flash storage.
 \section{Literature Review}
-\subsection{Semantic Segmentation}
-Semantic segmentation describes the process of assigning each pixel of an image a class label, such as dog, sky, or car. In the case of cell microscopy, pixels are assigned as cell (or a specific cell type) or the background. Segmentation is one of the key problems in computer vision. Through it, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
-
-In recent years, as a natural progression of the popularity of applications of convolutional neural networks (CNN), several CNN-based architectures were developed for semantic segmentation. A step further from the classification problems addressed by CNN architectures like AlexNet, VGG, Inception and ResNet, architectures coupling classification with localization, detection, and segmentation were built. Most of these segmentation architectures were designed as \textit{encoder-decoder} models. The \textit{encoder} is a classification network, oftentimes utilising the aforementioned popular CNN architectures. This network \textit{learns} discriminative features for segmentation in a lower-dimensional space. To achieve a full-resolution segmentation, the output of the \textit{encoder} is passed to the \textit{decoder} that would project it back to the original resolution space.
-\subsection{Instance Segmentation}
-Instance segmentation builds on top of semantic segmentation. Not only are class labels assigned to each pixel, instances of the same class were also discriminated. This addresses problems beyond simple scene understanding, where quantification and individuality of objects is needed. One key issue that algorithms for instance segmentation are still trying to improve on is the resolution of overlapping instances.
+\subsection{Object Detection}
+Object detection is one of the key problems in computer vision. It involves the process of localizing and identifying objects in an image or a video feed. To do detection, machine learning algorithms try to identify regions in the image that are most likely to contain an object and annotate these regions with bounding boxes. A number of such algorithms were developed in recent years to address object detection. These algorithms include Region-CNN (R-CNN), Fast and Faster Region-CNN (Fast R-CNN and Faster R-CNN), Single Shot MultiBox Detector (SSD), and You Only Look Once (YOLO). For cell detection, \cite{Waithe544833} compared these models and demonstrated that YOLO performs well in detecting various cell types.
 \subsection{YOLO}
-The YOLO (You Only Look Once) network \cite{redmon2016yolo9000} is a state-of-the-art object detection system that gained popularity within the past few years. It employs a series of convolutions to detect and localize objects in real-time.
+The YOLO (You Only Look Once) network\cite{redmon2016yolo9000} is a state-of-the-art object detection system that gained popularity within the past few years. It employs a series of convolutions to detect and localize objects in real-time.
 
-The implementation of YOLO starts with an initial 416 $\times$ 416 image input. The system performs 19 convolutions with an overall downsampling factor of 32, resulting to an output feature map of 13 $\times$ 13 dimension which is used to predict the bounding boxes of detected objects with the help of anchor boxes.
+YOLO version 2 starts with an initial $416\times 416$ image input. The system performs 19 convolutions with an overall downsampling factor of 32, resulting to an output feature map of $13\times 13$ dimension which is used to predict the bounding boxes of detected objects with the help of anchor boxes. It demonstrated a high mean average precision (mAP) on the VOC dataset, higher than existing architectures like Faster-RCNN.
 
-With version 2 of YOLO, \cite{redmon2016yolo9000} demonstrated a high mean average precision (mAP) on the VOC dataset, higher than existing architectures like Faster-RCNN.
+A more recent YOLO iteration, version 3\cite{yolov3}, uses a deeper network and performs object detection on 3 stages of different resolutions. With these changes, an even higher mAP was achieved, however, at the expense of heavier computational resource requirement and longer detection time.
+\subsection{Semantic Segmentation}
+Semantic segmentation describes the process of assigning each pixel of an image to a class label, such as dog, sky, or car. In the case of cell microscopy, pixels are assigned as cell (or a specific cell type) or the background. Through semantic segmentation, applications requiring scene understanding can be built, like self-driving vehicles and virtual reality. 
 
-A more recent YOLO iteration, version 3 \cite{yolov3}, uses a deeper network and performs object detection on 3 stages of different resolutions. With these changes, an even higher mAP was achieved, however, at the expense of heavier computational resource requirement and longer detection time.
+In recent years, as a natural progression of the popularity of applications of CNNs, several CNN-based architectures were developed for semantic segmentation. A step further from the classification problems addressed by CNN architectures like AlexNet, VGG, Inception and ResNet, architectures coupling classification with localization, detection, and segmentation were built. Most of these segmentation architectures were designed as \textit{encoder-decoder} models. The \textit{encoder} is a classification network, oftentimes utilising the aforementioned popular CNN architectures. This network \textit{learns} discriminative features for segmentation in a lower-dimensional space. To achieve a full-resolution segmentation, the output of the \textit{encoder} is passed to the \textit{decoder} that would project it back to the original resolution space.
+\subsection{Instance Segmentation}
+Instance segmentation builds on top of semantic segmentation. Not only are class labels assigned to each pixel, instances of the same class are also discriminated. This addresses problems beyond simple scene understanding, where quantification and isolation of objects is needed. One key issue that algorithms for instance segmentation are still trying to improve on is the resolution of overlapping instances.
 \subsection{UNet}
-UNet\cite{RFB15a} is a fully convolutional neural network architecture that aims to semantically label individual pixels in the image. The network consists of two paths - a contracting path and an expansive path. The contracting path is the typical convolutional network with a series of convolutional layers with rectified linear unit (ReLU) activations and pooling layers to downsample.
+UNet\cite{RFB15a} is a fully convolutional neural network architecture that aims to semantically label individual pixels in the image. The network consists of two paths: a contracting path (\textit{encoder}) and an expansive path (\textit{decoder}). The contracting path is the typical CNN with a series of convolutional layers with rectified linear unit (ReLU) activations and pooling layers to downsample.
 
 The expansive path is an upsampling route, taking the output of the contracting path. This path performs a series of \textit{up-convolutions}, a combination of upsampling and a 2 $\times$ 2 convolution.
 
 The key feature in UNet is the shortcut connections between the two paths for each resolution scale as shown in Figure \ref{fig:unet}. At each scale, concatenating the output from the contracting path with the upsampled output from the previous scale in the expansive path, ensures that the finer details lost through downsampling can be recovered and be used to fine tune the segmentation.
 
-UNet was first applied on microscopy images but since then have been applied to different imaging modalities like MRIs and CT scans.
+UNet was first applied on microscopy images\cite{RFB15a} but since then have been applied to different imaging modalities like MRIs and CT scans\cite{8681706}. 
 \begin{figure}
 \centering
 \includegraphics[width=3in]{unet.png}
-\caption{\textbf{U-net architecture} \cite{RFB15a} (example for 32x32 pixels in the lowest resolution). Each blue
+\caption{\textbf{U-net architecture}\cite{RFB15a} (example for $32\times 32$ pixels in the lowest resolution). Each blue
 box corresponds to a multi-channel feature map. The number of channels is denoted
 on top of the box. The x-y-size is provided at the lower left edge of the box. White
 boxes represent copied feature maps. The arrows denote the different operations.}
 \label{fig:unet}
 \end{figure}
-\subsection{DeepLabv3}
-DeepLab\cite{DBLP:journals/corr/ChenPSA17} is a recent architecture for semantic segmentation. DeepLab employs a special kind of convolution - the \textit{atrous} or dilated convolution. The primary motivation behind the use of atrous convolution filters is the observation that in convolutional networks with consecutive pooling and striding, there is a significant reduction in the spatial resolution of the generated feature maps. Transposed convolutional layers address this problem. However, this approach adds additional complexity to the network. \cite{DBLP:journals/corr/ChenPSA17} advocates the use of atrous convolution instead such that we can explicitly control the density of the feature response, and in turn, the spatial resolution of the feature map. Formally, for each pixel location \textit{i} on an input image \textit{y} and a filter \textit{w}, applying atrous convolution yields
+\subsection{DeepLabV3}
+DeepLab\cite{DBLP:journals/corr/ChenPSA17} is a recent architecture for semantic segmentation. It employs a special kind of convolution - the \textit{atrous} or dilated convolution. The primary motivation behind the use of atrous convolution filters is the observation that in CNNs with consecutive pooling and striding, there is a significant reduction in the spatial resolution of the generated feature maps. Transposed convolutional layers address this problem but it adds additional complexity to the network. \cite{DBLP:journals/corr/ChenPSA17} advocates the use of atrous convolution instead such that we can explicitly control the density of the feature response, and in turn, the spatial resolution of the feature map. Formally, for each pixel location \textit{i} on an input image \textit{y} and a filter \textit{w}, applying atrous convolution yields
 \begin{equation}
 y[i] = \sum_k x[i+rk]w[k]
 \end{equation}
-where \textit{r} is the atrous rate corresponding the stride with which the input is sampled. Equivalently, an atrous convolution with rate \textit{r} can be viewed as a convolution with an upsampled filter \textit{w} produced by inserting \textit{r-1} zeros between the rows and columns of \textit{w}. Figure \ref{fig:deeplab_atrous_conv} illustrates different atrous rate for a 3x3 convoltional filter.
+where \textit{r} is the atrous rate corresponding the stride with which the input is sampled. Equivalently, an atrous convolution with rate \textit{r} can be viewed as a convolution with an upsampled filter \textit{w} produced by inserting \textit{r-1} zeros between the rows and columns of \textit{w}. Figure \ref{fig:deeplab_atrous_conv} illustrates different atrous rate for a $3\times 3$ convolutional filter.
 
-Popular convolutional neural network architectures for feature extraction such as MobileNet and ResNet can be used as backend for DeepLab. The modification is that the convolution layers are replaced with atrous convolutions to control the spatial resolution of the output feature maps. We do this by setting the \textit{output\_stride} parameter which is the ratio of the input image dimension to the output feature map dimension. With this, DeepLab is able to extract denser feature maps without any additional learning parameters \cite{DBLP:journals/corr/ChenPSA17}.
-%spatial pooling
-(expand)
+Popular CNN architectures for feature extraction such as MobileNet and ResNet can be used as backend for DeepLab. The modification is that the convolution layers are replaced with atrous convolutions to control the spatial resolution of the output feature maps. We do this by setting the \textit{output\_stride} parameter which is the ratio of the input image dimension to the output feature map dimension. With this, DeepLab is able to extract denser feature maps without any additional learning parameters \cite{DBLP:journals/corr/ChenPSA17}.
 \begin{figure}
 \includegraphics[width=\linewidth]{atrous_conv.png}
-\caption{\textbf{Atrous Convolution}. Atrous convolution with kernel size 3 × 3 and different rates. Standard convolution corresponds to atrous convolution
+\caption{\textbf{Atrous Convolution}. Atrous convolution with kernel size $3\times 3$ and different rates. Standard convolution corresponds to atrous convolution
 with rate = 1. Employing large value of atrous rate enlarges the
 model’s field-of-view, enabling object encoding at multiple scales. Image taken from \cite{DBLP:journals/corr/ChenPSA17}.}
 \label{fig:deeplab_atrous_conv}
@@ -168,24 +162,26 @@ for factors \textit{F} = \{$\Psi_a$\} that have $\Psi_a \geq 0$.
 Markov networks and conditional random fields (CRF) are formulated similarly in this manner. The main difference is that the CRF learns the conditional probability $p(y|x)$ while Markov networks ultimately obtain the joint probability $p(y,x)$. With the joint probability $p(y,x)$, models like the Markov networks can describe the hypothesis space through the generation of all possible features \textit{x} for all labels \textit{y}. However, joint probability $p(y,x)$ involves prior knowledge on or estimate for $p(x)$, and the dependence (or independence) of the random variables. For general classification tasks, however, modelling of $p(x)$ is not needed as the concern is only on assigning labels to features, which is exactly what the conditional probability $p(y|x)$ gives.
 
 %put figure here
-Exact inference on conditional random fields is computationally expensive and usually impossible. If exact inference is possible, performing naively the sum of products of potentials (\textbf{message passing}) for all variables, can take a long time, especially for dense graphs. Current implementations of CRFs perform inference by approximation, with the speedup by employing dynamic programming. One inference algorithm is the mean field inference described in Algorithm \ref{alg:meanfieldinference}.
+Exact inference on CRFs is computationally expensive and usually impossible. If exact inference is possible, performing naively the sum of products of potentials (\textit{message passing}) for all variables, can take a long time, especially for dense graphs. Current implementations of CRFs perform inference by approximation, with the speedup by employing dynamic programming. One inference algorithm is the mean field inference described in Algorithm \ref{alg:meanfieldinference}.
 
-Each iteration of the mean field inference described in Algorithm \ref{alg:meanfieldinference} performs a message passing step, compatibility transform, and local update and normalization. Each step, except the message passing, runs in linear time. Message passing is the computational bottleneck. For a naive solution, it requires summing up over all variables and runs in quadratic time. For this very reason, the conditional random fields gained the reputation of being notoriously slow and impractical for a lot of machine learning tasks, especially those involving dense graph representations like image segmentation.
+Each iteration of the mean field inference performs a message passing step, compatibility transform, local update and normalization. Each step, except the message passing, runs in linear time which makes message passing the computational bottleneck. For a naive solution, it requires summing up over all variables and runs in quadratic time. For this very reason, the CRFs gained the reputation of being notoriously slow and impractical for a lot of machine learning tasks, especially those involving dense graph representations like image segmentation.
 
 %message passing as convolution
-Addressing the slow inference in CRFs, \cite{NIPS2011_4296} showed that message passing can be approximated and expressed as a convolution with a Gaussian kernel as follows:
+Addressing this slow inference in CRFs, \cite{NIPS2011_4296} showed that message passing can be approximated and expressed as a convolution with a Gaussian kernel as follows:
 \begin{equation}
-\widetilde{Q}_i^{(m)}(l)\gets \sum_{j\neq i}k^{(m)}(f_i,f_j)Q_j(l) = [G_(m) \otimes Q(l)](f_i) - Q_i(l)
+\widetilde{Q}_i^{(m)}(l)\gets \sum_{j\neq i}k^{(m)}(f_i,f_j)Q_j(l) = [G_m \otimes Q(l)](f_i) - Q_i(l)
 \end{equation}
+where $\otimes$ is the convolution operator. By convolving Q(l) with a Gaussian kernel $G_m$, the summation required in message passing can be done more efficiently.
+
 This approximation can be extended to higher dimensions, and with the permutohedral lattice data structure, efficient message passing can be done in $O(Nd)$ time where \textit{N} is the number of variables and \textit{d} the number of dimensions. 
 %cnnasrnn
-Furthermore, \cite{crfasrnn_ICCV2015} and \cite{higherordercrf_ECCV2016} demonstrated how the mean field inference in CRFs can be written as recurrent neural network with learnable weights. This formulation allows the CRFs to be seamlessly integrated as part of a convolutional neural network model for tasks such as image segmentation.
+Furthermore, \cite{crfasrnn_ICCV2015} and \cite{higherordercrf_ECCV2016} demonstrated how the mean field inference in CRFs can be written as recurrent neural network (RNN) with learnable weights. This formulation allows the CRFs to be seamlessly integrated as part of a CNN model for tasks such as image segmentation.
 
-With CRFs implemented as RNNs, several research has been done applying CNN-CRFs for general image segmentation task. \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF} proposed systems using CRFs integrated in CNNs for semantic image segmentation. Both systems train the CRF by minimizing the Gibbs energy and in doing so, finding the Maximum A Posteriori labelling of the image pixels. The CRF for semantic image segmentation is formulated with the following energy function for assignment of the pixels to semantic classes,
+With CRFs implemented as RNNs, several research has been done applying CNN-CRFs for general image segmentation task, such as  \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}. Both research train the CRF by minimizing the Gibbs energy and in doing so, finding the Maximum A Posteriori labelling of the image pixels. The CRF for semantic image segmentation is formulated with the following energy function for assignment of the pixels to semantic classes,
 \begin{equation}
 E(X = x) = \sum_i U(x_i) + \sum_{i<j}P(x_i,x_j)
 \end{equation}
-where \textit{U} is the unary potential and \textit{P} the pairwise potential. In \cite{NIPS2011_4296}, responses from the TextonBoost filter bank, color, histogram of oriented gradients (HOG) and pixel location features were used for the unary potential. On the other hand, \cite{Teichmann2018ConvolutionalCF} used the segmentation prediction from ResNet101 for the unary. Both systems used gaussian kernels for the pairwise potentials, given as:
+where \textit{U} is the unary potential and \textit{P} the pairwise potential. In \cite{NIPS2011_4296}, responses from the TextonBoost filter bank, color, histogram of oriented gradients (HOG) and pixel location features were used for the unary potential. On the other hand, \cite{Teichmann2018ConvolutionalCF} used the segmentation prediction from ResNet-101 for the unary. Both systems used gaussian kernels for the pairwise potentials, given as:
 \begin{equation}
 k(f_i^I,f_j^I) = w^{(1)}G_{appearance} + w^{(2)}G_{smoothness}
 \end{equation}
@@ -195,7 +191,7 @@ G_{appearance} = exp\left(-\frac{|p_i - p_j|^2}{2\theta_\alpha^2} - \frac{|I_i -
 \begin{equation}
 G_{smoothness} = exp\left(-\frac{|p_i - p_j|^2}{2\theta_\gamma^2}\right)
 \end{equation}
-The two terms in the pairwise potential encourages neighboring pairs of pixels that look similar to be assigned the same semantic label.
+The $G_{appearance}$ term in the pairwise potential encourages neighboring pairs of pixels that look similar to be assigned the same semantic label. On the other hand, $G_{smoothness}$ ensures that regions are smooth and hence, pixel pairs that are far apart are penalized.
 
 Extending from this, \cite{Arnab2017PixelwiseIS} and \cite{Li_2018_ECCV} introduced some modification to this energy function to be able to perform  pixelwise instance segmentation. The systems described for this task work on an initial instance segmentation from a detection algorithm, where each detection has a corresponding prediction score. This instance segmentation is further refined by adding information from semantic segmentation and the gaussian pairwise potentials. To do this, they have broken down the unary potential to accommodate two distinct terms $\Psi_{box}$ and $\Psi_{global}$ as follows:
 \begin{equation}
@@ -218,9 +214,9 @@ The $\Psi_{box}$ term encourages the pixel to be assigned to the instance corres
 
 \section{Experiment Setup}
 \subsection{Dataset}
-For training and testing different models for cell detection and segmentation, two datasets were used. The two datasets feature different cell types. For simplicity, we separately use the two datasets for training and testing, instead of building multi-class models. Both dataset are from \cite{waithe_dominic_2019_2632769}.
+For training and testing different models for cell detection and segmentation, two datasets were used. The two datasets feature different cell types. For simplicity, we separately use the two datasets for training and testing, instead of building multi-class models. Both datasets are from \cite{waithe_dominic_2019_2632769}.
 
-The first dataset is composed of 360 wide field fluorescent images of cultured \textit{Mus musculus} neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. The neuroblastoma cells were grown on 18 $\times$ 18 mm lamin coated glass coverslips maintained at 37 deg C in 5\% CO2. Images were acquired with a Zeiss epifluorescence microscope and a 20$\times$ objective. The average number of cells per image is 11.7.
+The first dataset is composed of 360 wide field fluorescent images of cultured \textit{Mus musculus} neuroblastoma cells labelled with phalloidn FITC and DAPI nuclear stain. The neuroblastoma cells were grown on 18 $\times$ 18 mm lamin coated glass coverslips maintained at 37 deg C in 5\% CO2. Images were acquired with a Zeiss epifluorescence microscope and a 20$\times$ objective. The average number of cells per image is 11.7. This dataset was adapted in \cite{waithe_dominic_2019_2632769} from \cite{neuroblastoma_dataset}.
 
 The second dataset is composed of 60 images of C127 cells stained with DAPI and fixed and mounted in Vectashield. The average number of cells per image is 7.1.
 
@@ -263,20 +259,20 @@ For all experiments, we performed a 50-50 train-test split for cross-validation 
 \end{figure*}
 \subsection{Model Architecture}
 \subsubsection{Detection}
-For detection, we employ the YOLO version 2 network because as reviewed previously and as demonstrated in \cite{Waithe544833}, it is effective in detecting objects in real-time. Specifically, we use its `tiny' implementation. The tiny implementation of YOLO version 2 differs from its full counterpart in the number of filters in each convolutional layer. In each layer, the tiny implementation contains only half of the number of filters in the full implementation. With this reduction in the number of filters comes an improvement in the detection time of Tiny YOLO version 2. In a microscopy setting, especially dealing with fluorescence-labelled samples with the detection of cells done in an integrated manner like in \cite{Waithe544833}, real-time processing is desirable. Moreover, the small memory footprint of Tiny YOLO version 2 makes it an even more suitable detection algorithm to consider. We start the training with the convolutional weights pre-trained on Imagenet and fine-tune the network for cell detection.
+For detection, we employ the YOLO version 2 network because as reviewed previously and as demonstrated in \cite{Waithe544833}, it is effective in detecting objects in real-time. Specifically, we use its `tiny' implementation. The tiny implementation of YOLO version 2 differs from its full counterpart in the number of filters in each convolutional layer. In each layer, the tiny implementation contains only half of the number of filters in the full implementation. With this reduction in the number of filters comes an improvement in the detection time of Tiny YOLO version 2. In a microscopy setting, especially dealing with fluorescence-labelled samples with the detection of cells done in an integrated manner like in \cite{Waithe544833}, real-time processing is desirable. Moreover, the small memory footprint of Tiny YOLO version 2 makes it an even more suitable detection algorithm to consider. We start the training with the convolutional weights pre-trained on ImageNet and fine-tune the network for cell detection.
 \subsubsection{Semantic and Instance Segmentation}
-We compare three models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma and C127 detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}. Lastly, we experiment on using the DeepLabV3 architecture with Mobilenet and Resnet as backend feature extractors.
+We compare three models for semantic segmentation. We first train a UNet model with 5 resolution levels. Next, we build a hybrid model combining the detection from the Tiny YOLO network and conditional random fields. We use the initial bounding boxes from the neuroblastoma and C127 detection and try to refine the segmentation to find the cell boundaries using the pairwise Gaussian kernels described in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}. Lastly, we experiment on using the DeepLabV3 architecture with Mobilenet and ResNet as backend feature extractors.
 \subsection{Training Parameters}
 \subsubsection{Detection}
-For training the tiny implementation of YOLO version 2 network for cell detection, we confugured with the following settings: batch size = 64, subdivisions = 8, image dimensions: 416 $\times$ 416, momentum = 0.9, decay = 0.0005, learning rate =  0.001, and epochs = 20000. Additional image augmentation by vertical flips was done, as described in \cite{Waithe544833}, to introduce robustness in detection. Training was done five times on each dataset to capture the variance in performance.
+For training the tiny implementation of YOLO version 2 network for cell detection, we configured with the following settings: batch size = 64, subdivisions = 8, image dimensions: 416 $\times$ 416, momentum = 0.9, decay = 0.0005, learning rate =  0.001, and epochs = 20000. Additional image augmentation by vertical flips was done, as described in \cite{Waithe544833}, to introduce robustness in detection. Training was done five times on each dataset to capture the variance in performance.
 \subsubsection{Semantic and Instance Segmentation}
 For training the UNet, we set the learning rate to 0.001, batch size to 16, momentum to 0.9, decay to 0.0005, and epochs to 8000. The cross entropy was used as the loss function. 
 
 For DeepLab, we train on a 0.001 learning rate, batch size of 16, 0.9 momentum, output stride of 16, and 2000 epochs, with the standard cross entropy as loss function.
 
-For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 batch size, 1000 epochs, and binary cross entropy with logits loss as objective function. The Gaussian CRF is configured with a filter size of 3, blur of 8, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term.
+For the YOLO-CRF hybrid model, we used a 0.00001 learning rate, 0.9 momentum, 4 batch size, 1000 epochs, and binary cross entropy with logits loss as objective function. The Gaussian CRF is configured with a filter size = 3, blur =f 8, $\theta_\alpha$ = 80, $\theta_\beta$ = 13, and $\theta_\gamma$ = 3, and a trainable bias term.
 
-For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a filter size of 11 pixels, blur of 4-pixel wide, $\theta_\alpha$ of 1/80, $\theta_\beta$ of 1/13, and $\theta_\gamma$ of 1/3, and a trainable bias term. The training, set for 10000 epochs, was done with a low learning rate of 1e-12 to account for the small batch size of 1. 
+For training the YOLO-UNet-CRF hybrid model, the CRF is configured with a $\theta_\alpha$ = 2, $\theta_\beta$ = 0.01, and $\theta_\gamma$ = 0.01, smoothness compatibility = 20, appearance compatibility = 10, and iterations = 75.
 
 Similar to the detection setup, training was done five times on each dataset for each model to capture the variance in performance.
 \subsection{Evaluation Metrics}
@@ -288,19 +284,19 @@ IoU = \frac{area(B_{p}\cap B_{g})}{area(B_{p}\cup B_{g})}
 \end{equation}
 where \textit{$B_p$} is the predicted box and \textit{$B_g$} is the ground truth box. Although this metric measures how well fit the predicted bounding boxes are to the ground truth, it does not penalize over- and underdetection.
 
-On the other hand, Mean Average Precision measures the recognition quality of the model by penalizing for false negatives (FN) and false positives (FP) in detection. With a threshold IoU score, true positives (TP) are counted if the box pair exceeds this score. The prediction confidence of the model is then used to compute the precision-recall curve. We take the maximum precision for all recall values in this curve and report the average of these maximum precision values as Average Precision (AP). For multi-class problems, we then compute mAP by taking the average of the APs for each class.
+On the other hand, Mean Average Precision measures the recognition quality of the model by penalizing for false negatives (FN) and false positives (FP) in detection. With a threshold IoU score, true positives (TP) are counted if the box pair exceeds this score. The prediction confidence of the model is then used to compute the precision-recall curve. We take the maximum precision for all recall values in this curve and report the average of these maximum precision values as Average Precision (AP). %For multi-class problems, we then compute mAP by taking the average of the APs for each class.
 
-For the instance segmentation, we used the panoptic quality metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
+For the instance segmentation, we used the panoptic quality (PQ) metric proposed in \cite{DBLP:journals/corr/abs-1801-00868} shown in the equation below:
 \begin{equation}
 PQ = \frac{\sum_{(p,g)\in TP}IoU(p,g)}{|TP|} \times \frac{|TP|}{|TP| + \frac{1}{2}|FP| + \frac{1}{2}|FN|}
 \end{equation}
-where \textit{p} and \textit{g} are pairs of output and target segmentation regions, \textit{TP} is the number of true positive detections, \textit{FP} is the number of false positives, and \textit{FN} is the number of false negatives. We use this metric because unlike the mIoU and mAP, the panoptic quality metric penalizes both poor segmentation and poor detections. As the problem only involves one class of object and a solid-colored background, it is to be expected to train models that would yield high IoU scores. Relying therefore only on IoU will not give true insight on how a model performs on delineating cell boundaries.
+where \textit{p} and \textit{g} are pairs of output and target segmentation regions, \textit{TP} is the number of true positive detections, \textit{FP} is the number of false positives, and \textit{FN} is the number of false negatives. We use this metric because unlike the mIoU and mAP, the panoptic quality metric penalizes both poor segmentation and poor detections. As the problem only involves one class of object and a solid-colored background, it is expected that the trained models would yield high IoU scores. Relying therefore only on IoU will not give true insight on how a model performs on delineating cell boundaries. With this reason, we also use the panoptic quality measure.
 \subsection{Computer Hardware}
 UNet and YOLO experiments were run on a server with Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz and NVIDIA Tesla K80 24GB VRAM.
 
-The YOLO-CRF and YOLO-UNet-CRF hybrid models were trained on a Lenovo Envy (build number) with (CPU) and NVIDIA GeForce 950M with Linux Mint 19 installed.
+The YOLO-CRF and YOLO-UNet-CRF hybrid models were trained on a Lenovo Envy 15 AE103NG with Intel Core i7-6500U CPU @ 2.50GHz x 4 and NVIDIA GeForce GTX 950M 4GB VRAM with Linux Mint 18.1 installed.
 
-Experiments on DeepLab were run on an ASUS TUF FX705GM-EV101T laptop: Intel® Core™ i7-8750H CPU @ 2.20GHz x 12, 16GB RAM, NVIDIA GeForce GTX 1060 with Ubuntu 18.04 installed.
+Experiments on DeepLab were run on an ASUS TUF FX705GM-EV101T laptop: Intel® Core™ i7-8750H CPU @ 2.20GHz x 12, 16GB RAM, NVIDIA GeForce GTX 1060 6GB VRAM with Ubuntu 18.04 installed.
 
 After training and evaluation, the models were transferred to the NVidia Jetson TX2 to benchmark the performance on this memory-constrained environment.
 \section{Results and Discussion}
@@ -309,154 +305,202 @@ After training and evaluation, the models were transferred to the NVidia Jetson 
 \centering
 \begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{110084.png}
-\caption{}
-\end{subfigure}\vspace{2pt}
-\begin{subfigure}[b]{0.49\linewidth}
-\includegraphics[width=\linewidth]{110085.png}
-\caption{}
 \end{subfigure}
 \begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{c127/yolo/108636.png}
-\caption{}
-\end{subfigure}\vspace{2pt}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{110085.png}
+\caption*{Neuroblastoma}
+\end{subfigure}
 \begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{c127/yolo/108641.png}
-\caption{}
+\caption*{C127}
 \end{subfigure}
-\caption{\textbf{Neuroblastoma and C127 Cell Detection}. Shown are some of the detected neuroblastoma (a,b) and c127 (c,d) cells using the Tiny YOLO network with the corresponding detection scores}
+\caption{\textbf{Neuroblastoma and C127 Cell Detection}. Shown are some of the detected neuroblastoma and c127 cells using the Tiny YOLO network with the corresponding detection scores.}
 \label{fig:yolo_results}
 \end{figure*}
-Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained 0.7589$\pm$0.0239 mAP$_{0.5}$ (0.8474$\pm$0.0334 mAP$_{0.3}$) and 0.7954$\pm$0.0262 mIoU.
+Detecting the neuroblastoma cells using the Tiny YOLO network proved to be an easy task. Even with the highly irregular and dissimilar shape of the neuroblastoma cells, the trained detection network obtained $0.7589\pm0.0239$ mAP$_{0.5}$ ($0.8474\pm0.0334$ mAP$_{0.3}$) and $0.7954\pm0.0262$ mIoU.
 
-For C127 detection, the Tiny YOLO network also yielded good results, with an mAP$_{0.5}$ of 0.9401$\pm$0.0264 (0.9463$\pm$0.0243 mAP$_{0.3}$) and mIoU of 0.7969$\pm$0.0118. Even with varying intensities and sizes, the trained model was still able to effectively detect the C127 cells. Figure \ref{fig:yolo_results} shows some of the boxed  cells in the test images.
+For C127 detection, the Tiny YOLO network also yielded good results, with an mAP$_{0.5}$ of $0.9401\pm0.0264$ ($0.9463\pm0.0243$ mAP$_{0.3}$) and mIoU of $0.7969\pm0.0118$. Even with varying intensities and sizes, the trained model was still able to effectively detect the C127 cells. Figure \ref{fig:yolo_results} shows some of the boxed  cells in the test images.
 
-For both datasets, the trained Tiny YOLO version 2 models performed subpar in comparison with the results of \cite{Waithe544833}. However, as presented in Figure \ref{fig:yolo_runtimes}, the Tiny YOLO version 2 models offer a significant reduction in detection and memory usage from the full YOLO models used in \cite{Waithe544833}. This is attributed to the fewer number of filters in the tiny implementation, requiring only 6.97 Bn FLOPS compared to 34.90 Bn of the full YOLO network \cite{redmon2016yolo9000}.
-\begin{figure}
-
-\caption{\textbf{YOLO version 2 Detection Times.} Comparing with the full YOLO in \cite{Waithe544833}, the trained Tiny YOLO models performed faster detections.}
-\label{fig:yolo_runtimes}
-\end{figure} 
+For both datasets, the trained Tiny YOLO version 2 models performed subpar in comparison with the results of \cite{Waithe544833}. However, the Tiny YOLO version 2 models offer a significant reduction in detection and memory usage from the full YOLO models used in \cite{Waithe544833}. This is attributed to the fewer number of filters in the tiny implementation, requiring only 6.97 Bn FLOPS compared to 34.90 Bn of the full YOLO network\cite{redmon2016yolo9000}.
 \subsection{Cell Semantic and Instance Segmentation}
-While the Tiny YOLO network trained to detect neuroblastoma and c127 proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing effect of conditional random fields to resolve pixelwise the cells and the background.
+While the Tiny YOLO network trained to detect neuroblastoma and C127 proved to be effective and efficient in its task, the segmentation it gives is a coarse one - a bounding box. For problems requiring pixel-level labelling of the cells, the output of YOLO is not enough. Here, we tried to combine the good cell localization of YOLO and the smoothing  and region continuity effect of CRFs to resolve pixelwise the cells and the background.
 
-Figure \ref{fig:yolocrf_results} shows the result of the segmentation of the YOLO-CRF model for one of the neuroblastoma test images. Using the pairwise smoothness Gaussian potential, the segmentation resulted to an overly-smoothed and dilated cell boundaries, with most of the cells merged together. (expand: advantage, add c127)
+Figure \ref{fig:yolocrf_results} shows the result of the segmentation of the YOLO-CRF model for two of the neuroblastoma test images. Using the pairwise smoothness Gaussian potential, the segmentation resulted in an overly-smoothed and dilated cell boundaries, with most of the cells merged together. With poor results in the neuroblastoma dataset, with only $0.5626\pm0.0192$ mIoU and $0.1476\pm0.01832$ mPQ, no experiment on the C127 dataset was done using the YOLO-CRF model.
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.45\linewidth}
-%\includegraphics[width=\linewidth]{unet/110115-instance.jpg}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolocrf/110127.jpg}
 \caption{}
 \end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
-\includegraphics[width=\linewidth]{unet/110115.jpg}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolocrf/110127-label.jpg}
 \caption{}
 \end{subfigure}
-\caption{\textbf{YOLO-CRF Neuroblastoma Semantic Segmentation}. With a Gaussian kernel favoring smoothness, the segmentation results(a) of YOLO-CRF are of poor IoU score and panoptic quality - the nuclei and darker parts of the cell being misclassified as the background. Shown in (b) is the target segmentation.}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolocrf/110137.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolocrf/110137-label.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{YOLO-CRF Semantic Segmentation}. With a Gaussian kernel favoring smoothness, the segmentation results(a,c) of YOLO-CRF are of poor IoU and PQ scores - the nuclei and darker parts of the cell being misclassified as the background. Shown in (b) and (d) are the target segmentations.}
 \label{fig:yolocrf_results}
 \end{figure}
 
-% run time for training and test
-
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.45\linewidth}
-\includegraphics[width=\linewidth]{unet/110115-instance.jpg}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{unet/110115-semantic.jpg}
 \caption{}
 \end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{unet/110115.jpg}
 \caption{}
 \end{subfigure}
-\caption{\textbf{UNet Neuroblastoma Semantic Segmentation}. In most cases, with the very narrow gap between the neuroblastoma cells, the trained UNet for semantic segmentation performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/unet/108641-semantic.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/108641-label.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{UNet Semantic Segmentation}. In most cases, with the very narrow gap between the cells, the trained UNet for semantic segmentation performs oversegmentation (a,c), ending up joining multiple cells together. Shown in (b) and (d) are the target segmentations.}
 \label{fig:unet_results}
 \end{figure}
-We also trained a UNet model to perform semantic segmentation of neuroblastoma. As is to be expected, the trained UNet yielded a high intersection over union (IoU) score. However, as the loss function used in training the UNet is the standard cross entropy function that minimizes pixel-wise the error in segmentation of the foreground (cells) from the background, without any special considerations for misclassified pixels that would result to joining neighboring cells, the UNet segmentation results have poor panoptic quality. Figure \ref{fig:unet_results} shows the UNet segmentation result of one of the test images with high IoU score but low panoptic quality. (add c127)
+We also trained a UNet model to perform semantic segmentation of neuroblastoma and C127. As is to be expected, the trained UNet yielded a high IoU score. With the standard cross entropy as loss function, all misclassified pixels are penalized similarly, even those resulting to merged cells. In the case of UNet, this entropy was minimized but resulted to an oversegmentation, and hence, low PQ. Figure \ref{fig:unet_results} shows the UNet segmentation result of two of the test images with high IoU scores but low PQ scores.
 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{deeplab/110115.jpg}
 \caption{}
 \end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{unet/110115.jpg}
 \caption{}
 \end{subfigure}
-\caption{\textbf{DeepLabV3 Neuroblastoma Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a), ending up joining multiple cells together. Shown in (b) is the target segmentation.}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/deeplab/108641.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/108641-label.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{DeepLabV3 Semantic Segmentation}. Similar to UNet for semantic segmentation, the trained DeepLabV3 model performs oversegmentation (a,c), ending up joining multiple cells together. Shown in (b) and (d) are the target segmentations.}
 \label{fig:deeplab_results}
 \end{figure}
-Another architecture explored for semantic segmentation is the version 3 of DeepLab \cite{DBLP:journals/corr/ChenPSA17}. Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for one test image. Without a decoder route with shortcut connections to different resolution levels similar to UNet that would ensure that fine details like the narrow gaps between cells, the DeepLab model joined together multiple adjacent cells, yielding a high IoU score but low panoptic quality. For the neuroblastoma dataset, using the MobileNet architecture as backend for DeepLab resulted to a higher mean IoU score of 0.8294$\pm$0.0046 (vs. Resnet's 0.7945$\pm$0.0258) and a better panoptic quality of 0.3651$\pm$0.0056 (vs. Resnet's 0.3363$\pm$0.0273). The opposite is true, however, for the C127 dataset. Using Resnet as backend, a mean IoU of 0.7517$\pm$0.0184 (vs. MobileNet's 0.7402$\pm$0.0241 and a panoptic quality of 0.5634$\pm$0.0304 (vs. MobileNet's 0.5189$\pm$0.0453) were obtained.
+Another architecture explored for semantic segmentation is the version 3 of DeepLab\cite{DBLP:journals/corr/ChenPSA17}. Similar to UNet, the trained model is overeager in segmentation and thus resulted to oversegmentation. Figure \ref{fig:deeplab_results} shows the segmentation result for two test images. Without a decoder route with shortcut connections to different resolution levels similar to UNet that would ensure that fine details like the narrow gaps between cells, the DeepLab model joined together multiple adjacent cells, yielding a high IoU score but low PQ. For the neuroblastoma dataset, using the MobileNet architecture as backend for DeepLab resulted to a higher mean IoU score of $0.8294\pm0.0046$ (vs. ResNet's $0.7945\pm0.0258$) and a better PQ of $0.3651\pm0.0056$ (vs. ResNet's $0.3363\pm0.0273$). The opposite is true, however, for the C127 dataset. Using ResNet as backend, an mIoU of $0.7517\pm0.0184$ (vs. MobileNet's $0.7402\pm0.0241$ and PQ of $0.5634\pm0.0304$ (vs. MobileNet's $0.5189\pm0.0453$) were obtained.
 
-With aim to increase the panoptic quality of the models, we modified the training setup of the UNet and DeepLab segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells as described in \cite{nature_unet}. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
-Fo each individual pixel location \textit{x}, we determine \textit{$d_1$} and \textit{$d_2$} - the distances to the two nearest instances, and compute the weight maps as follows:
+With aim to increase the mean PQ of the models, we modified the training setup of the UNet and DeepLab segmentation to accommodate giving higher penalties to misclassified pixels in the cell boundaries and gaps between cells as described in \cite{nature_unet}. In literature, extending semantic segmentation to account for the individual instances is called \textit{instance-aware segmentation}. To do this, we compute for the \textit{weight penalty maps} of the training images.
+For each individual pixel location \textit{x}, we determine \textit{$d_1$} and \textit{$d_2$} - the distances to the two nearest instances, and compute the weight maps as follows:
 \begin{equation}
 w_{sep}(x) = exp\left({-\frac{(d_1(x) + d_2(x))^2}{2\sigma^2_{sep}}}\right)
 \end{equation}
-$w_{sep}$ evaluates to a high value for locations in between  cells. Using this weight map would force the network to learn the cells gaps and yield semantic segmentation with better panoptic quality. We found that $\sigma_{sep} = 10$ gave the best segmentation visually, hence, for the remaining experiments, weight penalty maps with $\sigma_{sep} = 10$ were used. 
+$w_{sep}$ evaluates to a high value for locations in between  cells. Using this weight map would force the network to learn the cells gaps and yield semantic segmentation with better PQ score. We found that $\sigma_{sep} = 10$ gave the best segmentation visually, hence, for the remaining experiments, weight penalty maps with $\sigma_{sep} = 10$ were used. 
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.45\linewidth}
-\includegraphics[width=\linewidth]{weights/110082-wmap.eps}
-\end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{weights/110115-wmap.eps}
 \end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{unet/110115.jpg}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{weights/108641-wmap.eps}
 \end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
-\includegraphics[width=\linewidth]{weights/108681-wmap.eps}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/108641-label.jpg}
 \end{subfigure}
-\caption{\textbf{Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two of the training images.}
+\caption{\textbf{Weight Penalty Maps}. To force the models to learn the narrow gaps between cells in semantic segmentation, we gave higher penalties for misclassification in those pixels. Shown in this figure are weight penalty maps for two dataset images.}
 \label{fig:weight_map}
 \end{figure}
 Figure \ref{fig:weight_map} shows the computed weight map for some of the training images.
 
-Using these computed weight penalty maps, we retrained the semantic segmentation models. Figure \ref{fig:segmentation_with_weight_map} shows the result for one of the test images. For the DeepLab models, with the weight penalties, significant portions of the gaps between the cells are classified correctly. However, the problem still remains for tightly packed cells. With MobileNet as backend, we obtained a 20\% increase in the panoptic quality for the neuroblastoma dataset (0.4386$\pm$0.0051) and a 2\% increase in the same metric for the c127 dataset (0.5308$\pm$0.0253).
+Using these computed weight penalty maps, we retrained the semantic segmentation models. Figure \ref{fig:segmentation_with_weight_map} shows the result for two of the test images. For the DeepLab models, with the weight penalties, significant portions of the gaps between the cells are classified correctly. However, the problem still remains for tightly packed cells. With MobileNet as backend, we obtained a 20\% increase in PQ for the neuroblastoma dataset ($0.4386\pm0.0051$) and a 2\% increase in the same metric for the c127 dataset ($0.5308\pm0.0253$). For DeepLab-ResNet, we obtained an mPQ of $0.5634\pm0.0304$ for C127 and $0.4076\pm0.0155$ for neuroblastoma. On the other hand, UNet with the weight penalties resulted in an undersegmentation of cells as shown in Figure \ref{fig:segmentation_with_weight_map}.a. This resulted in a lower IoU score compared to DeepLab, but with better recognition rate, a boost in PQ ($0.7367\pm0.0395$ for C127 and $0.4547\pm0.0015$ for neuroblastoma).
 
-On the other hand, UNet with the weight penalties resulted to an undersegmentation of cells as shown in Figure \ref{fig:segmentation_with_weight_map}.a. This means a lower IoU score compared to DeepLab, but with better recognition rate, a boost in panoptic quality.
+Overall, testing on both UNet and DeepLab (with both MobileNet and ResNet as backend), the use of the weight penalty maps resulted to an increase in mean IoU and PQ. Although the computation of the weight maps is expensive, since it is done prior to training, the use of the weight penalty maps adds no overhead to model training and evaluation.
 
-Overall, testing on both UNet and DeepLab (with both MobileNet a ResNet as backend), the use of the weight penalty maps resulted to an increase in mean IoU and panoptic quality. Although the computation of the weight maps is expensive, since it is done prior to training, the use of the weight penalty maps adds no overhead to model training and evaluation.
+The use of the weight penalty maps offered an increase in the PQ of the semantic segmentation models. We further attempt to increase this metric by using the localization information that can be provided by object detection models like the trained Tiny YOLO version 2 network. Currently, adjacent cells that were merged during segmentation are counted as only one instance, yielding a high number of false negatives and hence, low PQ. Using the YOLO localization, these merged cells can be reconciled as different instances therefore, bringing down the false negative count. For this, we used a CRF model with the YOLO detection and UNet with weight penalty maps segmentation forming the unary as follows:
+\begin{equation}
+U(x) = -log(b_x s_x)
+\end{equation}
+where $b_x$ is the prediction score for the bounding box enclosing pixel \textit{x} and $s_x$ is the softmax output of UNet for pixel \textit{x}. Using this unary and a pairwise potential with smoothness and appearance kernels like in \cite{NIPS2011_4296} and \cite{Teichmann2018ConvolutionalCF}, the YOLO-UNet-CRF obtained an mIoU of 0.8398 and mPQ of 0.7731 on the C127 dataset, and an mIoU of 0.7565 and mPQ of 0.5062 on the neuroblastoma dataset. In both datasets, the CRF and YOLO localization successfully increased the PQ score. Figure \ref{fig:yolounetcrf_results} shows the instance segmentation for two of the test images using the YOLO-UNet-CRF model.
 
-(yolounetcrf)
-
-(summary)
+The results of these semantic and instance segmentation experiments are summarized in Figure \ref{fig:graph_results}.
 \begin{figure}
 \centering
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{weighted/110115-unet.jpg}
-\caption{UNet}
 \end{subfigure}
-\begin{subfigure}[b]{0.45\linewidth}
+\begin{subfigure}[b]{0.49\linewidth}
 \includegraphics[width=\linewidth]{weighted/110115-deeplab.jpg}
-\caption{DeepLabV3}
 \end{subfigure}
-\caption{\textbf{Neuroblastoma Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet (a), the weight penalties resulted to an undersegmentation of the neuroblastoma cells yielding to better instance segmentation.}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/unet-weighted/108641.jpg}
+\caption*{UNet}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{c127/deeplab-weighted/108641.jpg}
+\caption*{DeepLabV3}
+\end{subfigure}
+\caption{\textbf{Semantic Segmentation with Weight Penalties}. With the introduction of weight penalties, the models for semantic segmentation started to separate adjacent cells better. For UNet, the weight penalties resulted to an undersegmentation of the cells yielding better PQ.}
 \label{fig:segmentation_with_weight_map}
 \end{figure}
-
 \begin{figure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolounetcrf/110115-yolounetcrf.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolounetcrf/110115-label.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolounetcrf/108641-yolounetcrf.jpg}
+\caption{}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{yolounetcrf/108641-label.jpg}
+\caption{}
+\end{subfigure}
+\caption{\textbf{YOLO-UNet-CRF Instance Segmentation.} With the localization from YOLO, the instance segmentation (a,c) of the YOLO-UNet-CRF resolves adjacent cells better, leading to higher PQ. Shown in (b) and (d) are the target instance segmentations.}
+\label{fig:yolounetcrf_results}
+\end{figure}
+
+\begin{figure*}
 \centering
-\begin{subfigure}[b]{\linewidth}
-\includegraphics[width=\linewidth]{graphs/Test-Mean-IoU.eps}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{graphs/Mean-Intersection-over-Union-(Neuroblastoma).eps}
 \end{subfigure}
-\begin{subfigure}[b]{\linewidth}
-\includegraphics[width=\linewidth]{graphs/Test-Mean-Panoptic-Quality.eps}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{graphs/Mean-Intersection-over-Union-(C127).eps}
 \end{subfigure}
-\caption{\textbf{Mean Intersection over Union, and Panoptic Quality Results}.}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{graphs/Mean-Panoptic-Quality-(Neuroblastoma).eps}
+\caption*{Neuroblastoma}
+\end{subfigure}
+\begin{subfigure}[b]{0.49\linewidth}
+\includegraphics[width=\linewidth]{graphs/Mean-Panoptic-Quality-(C127).eps}
+\caption*{C127}
+\end{subfigure}
+\caption{\textbf{Mean Intersection over Union and Panoptic Quality Results}. Although generally obtaining good mean IoU scores on neuroblastoma segmentation, the models have low PQ. The models performed better on the C127 dataset, with the highest mPQ of 0.7731 from YOLO-UNet-CRF.}
 \label{fig:graph_results}
-\end{figure}
-\subsection{Performance Tests on the NVIDIA Jetson TX2}
-Finally, we tested the trained models on the NVIDIA Jetson TX2. Considering for limited memory and computing power, we benchmark the speed and memory usage of each model in detecting and segmenting cells in images from the two dataset. For each model, to capture the variance in values that can be attributed to other factors such as waking up from idle state and scheduling, we perform validation on the Jetson five times, keeping track of the mean and variance of the GPU memory usage and total detection/segmentation time. The results of these performance tests are summarized in Figure \ref{fig:performance_jetson}.
-\begin{figure}
-%\includegraphics[width=\linewidth]{}
-\caption{\textbf{Performance on a Constrained Environment.} The cell detection and segmentation algorithms were benchmarked for speed and memory usage on the NVIDIA Jetson TX2.}
-\label{fig:performance_jetson}
-\end{figure}
+\end{figure*}
+\subsection{Speed and Memory Usage}
+Finally, we tested the trained detection models on the NVIDIA Jetson TX2. Considering for limited memory and computing power, we benchmark the speed and memory usage of the models in detecting and segmenting cells in images from the two dataset. To capture the variance in values that can be attributed to other factors such as waking up from idle state and scheduling, we perform validation on the Jetson TX2 five times, keeping track of the GPU memory usage and total detection/segmentation time.
+
+The Tiny YOLO version 2 models were able to produce predictions in $4.6\pm0.4$ milliseconds per image. This time is almost half of what is needed to generate predictions using the full YOLO version 2 model, clocking at $7.9\pm0.7$ milliseconds per image. This entails that the Tiny YOLO version 2 models can handle faster frame rates and generate real-time annotations in virtual reality as demonstrated in \cite{Waithe544833} with little to no delay. In terms of peak memory usage, the Tiny YOLO version 2 models used only 585MB of memory.
+
+Comparing the segmentation models, the DeepLab-Mobilenet models used the smallest amount of memory (653MB peak memory usage), while UNet, having 5 resolution levels, needed 3.44GB of memory to run. DeepLab-ResNet required 1.2GB of memory to generate a segmentation. The hybrid YOLO-UNet-CRF model also requires 3.44GB of memory as UNet is the most memory-intensive of the three components. In terms of speed, the DeepLab-MobileNet recorded the fastest segmentation time ($94.4957\pm1.9006$ milliseconds per image), followed by DeepLab-ResNet ($162.8601\pm11.8485$ milliseconds per image). The prediction speed for both are ideal for real-time and high framerate applications. UNet produces segmentation really slowly at $634.6557\pm2.8863$ milliseconds per image, making it a poor real-time segmentation model. CRF processing adds up an additional overhead of up to 42 seconds per image, depending on the number of detected cell instances, since the library used for testing does not utilize the GPU, making the hybrid YOLO-UNet-CRF model the slowest of the segmentation models.
 \section{Conclusion}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In this paper, we have explored several deep learning algorithms for the detection and segmentation of cells in microscopy images. For detection, the Tiny YOLO version 2 model obtained good results in both the neuroblastoma and C127 datasets. Moreover, it performs the detection very fast and uses only a small amount of memory, making it a good cell detection algorithm even in a resource-constrained environment like the Jetson TX2. For semantic and instance segmentation, we have shown that the trained models, YOLO-CRF, UNet, and DeepLab, struggle to reconcile overlapping cells and perform oversegmentation. This can be improved with the use of weight penalty maps during training, with UNet showing the most improvement. Lastly, combining the localization information from the Tiny YOLO version 2 models and the initial semantic segmentation from UNet in a CRF model was demonstrated to further increase the panoptic quality of the segmentation. Although UNet and YOLO-UNet-CRF showed good results, the segmentation time of these models is slow for real-time applications; alternatives which are faster and require less memory  such as the DeepLab models (and possibly a YOLO-DeepLab-CRF model) can be considered for such applications.
 
-
-% use section* for acknowledgment
 \section*{Acknowledgment}
 K. delas Pe\~nas is supported by doctoral fellowships from the University of the Philippines under the Faculty, REPS and Administrative Staff Development Program and the Philippine Department of Science and Technology under the Engineering Research and Development for Technology (ERDT) Program.
 

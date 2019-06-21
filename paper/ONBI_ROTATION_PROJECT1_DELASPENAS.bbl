@@ -21,6 +21,34 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{5775215}
+{Qiu Wenhua} and {Qiu Zhenzhen}, ``White blood cell segmentation and extraction
+  based on histogram multi-threshold and lifting wavelet,'' in \emph{2011
+  International Conference on Electric Technology and Civil Engineering
+  (ICETCE)}, April 2011, pp. 4730--4732.
+
+\bibitem{7407919}
+X.~{Ji}, Y.~{Li}, J.~{Cheng}, Y.~{Yu}, and M.~{Wang}, ``Cell image segmentation
+  based on an improved watershed algorithm,'' in \emph{2015 8th International
+  Congress on Image and Signal Processing (CISP)}, Oct 2015, pp. 433--437.
+
+\bibitem{8264783}
+M.~{Saha} and C.~{Chakraborty}, ``Her2net: A deep framework for semantic
+  segmentation and classification of cell membranes and nuclei in breast cancer
+  evaluation,'' \emph{IEEE Transactions on Image Processing}, vol.~27, no.~5,
+  pp. 2189--2200, May 2018.
+
+\bibitem{7932065}
+L.~{Zhang}, {Le Lu}, I.~{Nogues}, R.~M. {Summers}, S.~{Liu}, and J.~{Yao},
+  ``Deeppap: Deep convolutional networks for cervical cell classification,''
+  \emph{IEEE Journal of Biomedical and Health Informatics}, vol.~21, no.~6, pp.
+  1633--1643, Nov 2017.
+
+\bibitem{7874113}
+R.~{Li}, T.~{Zeng}, H.~{Peng}, and S.~{Ji}, ``Deep learning segmentation of
+  optical microscopy images improves 3-d neuron reconstruction,'' \emph{IEEE
+  Transactions on Medical Imaging}, vol.~36, no.~7, pp. 1533--1541, July 2017.
+
 \bibitem{Waithe544833}
 \BIBentryALTinterwordspacing
 D.~Waithe, J.~M. Brown, K.~Reglinski, I.~Diez-Sevilla, D.~Roberts, and
@@ -52,6 +80,11 @@ O.~Ronneberger, P.Fischer, and T.~Brox, ``U-net: Convolutional networks for
   arXiv:1505.04597 [cs.CV]). [Online]. Available:
   \url{http://lmb.informatik.uni-freiburg.de/Publications/2015/RFB15a}
 \BIBentrySTDinterwordspacing
+
+\bibitem{8681706}
+Y.~{Weng}, T.~{Zhou}, Y.~{Li}, and X.~{Qiu}, ``Nas-unet: Neural architecture
+  search for medical image segmentation,'' \emph{IEEE Access}, vol.~7, pp.
+  44\,247--44\,257, 2019.
 
 \bibitem{DBLP:journals/corr/ChenPSA17}
 \BIBentryALTinterwordspacing
@@ -102,6 +135,14 @@ D.~Waithe, J.~M. Brown, K.~Reglinski, I.~Diez-Sevilla, D.~Roberts, and
   C.~Eggeling, ``{Fluorescence Microscopy Data for Cellular Detection using
   Object Detection Networks.}'' Mar. 2019. [Online]. Available:
   \url{https://doi.org/10.5281/zenodo.2632769}
+\BIBentrySTDinterwordspacing
+
+\bibitem{neuroblastoma_dataset}
+\BIBentryALTinterwordspacing
+W.~Yu, H.~K. Lee, S.~Hariharan, W.~Bu, and S.~Ahmed, ``Evolving generalized
+  voronoi diagrams for accurate cellular image segmentation,'' \emph{Cytometry
+  Part A}, vol. 77A, no.~4, pp. 379--386, 2010. [Online]. Available:
+  \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/cyto.a.20876}
 \BIBentrySTDinterwordspacing
 
 \bibitem{DBLP:journals/corr/abs-1801-00868}
